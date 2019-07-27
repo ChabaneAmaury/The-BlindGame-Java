@@ -1,0 +1,7 @@
+Contract\ImageResizer.class
+Contract\IControllerMain.class
+Contract\IEntity.class
+Contract\IModel.class
+Contract\Difficulties.class
+Contract\IView.class
+Contract\Types.class
