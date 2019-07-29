@@ -59,20 +59,21 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
         int optionsX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
                 - (this.getMenuPanel().getWidth() / 10) - (this.getMenuPanel().getWidth() / 51.2) - btnW);
         int nextX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 2) - (btnW * 2));
+                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 2) - (btnW * 2))
+                + (btnW / 2);
         int previousX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 3) - (btnW * 3));
+                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 3) - (btnW * 2));
         int refreshX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 4) - (btnW * 4));
+                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 4) - (btnW * 3));
         int quitX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 5) - (btnW * 5));
+                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 5) - (btnW * 4));
         if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= previousX) && (mx <= (previousX + btnW))) {
+            if ((mx >= previousX) && (mx <= (previousX + (btnW / 2)))) {
                 if (this.getMenuPanel().getShowIndex() > 0) {
                     this.getMenuPanel().setShowIndex(this.getMenuPanel().getShowIndex() - 6);
                     this.getMenuPanel().repaint();
                 }
-            } else if ((mx >= nextX) && (mx <= (nextX + btnW))) {
+            } else if ((mx >= nextX) && (mx <= (nextX + (btnW / 2)))) {
                 if (this.getMenuPanel().getViewFrame().getController().getModel().getThemes()
                         .size() > ((this.getMenuPanel().getShowIndex() + 6))) {
                     this.getMenuPanel().setShowIndex(this.getMenuPanel().getShowIndex() + 6);
@@ -160,10 +161,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        int btnY = (int) (this.getMenuPanel().getHeight() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getHeight() / 10.2857143));
-        if (e.getY() >= (btnY - 100)) {
-            this.getMenuPanel().repaint(0, btnY, this.getMenuPanel().getWidth(), this.getMenuPanel().getHeight());
-        }
+        this.getMenuPanel().repaint();
     }
 }

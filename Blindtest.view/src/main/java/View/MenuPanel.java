@@ -3,24 +3,15 @@
  */
 package View;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Paint;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 import Contract.IEntity;
 
 /**
@@ -28,7 +19,7 @@ import Contract.IEntity;
  *
  * @author Amaury Chabane
  */
-public class MenuPanel extends JPanel {
+public class MenuPanel extends MyPanel {
 
     // 25 = (this.getWidth() / 51.2)
     // 50 = (this.getWidth() / 25.6)
@@ -60,102 +51,6 @@ public class MenuPanel extends JPanel {
     }
 
     /**
-     * Draw gradient paint.
-     *
-     * @param graphics
-     *                     the graphics
-     */
-    public void drawGradientPaint(Graphics2D graphics) {
-        Paint paint = new GradientPaint(this.getWidth() / 2, 0, Color.blue.darker().darker(), this.getWidth() / 2,
-                this.getHeight(), Color.black);
-        graphics.setPaint(paint);
-        graphics.fill(new Rectangle(this.getWidth(), this.getHeight()));
-    }
-
-    /**
-     * Draw centered string.
-     *
-     * @param page
-     *                   the page
-     * @param s
-     *                   the s
-     * @param x
-     *                   the x
-     * @param y
-     *                   the y
-     * @param width
-     *                   the width
-     * @param height
-     *                   the height
-     */
-    public void drawCenteredString(Graphics page, String s, int x, int y, int width, int height) {
-        // Find the size of string s in the font of the Graphics context "page"
-        FontMetrics fm = page.getFontMetrics(page.getFont());
-        Rectangle2D rect = fm.getStringBounds(s, page);
-        int textHeight = (int) (rect.getHeight());
-        int textWidth = (int) (rect.getWidth());
-
-        // Center text horizontally and vertically within provided rectangular bounds
-        int textX = x + ((width - textWidth) / 2);
-        int textY = y + ((height - textHeight) / 2) + fm.getAscent();
-        page.drawString(s, textX, textY);
-    }
-
-    /**
-     * Draw button.
-     *
-     * @param graphics
-     *                     the graphics
-     * @param text
-     *                     the text
-     * @param x
-     *                     the x
-     * @param y
-     *                     the y
-     * @param width
-     *                     the width
-     * @param height
-     *                     the height
-     */
-    public void drawButton(Graphics2D graphics, String text, int x, int y, int width, int height) {
-        Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
-        graphics.setColor(Color.DARK_GRAY);
-        graphics.fillRect(x - (this.getWidth() / 128), y - (this.getHeight() / 72), width + (this.getWidth() / 64),
-                height + (this.getHeight() / 36));
-        Point mousePos = this.getMousePosition();
-        graphics.setColor(Color.GRAY);
-        if (mousePos != null) {
-            if ((mousePos.getX() >= x) && (mousePos.getX() <= (x + width))) {
-                if ((mousePos.getY() >= y) && (mousePos.getY() <= (y + height))) {
-                    graphics.setColor(Color.WHITE);
-                }
-            }
-        }
-        graphics.fillRect(x, y, width, height);
-        graphics.setColor(Color.BLACK);
-        graphics.setFont(basicFont);
-        this.drawCenteredString(graphics, text, x, y, width, height);
-    }
-
-    /**
-     * Load image.
-     *
-     * @param path
-     *                 the path
-     * @return the image
-     */
-    public Image loadImage(String path) {
-        Image img = null;
-        try {
-            img = ImageIO.read(new File(path));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return img;
-    }
-
-    /**
      * Draw theme.
      *
      * @param graphics
@@ -168,6 +63,7 @@ public class MenuPanel extends JPanel {
      *                     the y
      */
     public void drawTheme(Graphics2D graphics, IEntity theme, double x, double y) {
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1)); // remove transparency
         Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
         graphics.setColor(Color.WHITE);
         graphics.setFont(basicFont);
@@ -184,7 +80,17 @@ public class MenuPanel extends JPanel {
         graphics.drawString(theme.getTitle(), titleX, titleY);
         if (new File(theme.getCover()).exists()) {
             graphics.setColor(Color.WHITE);
-            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, null);
+            Point mousePos = this.getMousePosition();
+            if (mousePos != null) {
+                if ((mousePos.getX() >= rectX) && (mousePos.getX() <= (rectX + rectW))) {
+                    if ((mousePos.getY() >= rectY) && (mousePos.getY() <= (rectY + rectH))) {
+                        float alpha = (float) 0.5; // draw half transparent
+                        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+                        graphics.setComposite(ac);
+                    }
+                }
+            }
+            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
@@ -213,20 +119,20 @@ public class MenuPanel extends JPanel {
         int optionsX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
                 - (this.getWidth() / 51.2) - btnW);
         int nextX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 2) - (btnW * 2));
+                - ((this.getWidth() / 51.2) * 2) - (btnW * 2)) + (btnW / 2);
         int previousX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 3) - (btnW * 3));
+                - ((this.getWidth() / 51.2) * 3) - (btnW * 2));
         int refreshX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 4) - (btnW * 4));
+                - ((this.getWidth() / 51.2) * 4) - (btnW * 3));
         int quitX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 5) - (btnW * 5));
+                - ((this.getWidth() / 51.2) * 5) - (btnW * 4));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
         this.drawButton(graphics, "Options", optionsX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Next", nextX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Previous", previousX, btnY, btnW, btnH);
+        this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
+        this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "Refresh", refreshX, btnY, btnW, btnH);
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         for (IEntity theme : this.getViewFrame().getModel().getThemes()) {

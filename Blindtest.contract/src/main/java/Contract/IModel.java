@@ -45,4 +45,8 @@ public interface IModel {
      */
     void fillThemesList();
 
+    void loadTypes();
+
+    ArrayList<String> getTypes();
+
 }
