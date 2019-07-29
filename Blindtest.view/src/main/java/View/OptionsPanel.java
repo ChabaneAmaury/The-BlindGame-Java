@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import Contract.Difficulties;
-import Contract.Types;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -69,7 +68,7 @@ public class OptionsPanel extends JPanel implements ActionListener {
 
         this.getCheckboxes().removeAll(this.checkboxes);
 
-        for (Types type : Types.values()) {
+        for (String type : this.getViewFrame().getModel().getTypes()) {
             JCheckBox chckbx = new JCheckBox(
                     (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_', ' '),
                     true);

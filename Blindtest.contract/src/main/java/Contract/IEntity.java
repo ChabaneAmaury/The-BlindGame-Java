@@ -39,7 +39,7 @@ public interface IEntity {
      *
      * @return the type
      */
-    Types getType();
+    String getType();
 
     /**
      * Sets the timecode.
@@ -114,7 +114,7 @@ public interface IEntity {
      * @param type
      *                 the new type
      */
-    void setType(Types type);
+    void setType(String type);
 
     /**
      * Checks if is checks for error.

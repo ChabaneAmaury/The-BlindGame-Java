@@ -11,7 +11,6 @@ import Contract.IControllerMain;
 import Contract.IEntity;
 import Contract.IModel;
 import Contract.IView;
-import Contract.Types;
 
 /**
  * The Class ControllerMain.
@@ -39,7 +38,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     private int themeIndex = 0;
 
     /** The not choosen types. */
-    private ArrayList<Types> notChoosenTypes = new ArrayList<>();
+    private ArrayList<String> notChoosenTypes = new ArrayList<>();
 
     /** The timer. */
     private Thread timer = null;
@@ -65,7 +64,7 @@ public class ControllerMain extends Observable implements IControllerMain {
      */
     @Override
     public void removeType(String strType) {
-        for (Types type : Types.values()) {
+        for (String type : this.getModel().getTypes()) {
             if (type.toString().equals(strType.toUpperCase().replace(' ', '_'))) {
                 this.notChoosenTypes.remove(type);
             }
@@ -80,7 +79,7 @@ public class ControllerMain extends Observable implements IControllerMain {
      */
     @Override
     public void addType(String strType) {
-        for (Types type : Types.values()) {
+        for (String type : this.getModel().getTypes()) {
             if (type.toString().equals(strType.toUpperCase().replace(' ', '_'))) {
                 this.notChoosenTypes.add(type);
             }
@@ -94,7 +93,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     public void startGame() {
         ArrayList<IEntity> toRemove = new ArrayList<>();
         for (IEntity theme : this.getModel().getThemes()) {
-            for (Types type : this.notChoosenTypes) {
+            for (String type : this.notChoosenTypes) {
                 if (theme.getType().equals(type)) {
                     toRemove.add(theme);
                 }
