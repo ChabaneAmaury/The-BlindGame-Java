@@ -222,6 +222,7 @@ class ViewPanel extends JPanel {
      */
     @Override
     protected void paintComponent(final Graphics g) {
+        super.paintComponent(g);
         int quitX = (int) (this.getWidth() / 51.2);
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;

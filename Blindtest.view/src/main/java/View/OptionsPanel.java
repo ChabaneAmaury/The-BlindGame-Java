@@ -37,6 +37,8 @@ public class OptionsPanel extends JPanel implements ActionListener {
     /** The view frame. */
     private ViewFrame viewFrame = null;
 
+    private String difficulty = "Easy";
+
     /** The checkboxes. */
     private List<JCheckBox> checkboxes = new ArrayList<>();
 
@@ -77,7 +79,11 @@ public class OptionsPanel extends JPanel implements ActionListener {
             chckbx.setFont(basicFont);
             chckbx.setAlignmentX(CENTER_ALIGNMENT);
             this.add(chckbx);
-            this.add(Box.createRigidArea(new Dimension(separator, separator)));
+            Dimension minSize = new Dimension(5, 100);
+            Dimension prefSize = new Dimension(5, 100);
+            Dimension maxSize = new Dimension(Short.MAX_VALUE, 100);
+            this.add(new Box.Filler(minSize, prefSize, maxSize));
+            // this.add(Box.createRigidArea(new Dimension(separator, separator)));
         }
 
         JButton easy = new JButton("Easy");
@@ -88,6 +94,8 @@ public class OptionsPanel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 OptionsPanel.this.getViewFrame().getController().setAllowedTime(Difficulties.EASY);
+                OptionsPanel.this.setDifficulty("Easy");
+                OptionsPanel.this.repaint();
             }
         });
         JButton medium = new JButton("Medium");
@@ -98,6 +106,8 @@ public class OptionsPanel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 OptionsPanel.this.getViewFrame().getController().setAllowedTime(Difficulties.MEDIUM);
+                OptionsPanel.this.setDifficulty("Medium");
+                OptionsPanel.this.repaint();
             }
         });
         JButton hard = new JButton("Hard");
@@ -108,15 +118,17 @@ public class OptionsPanel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 OptionsPanel.this.getViewFrame().getController().setAllowedTime(Difficulties.HARD);
+                OptionsPanel.this.setDifficulty("Hard");
+                OptionsPanel.this.repaint();
             }
         });
-        this.add(Box.createRigidArea(new Dimension(separator * 9, separator * 9)));
+        // this.add(Box.createRigidArea(new Dimension(separator * 9, separator * 9)));
         this.add(easy);
-        this.add(Box.createRigidArea(new Dimension(separator, separator)));
+        // this.add(Box.createRigidArea(new Dimension(separator, separator)));
         this.add(medium);
-        this.add(Box.createRigidArea(new Dimension(separator, separator)));
+        // this.add(Box.createRigidArea(new Dimension(separator, separator)));
         this.add(hard);
-        this.add(Box.createRigidArea(new Dimension(separator, separator)));
+        // this.add(Box.createRigidArea(new Dimension(separator, separator)));
 
         for (Component comp : this.getComponents()) {
             if (comp instanceof JCheckBox) {
@@ -211,16 +223,20 @@ public class OptionsPanel extends JPanel implements ActionListener {
      */
     @Override
     protected void paintComponent(final Graphics g) {
+        super.paintComponent(g);
         int backX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10));
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
         int quitX = (int) (this.getWidth() / 51.2);
+        int difficultyX = ((int) (this.getWidth() / 51.2) * 2) + btnW;
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
+        graphics.setColor(Color.WHITE);
+        this.drawCenteredString(graphics, this.getDifficulty(), difficultyX, btnY, btnW, btnH);
     }
 
     /**
@@ -271,6 +287,14 @@ public class OptionsPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
 
+    }
+
+    public String getDifficulty() {
+        return this.difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
 }

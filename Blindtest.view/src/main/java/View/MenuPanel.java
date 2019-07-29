@@ -3,6 +3,7 @@
  */
 package View;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -168,6 +169,7 @@ public class MenuPanel extends JPanel {
      *                     the y
      */
     public void drawTheme(Graphics2D graphics, IEntity theme, double x, double y) {
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1)); // remove transparency
         Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
         graphics.setColor(Color.WHITE);
         graphics.setFont(basicFont);
@@ -184,7 +186,17 @@ public class MenuPanel extends JPanel {
         graphics.drawString(theme.getTitle(), titleX, titleY);
         if (new File(theme.getCover()).exists()) {
             graphics.setColor(Color.WHITE);
-            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, null);
+            Point mousePos = this.getMousePosition();
+            if (mousePos != null) {
+                if ((mousePos.getX() >= rectX) && (mousePos.getX() <= (rectX + rectW))) {
+                    if ((mousePos.getY() >= rectY) && (mousePos.getY() <= (rectY + rectH))) {
+                        float alpha = (float) 0.5; // draw half transparent
+                        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+                        graphics.setComposite(ac);
+                    }
+                }
+            }
+            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
