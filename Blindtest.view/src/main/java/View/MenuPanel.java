@@ -213,20 +213,20 @@ public class MenuPanel extends JPanel {
         int optionsX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
                 - (this.getWidth() / 51.2) - btnW);
         int nextX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 2) - (btnW * 2));
+                - ((this.getWidth() / 51.2) * 2) - (btnW * 2)) + (btnW / 2);
         int previousX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 3) - (btnW * 3));
+                - ((this.getWidth() / 51.2) * 3) - (btnW * 2));
         int refreshX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 4) - (btnW * 4));
+                - ((this.getWidth() / 51.2) * 4) - (btnW * 3));
         int quitX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 5) - (btnW * 5));
+                - ((this.getWidth() / 51.2) * 5) - (btnW * 4));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
         this.drawButton(graphics, "Options", optionsX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Next", nextX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Previous", previousX, btnY, btnW, btnH);
+        this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
+        this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "Refresh", refreshX, btnY, btnW, btnH);
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         for (IEntity theme : this.getViewFrame().getModel().getThemes()) {
