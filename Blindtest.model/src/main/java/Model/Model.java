@@ -40,6 +40,7 @@ public class Model implements IModel {
 
     @Override
     public void loadTypes() {
+        this.getTypes().removeAll(this.getTypes());
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader("bin\\types.txt"));
