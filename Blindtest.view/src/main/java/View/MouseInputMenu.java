@@ -94,7 +94,49 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                 System.exit(0);
 
             }
+        } else if (true) {
+            for (int i = this.getMenuPanel().getShowIndex(); i < (this.getMenuPanel().getShowIndex() + 3); i++) {
+                if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
+                    int tY = (int) (((((i - this.getMenuPanel().getShowIndex()) + 1) * this.getMenuPanel().getWidth())
+                            / 51.2)
+                            + ((((this.getMenuPanel().getWidth() / 11) * 160) / 120)
+                                    * (i - this.getMenuPanel().getShowIndex())));
+                    int tX = (int) (this.getMenuPanel().getWidth() / 51.2);
+                    int tW = this.getMenuPanel().getWidth() / 11;
+                    int tH = (tW * 160) / 120;
+                    if ((my >= tY) && (my <= (tY + tH))) {
+                        if ((mx >= tX) && (mx <= (tX + tW))) {
+                            this.getMenuPanel().getViewFrame()
+                                    .setContentPane(new ThemePropPanel(this.getMenuPanel().getViewFrame(), i));
+                            this.getMenuPanel().getViewFrame().revalidate();
+                            break;
+                        }
+
+                    }
+                }
+            }
+            for (int i = this.getMenuPanel().getShowIndex() + 3; i < (this.getMenuPanel().getShowIndex() + 6); i++) {
+                if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
+                    int tY = ((int) (((((i - 3 - this.getMenuPanel().getShowIndex()) + 1)
+                            * this.getMenuPanel().getWidth()) / 51.2))
+                            + ((((this.getMenuPanel().getWidth() / 11) * 160) / 120)
+                                    * (i - 3 - this.getMenuPanel().getShowIndex())));
+                    int tX = (int) (this.getMenuPanel().getWidth() / 51.2) + (this.getMenuPanel().getWidth() / 2);
+                    int tW = this.getMenuPanel().getWidth() / 11;
+                    int tH = (tW * 160) / 120;
+                    if ((my >= tY) && (my <= (tY + tH))) {
+                        if ((mx >= tX) && (mx <= (tX + tW))) {
+                            this.getMenuPanel().getViewFrame()
+                                    .setContentPane(new ThemePropPanel(this.getMenuPanel().getViewFrame(), i));
+                            this.getMenuPanel().getViewFrame().revalidate();
+                            break;
+                        }
+                    }
+
+                }
+            }
         }
+
     }
 
     /**

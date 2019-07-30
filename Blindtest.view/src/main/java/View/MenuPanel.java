@@ -31,9 +31,6 @@ public class MenuPanel extends MyPanel {
     /** The show index. */
     private int showIndex = 0;
 
-    /** The view frame. */
-    private ViewFrame viewFrame = null;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6346376664434242649L;
 
@@ -44,8 +41,8 @@ public class MenuPanel extends MyPanel {
      *                      the view frame
      */
     public MenuPanel(ViewFrame viewFrame) {
+        super(viewFrame);
         MouseInputMenu mouseInput = new MouseInputMenu(this);
-        this.setViewFrame(viewFrame);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
     }
@@ -166,25 +163,6 @@ public class MenuPanel extends MyPanel {
                                 + ((((this.getWidth() / 11) * 160) / 120) * (i - 3 - this.getShowIndex())));
             }
         }
-    }
-
-    /**
-     * Gets the view frame.
-     *
-     * @return the view frame
-     */
-    public ViewFrame getViewFrame() {
-        return this.viewFrame;
-    }
-
-    /**
-     * Sets the view frame.
-     *
-     * @param viewFrame
-     *                      the new view frame
-     */
-    public void setViewFrame(ViewFrame viewFrame) {
-        this.viewFrame = viewFrame;
     }
 
     /**

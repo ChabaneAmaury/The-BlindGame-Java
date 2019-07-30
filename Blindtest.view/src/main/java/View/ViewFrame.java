@@ -16,6 +16,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.JFrame;
+
 import Contract.IControllerMain;
 import Contract.IModel;
 
@@ -77,7 +78,6 @@ public class ViewFrame extends JFrame implements Observer {
      *                     the time code
      */
     public void playMusic(String filePath, int timeCode) {
-
         try {
             this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
             this.setClip(AudioSystem.getClip());
@@ -88,7 +88,6 @@ public class ViewFrame extends JFrame implements Observer {
             gainControl.setValue(dB);
             this.getClip().setMicrosecondPosition(timeCode * 1000000);
             this.getClip().start();
-            this.getClip().loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
         }
     }
@@ -192,9 +191,10 @@ public class ViewFrame extends JFrame implements Observer {
         this.setSize(FRAMEWIDTH, FRAMEHEIGHT);
         this.setBounds(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
         this.setIconImage(this.loadImage(ICON));
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
-        this.setUndecorated(true); // truly fullscreen
+        // this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
+        // this.setUndecorated(true); // truly fullscreen
         this.setContentPane(new MenuPanel(this));
+        // this.setContentPane(new ThemePropPanel(this, 0));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
