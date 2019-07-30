@@ -94,7 +94,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                 System.exit(0);
 
             }
-        } else if (true) {
+        } else {
             for (int i = this.getMenuPanel().getShowIndex(); i < (this.getMenuPanel().getShowIndex() + 3); i++) {
                 if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
                     int tY = (int) (((((i - this.getMenuPanel().getShowIndex()) + 1) * this.getMenuPanel().getWidth())
@@ -111,7 +111,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                             this.getMenuPanel().getViewFrame().revalidate();
                             break;
                         }
-
                     }
                 }
             }
@@ -132,7 +131,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                             break;
                         }
                     }
-
                 }
             }
         }
@@ -191,7 +189,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 

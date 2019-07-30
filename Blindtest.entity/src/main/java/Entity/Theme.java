@@ -48,7 +48,7 @@ public class Theme extends Properties implements IEntity {
     private String infos = "";
 
     /** The file extensions. */
-    private String[] fileExtensions = new String[] { ".wav" };
+    private String[] fileExtensions = new String[] { ".mp3", ".wav" };
 
     /** The cover extensions. */
     private String[] coverExtensions = new String[] { ".png", ".jpg", ".jpeg" };

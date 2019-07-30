@@ -6,15 +6,20 @@ package View;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 import Contract.IControllerMain;
@@ -78,8 +83,40 @@ public class ViewFrame extends JFrame implements Observer {
      *                     the time code
      */
     public void playMusic(String filePath, int timeCode) {
+        if (filePath.toLowerCase().endsWith(".mp3")) {
+
+            AudioInputStream mp3Stream = null;
+            try {
+                InputStream inputStream = new FileInputStream(filePath);
+                mp3Stream = AudioSystem.getAudioInputStream(inputStream);
+            } catch (UnsupportedAudioFileException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            AudioFormat sourceFormat = mp3Stream.getFormat();
+            // create audio format object for the desired stream/audio format
+            // this is *not* the same as the file format (wav)
+            AudioFormat convertFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sourceFormat.getSampleRate(),
+                    16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat.getSampleRate(),
+                    false);
+            // create stream that delivers the desired format
+            AudioInputStream converted = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
+
+            this.audioInputStream = converted;
+
+        } else {
+            try {
+                this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+            } catch (UnsupportedAudioFileException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         try {
-            this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
             this.setClip(AudioSystem.getClip());
             this.getClip().open(this.audioInputStream);
             FloatControl gainControl = (FloatControl) this.getClip().getControl(FloatControl.Type.MASTER_GAIN);
@@ -88,7 +125,9 @@ public class ViewFrame extends JFrame implements Observer {
             gainControl.setValue(dB);
             this.getClip().setMicrosecondPosition(timeCode * 1000000);
             this.getClip().start();
-        } catch (Exception e) {
+        } catch (LineUnavailableException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
