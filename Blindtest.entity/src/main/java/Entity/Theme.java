@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +32,8 @@ public class Theme extends Properties implements IEntity {
 
     /** The title. */
     private String title = "Undefined";
+
+    private File folder = null;
 
     /** The composer. */
     private String composer = "Undefined";
@@ -79,6 +82,7 @@ public class Theme extends Properties implements IEntity {
      */
     public Theme(IModel model, File folder) {
         this.setModel(model);
+        this.setFolder(folder);
         try {
             this.setCover(this.FindFileByExtension(folder, this.getCoverExtensions()));
             this.setCoverImage(this.loadImage(this.getCover()));
@@ -119,6 +123,41 @@ public class Theme extends Properties implements IEntity {
             try {
                 this.setTimecode(Integer.parseInt(this.getProperty("timecode")));
             } catch (NumberFormatException e) {
+            }
+        }
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setPropertyValue(String key, String value) {
+        File properties = new File(this.getFolder().getAbsolutePath() + "\\" + Theme.PROPERTIES_FILE_NAME);
+        InputStream inputStream = null;
+        FileOutputStream fos;
+        try {
+            inputStream = new FileInputStream(properties);
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        if (inputStream != null) {
+            try {
+                this.load(inputStream);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            this.setProperty(key, value);
+            try {
+                inputStream.close();
+                fos = new FileOutputStream(this.getFolder().getAbsolutePath() + "\\" + Theme.PROPERTIES_FILE_NAME);
+                this.store(fos, "");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
     }
@@ -457,6 +496,14 @@ public class Theme extends Properties implements IEntity {
 
     public void setModel(IModel model) {
         this.model = model;
+    }
+
+    public File getFolder() {
+        return this.folder;
+    }
+
+    public void setFolder(File folder2) {
+        this.folder = folder2;
     }
 
 }

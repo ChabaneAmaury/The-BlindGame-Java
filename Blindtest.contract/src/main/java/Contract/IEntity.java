@@ -145,4 +145,6 @@ public interface IEntity {
      */
     Image getResizedCoverImage();
 
+    void setPropertyValue(String key, String value);
+
 }

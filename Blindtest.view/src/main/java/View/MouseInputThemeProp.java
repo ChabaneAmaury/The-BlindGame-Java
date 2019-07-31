@@ -61,6 +61,18 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
             if ((mx >= quitX) && (mx <= (quitX + btnW))) {
                 System.exit(0);
             } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
+                this.getThemePropPanel().getTheme().setPropertyValue("title",
+                        this.getThemePropPanel().getTitleField().getText());
+                this.getThemePropPanel().getTheme().setPropertyValue("composer",
+                        this.getThemePropPanel().getComposerField().getText());
+                this.getThemePropPanel().getTheme().setPropertyValue("type",
+                        this.getThemePropPanel().getTypeField().getText());
+                this.getThemePropPanel().getTheme().setPropertyValue("timecode",
+                        this.getThemePropPanel().getTimeCodeField().getText());
+                this.getThemePropPanel().getTheme().setPropertyValue("release",
+                        this.getThemePropPanel().getReleaseField().getText());
+                this.getThemePropPanel().getTheme().setPropertyValue("infos",
+                        this.getThemePropPanel().getInfosField().getText());
                 this.getThemePropPanel().getViewFrame().getModel().loadTypes();
                 this.getThemePropPanel().getViewFrame().getModel().loadFolders();
                 this.getThemePropPanel().getViewFrame().getModel().fillThemesList();
