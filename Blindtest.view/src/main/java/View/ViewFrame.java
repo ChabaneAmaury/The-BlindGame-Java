@@ -5,6 +5,7 @@ package View;
 
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -74,6 +75,18 @@ public class ViewFrame extends JFrame implements Observer {
         this.buildViewFrame(model);
     }
 
+    public void startLoadingScreen() {
+        this.setContentPane(new LoadPanel(this));
+        this.revalidate();
+    }
+
+    @SuppressWarnings("deprecation")
+    public void stopLoadingScreen(MyPanel panel) {
+        ((LoadPanel) this.getContentPane()).getRotate().stop();
+        this.setContentPane(panel);
+        this.revalidate();
+    }
+
     /**
      * Play music.
      *
@@ -83,12 +96,16 @@ public class ViewFrame extends JFrame implements Observer {
      *                     the time code
      */
     public void playMusic(String filePath, int timeCode) {
+        this.startLoadingScreen();
         if (filePath.toLowerCase().endsWith(".mp3")) {
 
+            InputStream inputStream;
+            // open stream
             AudioInputStream mp3Stream = null;
             try {
-                InputStream inputStream = new FileInputStream(filePath);
-                mp3Stream = AudioSystem.getAudioInputStream(inputStream);
+                inputStream = new FileInputStream(filePath);
+                BufferedInputStream bis = new BufferedInputStream(inputStream);
+                mp3Stream = AudioSystem.getAudioInputStream(bis);
             } catch (UnsupportedAudioFileException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -100,17 +117,12 @@ public class ViewFrame extends JFrame implements Observer {
                     16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat.getSampleRate(),
                     false);
             // create stream that delivers the desired format
-            AudioInputStream converted = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
-
-            this.audioInputStream = converted;
+            this.audioInputStream = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
 
         } else {
             try {
                 this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-            } catch (UnsupportedAudioFileException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (UnsupportedAudioFileException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -124,6 +136,7 @@ public class ViewFrame extends JFrame implements Observer {
             float dB = (float) ((Math.log(gain) / Math.log(10.0)) * 20.0);
             gainControl.setValue(dB);
             this.getClip().setMicrosecondPosition(timeCode * 1000000);
+            this.stopLoadingScreen(new ViewPanel(this));
             this.getClip().start();
         } catch (LineUnavailableException | IOException e) {
             // TODO Auto-generated catch block
@@ -255,7 +268,6 @@ public class ViewFrame extends JFrame implements Observer {
             this.playMusic(this.getController().getTheme().getFile(), this.getController().getTheme().getTimecode());
             this.setCurrentThemeIndex(this.getController().getThemeIndex());
         }
-
     }
 
     /**

@@ -84,8 +84,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                 this.getMenuPanel().getViewFrame().revalidate();
             } else if ((mx >= playX) && (mx <= (playX + btnW))) {
                 this.getMenuPanel().getViewFrame().getController().startGame();
-                this.getMenuPanel().getViewFrame().setContentPane(new ViewPanel(this.getMenuPanel().getViewFrame()));
-                this.getMenuPanel().getViewFrame().revalidate();
             } else if ((mx >= refreshX) && (mx <= (refreshX + btnW))) {
                 this.getMenuPanel().getViewFrame().getModel().loadFolders();
                 this.getMenuPanel().getViewFrame().getModel().fillThemesList();
