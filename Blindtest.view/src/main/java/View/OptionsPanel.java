@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 
 import Contract.Difficulties;
 
@@ -26,9 +27,6 @@ import Contract.Difficulties;
  * @author Amaury Chabane
  */
 public class OptionsPanel extends MyPanel implements ActionListener {
-
-    /** The view frame. */
-    private ViewFrame viewFrame = null;
 
     private String difficulty = "Easy";
 
@@ -45,10 +43,10 @@ public class OptionsPanel extends MyPanel implements ActionListener {
      *                      the view frame
      */
     public OptionsPanel(ViewFrame viewFrame) {
+        super(viewFrame);
         MouseInputOptions mouseInput = new MouseInputOptions(this);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
-        this.setViewFrame(viewFrame);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.initOptions();
     }
@@ -67,12 +65,18 @@ public class OptionsPanel extends MyPanel implements ActionListener {
             JCheckBox chckbx = new JCheckBox(
                     (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_', ' '),
                     true);
+            chckbx.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             chckbx.setOpaque(false);
             chckbx.setForeground(Color.WHITE);
             chckbx.setFont(basicFont);
             chckbx.setAlignmentX(CENTER_ALIGNMENT);
             this.add(chckbx);
             // this.add(Box.createRigidArea(new Dimension(separator, separator)));
+            for (String notChoosenType : this.getViewFrame().getController().getNotChoosenTypes()) {
+                if (notChoosenType.equals(type)) {
+                    chckbx.setSelected(false);
+                }
+            }
         }
 
         JButton easy = new JButton("Easy");
@@ -148,25 +152,6 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         graphics.setColor(Color.WHITE);
         this.drawCenteredString(graphics, this.getDifficulty(), difficultyX, btnY, btnW, btnH);
-    }
-
-    /**
-     * Gets the view frame.
-     *
-     * @return the view frame
-     */
-    public ViewFrame getViewFrame() {
-        return this.viewFrame;
-    }
-
-    /**
-     * Sets the view frame.
-     *
-     * @param viewFrame
-     *                      the new view frame
-     */
-    public void setViewFrame(ViewFrame viewFrame) {
-        this.viewFrame = viewFrame;
     }
 
     /**

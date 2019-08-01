@@ -27,6 +27,12 @@ public class MyPanel extends JPanel {
      */
     private static final long serialVersionUID = 7093327424627297559L;
 
+    private ViewFrame viewFrame = null;
+
+    public MyPanel(ViewFrame viewFrame) {
+        this.setViewFrame(viewFrame);
+    }
+
     /**
      * Load image.
      *
@@ -121,6 +127,14 @@ public class MyPanel extends JPanel {
         graphics.setColor(Color.BLACK);
         graphics.setFont(basicFont);
         this.drawCenteredString(graphics, text, x, y, width, height);
+    }
+
+    public ViewFrame getViewFrame() {
+        return this.viewFrame;
+    }
+
+    public void setViewFrame(ViewFrame viewFrame) {
+        this.viewFrame = viewFrame;
     }
 
 }

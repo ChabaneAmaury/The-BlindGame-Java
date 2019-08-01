@@ -24,9 +24,6 @@ class ViewPanel extends MyPanel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -998294702363713521L;
 
-    /** The view frame. */
-    private ViewFrame viewFrame;
-
     /**
      * Instantiates a new view panel.
      *
@@ -34,19 +31,10 @@ class ViewPanel extends MyPanel {
      *                      the view frame
      */
     public ViewPanel(final ViewFrame viewFrame) {
+        super(viewFrame);
         MouseInputGame mouseInput = new MouseInputGame(this);
-        this.setViewFrame(viewFrame);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
-    }
-
-    /**
-     * Gets the view frame.
-     *
-     * @return the view frame
-     */
-    public ViewFrame getViewFrame() {
-        return this.viewFrame;
     }
 
     /**
@@ -135,15 +123,5 @@ class ViewPanel extends MyPanel {
         }
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
-    }
-
-    /**
-     * Sets the view frame.
-     *
-     * @param viewFrame
-     *                      the new view frame
-     */
-    void setViewFrame(final ViewFrame viewFrame) {
-        this.viewFrame = viewFrame;
     }
 }

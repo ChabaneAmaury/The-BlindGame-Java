@@ -5,17 +5,24 @@ package View;
 
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
+
 import Contract.IControllerMain;
 import Contract.IModel;
 
@@ -68,6 +75,18 @@ public class ViewFrame extends JFrame implements Observer {
         this.buildViewFrame(model);
     }
 
+    public void startLoadingScreen() {
+        this.setContentPane(new LoadPanel(this));
+        this.revalidate();
+    }
+
+    @SuppressWarnings("deprecation")
+    public void stopLoadingScreen(MyPanel panel) {
+        ((LoadPanel) this.getContentPane()).getRotate().stop();
+        this.setContentPane(panel);
+        this.revalidate();
+    }
+
     /**
      * Play music.
      *
@@ -77,9 +96,39 @@ public class ViewFrame extends JFrame implements Observer {
      *                     the time code
      */
     public void playMusic(String filePath, int timeCode) {
+        this.startLoadingScreen();
+        if (filePath.toLowerCase().endsWith(".mp3")) {
+
+            InputStream inputStream;
+            // open stream
+            AudioInputStream mp3Stream = null;
+            try {
+                inputStream = new FileInputStream(filePath);
+                BufferedInputStream bis = new BufferedInputStream(inputStream);
+                mp3Stream = AudioSystem.getAudioInputStream(bis);
+            } catch (UnsupportedAudioFileException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            AudioFormat sourceFormat = mp3Stream.getFormat();
+            // create audio format object for the desired stream/audio format
+            // this is *not* the same as the file format (wav)
+            AudioFormat convertFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sourceFormat.getSampleRate(),
+                    16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat.getSampleRate(),
+                    false);
+            // create stream that delivers the desired format
+            this.audioInputStream = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
+
+        } else {
+            try {
+                this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+            } catch (UnsupportedAudioFileException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
 
         try {
-            this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
             this.setClip(AudioSystem.getClip());
             this.getClip().open(this.audioInputStream);
             FloatControl gainControl = (FloatControl) this.getClip().getControl(FloatControl.Type.MASTER_GAIN);
@@ -87,9 +136,11 @@ public class ViewFrame extends JFrame implements Observer {
             float dB = (float) ((Math.log(gain) / Math.log(10.0)) * 20.0);
             gainControl.setValue(dB);
             this.getClip().setMicrosecondPosition(timeCode * 1000000);
+            this.stopLoadingScreen(new ViewPanel(this));
             this.getClip().start();
-            this.getClip().loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
+        } catch (LineUnavailableException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -192,9 +243,10 @@ public class ViewFrame extends JFrame implements Observer {
         this.setSize(FRAMEWIDTH, FRAMEHEIGHT);
         this.setBounds(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
         this.setIconImage(this.loadImage(ICON));
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
-        this.setUndecorated(true); // truly fullscreen
+        // this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
+        // this.setUndecorated(true); // truly fullscreen
         this.setContentPane(new MenuPanel(this));
+        // this.setContentPane(new ThemePropPanel(this, 0));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -216,7 +268,6 @@ public class ViewFrame extends JFrame implements Observer {
             this.playMusic(this.getController().getTheme().getFile(), this.getController().getTheme().getTimecode());
             this.setCurrentThemeIndex(this.getController().getThemeIndex());
         }
-
     }
 
     /**

@@ -84,8 +84,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                 this.getMenuPanel().getViewFrame().revalidate();
             } else if ((mx >= playX) && (mx <= (playX + btnW))) {
                 this.getMenuPanel().getViewFrame().getController().startGame();
-                this.getMenuPanel().getViewFrame().setContentPane(new ViewPanel(this.getMenuPanel().getViewFrame()));
-                this.getMenuPanel().getViewFrame().revalidate();
             } else if ((mx >= refreshX) && (mx <= (refreshX + btnW))) {
                 this.getMenuPanel().getViewFrame().getModel().loadFolders();
                 this.getMenuPanel().getViewFrame().getModel().fillThemesList();
@@ -94,7 +92,47 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                 System.exit(0);
 
             }
+        } else {
+            for (int i = this.getMenuPanel().getShowIndex(); i < (this.getMenuPanel().getShowIndex() + 3); i++) {
+                if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
+                    int tY = (int) (((((i - this.getMenuPanel().getShowIndex()) + 1) * this.getMenuPanel().getWidth())
+                            / 51.2)
+                            + ((((this.getMenuPanel().getWidth() / 11) * 160) / 120)
+                                    * (i - this.getMenuPanel().getShowIndex())));
+                    int tX = (int) (this.getMenuPanel().getWidth() / 51.2);
+                    int tW = this.getMenuPanel().getWidth() / 11;
+                    int tH = (tW * 160) / 120;
+                    if ((my >= tY) && (my <= (tY + tH))) {
+                        if ((mx >= tX) && (mx <= (tX + tW))) {
+                            this.getMenuPanel().getViewFrame()
+                                    .setContentPane(new ThemePropPanel(this.getMenuPanel().getViewFrame(), i));
+                            this.getMenuPanel().getViewFrame().revalidate();
+                            break;
+                        }
+                    }
+                }
+            }
+            for (int i = this.getMenuPanel().getShowIndex() + 3; i < (this.getMenuPanel().getShowIndex() + 6); i++) {
+                if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
+                    int tY = ((int) (((((i - 3 - this.getMenuPanel().getShowIndex()) + 1)
+                            * this.getMenuPanel().getWidth()) / 51.2))
+                            + ((((this.getMenuPanel().getWidth() / 11) * 160) / 120)
+                                    * (i - 3 - this.getMenuPanel().getShowIndex())));
+                    int tX = (int) (this.getMenuPanel().getWidth() / 51.2) + (this.getMenuPanel().getWidth() / 2);
+                    int tW = this.getMenuPanel().getWidth() / 11;
+                    int tH = (tW * 160) / 120;
+                    if ((my >= tY) && (my <= (tY + tH))) {
+                        if ((mx >= tX) && (mx <= (tX + tW))) {
+                            this.getMenuPanel().getViewFrame()
+                                    .setContentPane(new ThemePropPanel(this.getMenuPanel().getViewFrame(), i));
+                            this.getMenuPanel().getViewFrame().revalidate();
+                            break;
+                        }
+                    }
+                }
+            }
         }
+
     }
 
     /**
@@ -149,7 +187,6 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
