@@ -75,11 +75,20 @@ public class ViewFrame extends JFrame implements Observer {
         this.buildViewFrame(model);
     }
 
+    /**
+     * Start loading screen.
+     */
     public void startLoadingScreen() {
         this.setContentPane(new LoadPanel(this));
         this.revalidate();
     }
 
+    /**
+     * Stop loading screen.
+     *
+     * @param panel
+     *                  the panel
+     */
     @SuppressWarnings("deprecation")
     public void stopLoadingScreen(MyPanel panel) {
         ((LoadPanel) this.getContentPane()).getRotate().stop();

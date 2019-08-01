@@ -18,17 +18,39 @@ import javax.swing.JTextField;
 
 import Contract.IEntity;
 
+/**
+ * The Class ThemePropPanel.
+ *
+ * @author Amaury Chabane
+ */
 public class ThemePropPanel extends MyPanel {
 
+    /**
+     * The Class RoundJTextField.
+     *
+     * @author Amaury Chabane
+     */
     @SuppressWarnings("serial")
     public class RoundJTextField extends JTextField {
+        
+        /** The shape. */
         private Shape shape;
 
+        /**
+         * Instantiates a new round J text field.
+         *
+         * @param size the size
+         */
         public RoundJTextField(int size) {
             super(size);
             this.setOpaque(false); // As suggested by @AVD in comment.
         }
 
+        /**
+         * Paint component.
+         *
+         * @param g the g
+         */
         @Override
         protected void paintComponent(Graphics g) {
             g.setColor(this.getBackground());
@@ -36,12 +58,24 @@ public class ThemePropPanel extends MyPanel {
             super.paintComponent(g);
         }
 
+        /**
+         * Paint border.
+         *
+         * @param g the g
+         */
         @Override
         protected void paintBorder(Graphics g) {
             g.setColor(this.getForeground());
             g.drawRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, 15, 15);
         }
 
+        /**
+         * Contains.
+         *
+         * @param x the x
+         * @param y the y
+         * @return true, if successful
+         */
         @Override
         public boolean contains(int x, int y) {
             if ((this.shape == null) || !this.shape.getBounds().equals(this.getBounds())) {
@@ -51,21 +85,39 @@ public class ThemePropPanel extends MyPanel {
         }
     }
 
+    /** The title field. */
     private JTextField titleField = null;
+    
+    /** The composer field. */
     private JTextField composerField = null;
+    
+    /** The type field. */
     private JTextField typeField = null;
+    
+    /** The time code field. */
     private JTextField timeCodeField = null;
+    
+    /** The release field. */
     private JTextField releaseField = null;
+    
+    /** The infos field. */
     private JTextField infosField = null;
+    
+    /** The activate. */
     boolean activate = false;
 
+    /** The theme. */
     private IEntity theme = null;
 
-    /**
-     *
-     */
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -359666814951181068L;
 
+    /**
+     * Instantiates a new theme prop panel.
+     *
+     * @param viewFrame the view frame
+     * @param themeIndex the theme index
+     */
     public ThemePropPanel(ViewFrame viewFrame, int themeIndex) {
         super(viewFrame);
         MouseInputThemeProp mouseInput = new MouseInputThemeProp(this);
@@ -98,6 +150,16 @@ public class ThemePropPanel extends MyPanel {
 
     }
 
+    /**
+     * Creates the text field.
+     *
+     * @param string the string
+     * @param x the x
+     * @param y the y
+     * @param width the width
+     * @param height the height
+     * @return the round J text field
+     */
     public RoundJTextField createTextField(String string, int x, int y, int width, int height) {
         RoundJTextField textField = new RoundJTextField(0);
         textField.setFont(new Font("Cooper Black", Font.PLAIN, 25));
@@ -108,6 +170,12 @@ public class ThemePropPanel extends MyPanel {
         return textField;
     }
 
+    /**
+     * Draw theme.
+     *
+     * @param graphics the graphics
+     * @param theme the theme
+     */
     public void drawTheme(Graphics2D graphics, IEntity theme) {
         int metaXStart = (int) (this.getWidth() / 51.2);
         int titleHeight = this.getTitleField().getBounds().y - graphics.getFont().getSize();
@@ -144,6 +212,11 @@ public class ThemePropPanel extends MyPanel {
         graphics.drawString("Infos :", metaXStart, infosHeight);
     }
 
+    /**
+     * Paint component.
+     *
+     * @param g the g
+     */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
@@ -161,58 +234,128 @@ public class ThemePropPanel extends MyPanel {
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
     }
 
+    /**
+     * Gets the theme.
+     *
+     * @return the theme
+     */
     public IEntity getTheme() {
         return this.theme;
     }
 
+    /**
+     * Sets the theme.
+     *
+     * @param theme the new theme
+     */
     public void setTheme(IEntity theme) {
         this.theme = theme;
     }
 
+    /**
+     * Gets the title field.
+     *
+     * @return the title field
+     */
     public JTextField getTitleField() {
         return this.titleField;
     }
 
+    /**
+     * Sets the title field.
+     *
+     * @param titleField the new title field
+     */
     public void setTitleField(JTextField titleField) {
         this.titleField = titleField;
     }
 
+    /**
+     * Gets the composer field.
+     *
+     * @return the composer field
+     */
     public JTextField getComposerField() {
         return this.composerField;
     }
 
+    /**
+     * Sets the composer field.
+     *
+     * @param composerField the new composer field
+     */
     public void setComposerField(JTextField composerField) {
         this.composerField = composerField;
     }
 
+    /**
+     * Gets the type field.
+     *
+     * @return the type field
+     */
     public JTextField getTypeField() {
         return this.typeField;
     }
 
+    /**
+     * Sets the type field.
+     *
+     * @param typeField the new type field
+     */
     public void setTypeField(JTextField typeField) {
         this.typeField = typeField;
     }
 
+    /**
+     * Gets the time code field.
+     *
+     * @return the time code field
+     */
     public JTextField getTimeCodeField() {
         return this.timeCodeField;
     }
 
+    /**
+     * Sets the time code field.
+     *
+     * @param timeCodeField the new time code field
+     */
     public void setTimeCodeField(JTextField timeCodeField) {
         this.timeCodeField = timeCodeField;
     }
 
+    /**
+     * Gets the release field.
+     *
+     * @return the release field
+     */
     public JTextField getReleaseField() {
         return this.releaseField;
     }
 
+    /**
+     * Sets the release field.
+     *
+     * @param releaseField the new release field
+     */
     public void setReleaseField(JTextField releaseField) {
         this.releaseField = releaseField;
     }
 
+    /**
+     * Gets the infos field.
+     *
+     * @return the infos field
+     */
     public JTextField getInfosField() {
         return this.infosField;
     }
 
+    /**
+     * Sets the infos field.
+     *
+     * @param infosField the new infos field
+     */
     public void setInfosField(JTextField infosField) {
         this.infosField = infosField;
     }

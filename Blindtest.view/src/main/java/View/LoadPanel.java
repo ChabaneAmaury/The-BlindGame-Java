@@ -7,19 +7,30 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
+/**
+ * The Class LoadPanel.
+ *
+ * @author Amaury Chabane
+ */
 public class LoadPanel extends MyPanel {
 
+    /** The image. */
     private Image image = null;
 
+    /** The rotate. */
     private Thread rotate = null;
 
+    /** The rotate factor. */
     private double rotateFactor = 0;
 
-    /**
-     *
-     */
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4875013586052666221L;
 
+    /**
+     * Instantiates a new load panel.
+     *
+     * @param viewFrame the view frame
+     */
     public LoadPanel(ViewFrame viewFrame) {
         super(viewFrame);
         this.setRotate(new Thread() {
@@ -41,6 +52,11 @@ public class LoadPanel extends MyPanel {
         this.getRotate().start();
     }
 
+    /**
+     * Paint component.
+     *
+     * @param g the g
+     */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
@@ -53,26 +69,56 @@ public class LoadPanel extends MyPanel {
         graphics.drawImage(this.getImage(), imgX, imgY, imgW, imgW, null);
     }
 
+    /**
+     * Gets the rotate.
+     *
+     * @return the rotate
+     */
     public Thread getRotate() {
         return this.rotate;
     }
 
+    /**
+     * Sets the rotate.
+     *
+     * @param rotate the new rotate
+     */
     public void setRotate(Thread rotate) {
         this.rotate = rotate;
     }
 
+    /**
+     * Gets the rotate factor.
+     *
+     * @return the rotate factor
+     */
     public double getRotateFactor() {
         return this.rotateFactor;
     }
 
+    /**
+     * Sets the rotate factor.
+     *
+     * @param d the new rotate factor
+     */
     public void setRotateFactor(double d) {
         this.rotateFactor = d;
     }
 
+    /**
+     * Gets the image.
+     *
+     * @return the image
+     */
     public Image getImage() {
         return this.image;
     }
 
+    /**
+     * Sets the image.
+     *
+     * @param image the new image
+     */
     public void setImage(Image image) {
         this.image = image;
     }

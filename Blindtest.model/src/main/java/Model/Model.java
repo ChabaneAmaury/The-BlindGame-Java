@@ -24,6 +24,7 @@ public class Model implements IModel {
     /** The folders. */
     private File[] folders = null;
 
+    /** The types. */
     private ArrayList<String> types = new ArrayList<>();
 
     /** The themes. */
@@ -38,6 +39,9 @@ public class Model implements IModel {
         this.fillThemesList();
     }
 
+    /**
+     * Load types.
+     */
     @Override
     public void loadTypes() {
         this.getTypes().removeAll(this.getTypes());
@@ -103,8 +107,7 @@ public class Model implements IModel {
     /**
      * Sets the folders.
      *
-     * @param folders
-     *                    the new folders
+     * @param folders the new folders
      */
     @Override
     public void setFolders(File[] folders) {
@@ -121,11 +124,21 @@ public class Model implements IModel {
         return this.themes;
     }
 
+    /**
+     * Gets the types.
+     *
+     * @return the types
+     */
     @Override
     public ArrayList<String> getTypes() {
         return this.types;
     }
 
+    /**
+     * Sets the types.
+     *
+     * @param types the new types
+     */
     public void setTypes(ArrayList<String> types) {
         this.types = types;
     }
