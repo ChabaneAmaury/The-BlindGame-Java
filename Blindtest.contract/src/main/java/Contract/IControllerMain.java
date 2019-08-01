@@ -3,6 +3,7 @@
  */
 package Contract;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -97,5 +98,9 @@ public interface IControllerMain {
      * @return the timer
      */
     Thread getTimer();
+
+    ArrayList<String> getNotChoosenTypes();
+
+    void setNotChoosenTypes(ArrayList<String> notChoosenTypes);
 
 }

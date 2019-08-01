@@ -66,7 +66,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     public void removeType(String strType) {
         for (String type : this.getModel().getTypes()) {
             if (type.toString().equals(strType.toUpperCase().replace(' ', '_'))) {
-                this.notChoosenTypes.remove(type);
+                this.getNotChoosenTypes().remove(type);
             }
         }
     }
@@ -81,7 +81,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     public void addType(String strType) {
         for (String type : this.getModel().getTypes()) {
             if (type.toString().equals(strType.toUpperCase().replace(' ', '_'))) {
-                this.notChoosenTypes.add(type);
+                this.getNotChoosenTypes().add(type);
             }
         }
     }
@@ -280,5 +280,15 @@ public class ControllerMain extends Observable implements IControllerMain {
     @Override
     public void setAllowedTime(int aLLOWED_TIME) {
         ControllerMain.allowedTime = aLLOWED_TIME;
+    }
+
+    @Override
+    public ArrayList<String> getNotChoosenTypes() {
+        return this.notChoosenTypes;
+    }
+
+    @Override
+    public void setNotChoosenTypes(ArrayList<String> notChoosenTypes) {
+        this.notChoosenTypes = notChoosenTypes;
     }
 }

@@ -65,6 +65,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
             if ((mx >= quitX) && (mx <= (quitX + btnW))) {
                 System.exit(0);
             } else if ((mx >= backX) && (mx <= (backX + btnW))) {
+                this.getOptionsPanel().getViewFrame().getController().getNotChoosenTypes().clear();
                 for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
                     if (checkboxe.isSelected()) {
                         this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());

@@ -99,8 +99,7 @@ public class ThemePropPanel extends MyPanel {
     }
 
     public RoundJTextField createTextField(String string, int x, int y, int width, int height) {
-        RoundJTextField textField = new RoundJTextField(30);
-        textField = new RoundJTextField(30);
+        RoundJTextField textField = new RoundJTextField(0);
         textField.setFont(new Font("Cooper Black", Font.PLAIN, 25));
         textField.setText(string);
         textField.setForeground(Color.BLACK);

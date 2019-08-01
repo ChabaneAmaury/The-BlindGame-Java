@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 
 import Contract.Difficulties;
 
@@ -64,12 +65,18 @@ public class OptionsPanel extends MyPanel implements ActionListener {
             JCheckBox chckbx = new JCheckBox(
                     (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_', ' '),
                     true);
+            chckbx.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             chckbx.setOpaque(false);
             chckbx.setForeground(Color.WHITE);
             chckbx.setFont(basicFont);
             chckbx.setAlignmentX(CENTER_ALIGNMENT);
             this.add(chckbx);
             // this.add(Box.createRigidArea(new Dimension(separator, separator)));
+            for (String notChoosenType : this.getViewFrame().getController().getNotChoosenTypes()) {
+                if (notChoosenType.equals(type)) {
+                    chckbx.setSelected(false);
+                }
+            }
         }
 
         JButton easy = new JButton("Easy");
