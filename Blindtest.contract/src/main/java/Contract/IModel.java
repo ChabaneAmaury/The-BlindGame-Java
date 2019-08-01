@@ -30,8 +30,7 @@ public interface IModel {
     /**
      * Sets the folders.
      *
-     * @param folders
-     *                    the new folders
+     * @param folders the new folders
      */
     void setFolders(File[] folders);
 
@@ -45,8 +44,16 @@ public interface IModel {
      */
     void fillThemesList();
 
+    /**
+     * Load types.
+     */
     void loadTypes();
 
+    /**
+     * Gets the types.
+     *
+     * @return the types
+     */
     ArrayList<String> getTypes();
 
 }

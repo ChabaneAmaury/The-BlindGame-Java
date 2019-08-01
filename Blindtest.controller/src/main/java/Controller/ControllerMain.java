@@ -46,10 +46,8 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Instantiates a new controller main.
      *
-     * @param view
-     *                  the view
-     * @param model
-     *                  the model
+     * @param view the view
+     * @param model the model
      */
     public ControllerMain(IView view, IModel model) {
         this.setModel(model);
@@ -59,8 +57,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Removes the type.
      *
-     * @param strType
-     *                    the str type
+     * @param strType the str type
      */
     @Override
     public void removeType(String strType) {
@@ -74,8 +71,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Adds the type.
      *
-     * @param strType
-     *                    the str type
+     * @param strType the str type
      */
     @Override
     public void addType(String strType) {
@@ -159,8 +155,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Sets the view.
      *
-     * @param view
-     *                 the new view
+     * @param view the new view
      */
     public void setView(IView view) {
         this.view = view;
@@ -169,8 +164,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Sets the model.
      *
-     * @param model
-     *                  the new model
+     * @param model the new model
      */
     public void setModel(IModel model) {
         this.model = model;
@@ -212,8 +206,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Sets the time left.
      *
-     * @param timeLeft
-     *                     the new time left
+     * @param timeLeft the new time left
      */
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
@@ -243,8 +236,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Sets the theme.
      *
-     * @param theme
-     *                  the new theme
+     * @param theme the new theme
      */
     @Override
     public void setTheme(IEntity theme) {
@@ -264,8 +256,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Sets the theme index.
      *
-     * @param themeIndex
-     *                       the new theme index
+     * @param themeIndex the new theme index
      */
     public void setThemeIndex(int themeIndex) {
         this.themeIndex = themeIndex;
@@ -274,19 +265,28 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Sets the allowed time.
      *
-     * @param aLLOWED_TIME
-     *                         the new allowed time
+     * @param aLLOWED_TIME the new allowed time
      */
     @Override
     public void setAllowedTime(int aLLOWED_TIME) {
         ControllerMain.allowedTime = aLLOWED_TIME;
     }
 
+    /**
+     * Gets the not choosen types.
+     *
+     * @return the not choosen types
+     */
     @Override
     public ArrayList<String> getNotChoosenTypes() {
         return this.notChoosenTypes;
     }
 
+    /**
+     * Sets the not choosen types.
+     *
+     * @param notChoosenTypes the new not choosen types
+     */
     @Override
     public void setNotChoosenTypes(ArrayList<String> notChoosenTypes) {
         this.notChoosenTypes = notChoosenTypes;

@@ -28,6 +28,7 @@ import Contract.Difficulties;
  */
 public class OptionsPanel extends MyPanel implements ActionListener {
 
+    /** The difficulty. */
     private String difficulty = "Easy";
 
     /** The checkboxes. */
@@ -185,10 +186,21 @@ public class OptionsPanel extends MyPanel implements ActionListener {
 
     }
 
+    /**
+     * Gets the difficulty.
+     *
+     * @return the difficulty
+     */
     public String getDifficulty() {
         return this.difficulty;
     }
 
+    /**
+     * Sets the difficulty.
+     *
+     * @param difficulty
+     *                       the new difficulty
+     */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }

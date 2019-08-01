@@ -20,15 +20,24 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * The Class MyPanel.
+ *
+ * @author Amaury Chabane
+ */
 public class MyPanel extends JPanel {
 
-    /**
-     *
-     */
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 7093327424627297559L;
 
+    /** The view frame. */
     private ViewFrame viewFrame = null;
 
+    /**
+     * Instantiates a new my panel.
+     *
+     * @param viewFrame the view frame
+     */
     public MyPanel(ViewFrame viewFrame) {
         this.setViewFrame(viewFrame);
     }
@@ -36,8 +45,7 @@ public class MyPanel extends JPanel {
     /**
      * Load image.
      *
-     * @param path
-     *                 the path
+     * @param path the path
      * @return the image
      */
     public Image loadImage(String path) {
@@ -54,18 +62,12 @@ public class MyPanel extends JPanel {
     /**
      * Draw centered string.
      *
-     * @param page
-     *                   the page
-     * @param s
-     *                   the s
-     * @param x
-     *                   the x
-     * @param y
-     *                   the y
-     * @param width
-     *                   the width
-     * @param height
-     *                   the height
+     * @param page the page
+     * @param s the s
+     * @param x the x
+     * @param y the y
+     * @param width the width
+     * @param height the height
      */
     public void drawCenteredString(Graphics page, String s, int x, int y, int width, int height) {
         // Find the size of string s in the font of the Graphics context "page"
@@ -83,8 +85,7 @@ public class MyPanel extends JPanel {
     /**
      * Draw gradient paint.
      *
-     * @param graphics
-     *                     the graphics
+     * @param graphics the graphics
      */
     public void drawGradientPaint(Graphics2D graphics) {
         Paint paint = new GradientPaint(this.getWidth() / 2, 0, Color.blue.darker().darker(), this.getWidth() / 2,
@@ -96,18 +97,12 @@ public class MyPanel extends JPanel {
     /**
      * Draw button.
      *
-     * @param graphics
-     *                     the graphics
-     * @param text
-     *                     the text
-     * @param x
-     *                     the x
-     * @param y
-     *                     the y
-     * @param width
-     *                     the width
-     * @param height
-     *                     the height
+     * @param graphics the graphics
+     * @param text the text
+     * @param x the x
+     * @param y the y
+     * @param width the width
+     * @param height the height
      */
     public void drawButton(Graphics2D graphics, String text, int x, int y, int width, int height) {
         Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
@@ -129,10 +124,20 @@ public class MyPanel extends JPanel {
         this.drawCenteredString(graphics, text, x, y, width, height);
     }
 
+    /**
+     * Gets the view frame.
+     *
+     * @return the view frame
+     */
     public ViewFrame getViewFrame() {
         return this.viewFrame;
     }
 
+    /**
+     * Sets the view frame.
+     *
+     * @param viewFrame the new view frame
+     */
     public void setViewFrame(ViewFrame viewFrame) {
         this.viewFrame = viewFrame;
     }

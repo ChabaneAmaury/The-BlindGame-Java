@@ -51,8 +51,7 @@ public interface IControllerMain {
     /**
      * Sets the theme.
      *
-     * @param theme
-     *                  the new theme
+     * @param theme the new theme
      */
     void setTheme(IEntity theme);
 
@@ -71,24 +70,21 @@ public interface IControllerMain {
     /**
      * Sets the allowed time.
      *
-     * @param aLLOWED_TIME
-     *                         the new allowed time
+     * @param aLLOWED_TIME the new allowed time
      */
     void setAllowedTime(int aLLOWED_TIME);
 
     /**
      * Removes the type.
      *
-     * @param type
-     *                 the type
+     * @param type the type
      */
     void removeType(String type);
 
     /**
      * Adds the type.
      *
-     * @param type
-     *                 the type
+     * @param type the type
      */
     void addType(String type);
 
@@ -99,8 +95,18 @@ public interface IControllerMain {
      */
     Thread getTimer();
 
+    /**
+     * Gets the not choosen types.
+     *
+     * @return the not choosen types
+     */
     ArrayList<String> getNotChoosenTypes();
 
+    /**
+     * Sets the not choosen types.
+     *
+     * @param notChoosenTypes the new not choosen types
+     */
     void setNotChoosenTypes(ArrayList<String> notChoosenTypes);
 
 }
