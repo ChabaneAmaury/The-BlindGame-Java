@@ -88,9 +88,11 @@ public class Model implements IModel {
     @Override
     public void fillThemesList() {
         this.getThemes().removeAll(this.themes);
-        for (int i = 0; i < this.getFolders().length; i++) {
-            Theme theme = new Theme(this, this.getFolders()[i]);
-            this.getThemes().add(theme);
+        for (File theme : this.getFolders()) {
+            if (theme.isDirectory()) {
+                Theme loadedTheme = new Theme(this, theme);
+                this.getThemes().add(loadedTheme);
+            }
         }
     }
 
