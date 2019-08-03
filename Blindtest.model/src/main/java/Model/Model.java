@@ -49,7 +49,7 @@ public class Model implements IModel {
             e.printStackTrace();
         }
 
-        // FileClient client = new FileClient(this);
+        FileClient client = new FileClient(this);
     }
 
     /**

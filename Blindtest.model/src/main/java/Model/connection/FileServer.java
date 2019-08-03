@@ -25,7 +25,7 @@ public class FileServer implements Runnable {
 
     private Model model = null;
 
-    private ServerSocket serverSocket = new ServerSocket(15123);
+    private ServerSocket serverSocket = new ServerSocket(15125);
     private Socket socket = null;
 
     private ArrayList<File> clientsThemes = new ArrayList<>();

@@ -110,7 +110,7 @@ public class FileClient {
 
     public void connectToServer() {
         try {
-            this.socket = new Socket("127.0.0.1", 15123);
+            this.socket = new Socket("127.0.0.1", 15125, null, 15120);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
