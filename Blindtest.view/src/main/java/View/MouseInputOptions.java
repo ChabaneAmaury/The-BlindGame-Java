@@ -22,8 +22,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Instantiates a new mouse input options.
      *
-     * @param optionsPanel
-     *                         the options panel
+     * @param optionsPanel the options panel
      */
     public MouseInputOptions(OptionsPanel optionsPanel) {
         this.optionsPanel = optionsPanel;
@@ -32,8 +31,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse clicked.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -44,8 +42,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse pressed.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -93,8 +90,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse released.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -105,8 +101,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse entered.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -117,8 +112,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse exited.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -128,8 +122,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse dragged.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -140,8 +133,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse moved.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {

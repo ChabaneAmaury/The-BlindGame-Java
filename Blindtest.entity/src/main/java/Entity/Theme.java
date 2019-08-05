@@ -117,7 +117,7 @@ public class Theme extends Properties implements IEntity {
             this.setInfos(this.getProperty("infos"));
 
             for (String type : this.getModel().getTypes()) {
-                if (this.getProperty("type").toUpperCase().equals(type.toString())) {
+                if (this.getProperty("type").equalsIgnoreCase(type)) {
                     this.setType(type);
                     break;
                 }

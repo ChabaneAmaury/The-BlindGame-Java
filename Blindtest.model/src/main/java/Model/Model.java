@@ -9,10 +9,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+
 import Contract.IEntity;
 import Contract.IModel;
 import Entity.Theme;
+import Model.connection.FileClient;
+import Model.connection.FileServer;
 
 /**
  * The Class Model.
@@ -30,6 +41,9 @@ public class Model implements IModel {
     /** The themes. */
     private ArrayList<IEntity> themes = new ArrayList<>();
 
+    /** The I ps to scan. */
+    private ArrayList<String> IPsToScan = new ArrayList<>();
+
     /**
      * Instantiates a new model.
      */
@@ -37,6 +51,80 @@ public class Model implements IModel {
         this.loadTypes();
         this.loadFolders();
         this.fillThemesList();
+
+        try {
+            Thread server = new Thread(new FileServer(this));
+            server.setDaemon(true);
+            server.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Thread clientSearching = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        Model.this.scanIPsInSubnet();
+                        Thread.sleep(100);
+                        for (String addr : Model.this.getIPsToScan()) {
+                            System.out.println("Trying " + addr);
+                            @SuppressWarnings("unused")
+                            FileClient client = new FileClient(Model.this, addr);
+                        }
+                    }
+                } catch (Exception e) {
+                }
+
+            }
+        };
+        clientSearching.setDaemon(true);
+        clientSearching.start();
+
+    }
+
+    /**
+     * Scan I ps in subnet.
+     */
+    public void scanIPsInSubnet() {
+        this.getIPsToScan().clear();
+        Enumeration<NetworkInterface> nets = null;
+        try {
+            nets = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for (NetworkInterface netint : Collections.list(nets)) {
+            Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+            if (inetAddresses.hasMoreElements()) {
+                for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+                    if ((inetAddress instanceof Inet4Address) && !inetAddress.toString()
+                            .substring(1, inetAddress.toString().lastIndexOf('.') + 1).equals("127.0.0.")) {
+                        for (int i = 1; i <= 254; i++) {
+                            String ip = inetAddress.toString().substring(1, inetAddress.toString().lastIndexOf('.') + 1)
+                                    + i;
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        if (InetAddress.getByName(ip).isReachable(100)
+                                                && !ip.equalsIgnoreCase(inetAddress.toString().substring(1))) {
+                                            Socket s = new Socket();
+                                            s.connect(new InetSocketAddress(ip, 15125), 100);
+                                            System.out.println("Server is listening on port " + 15125 + " of " + ip);
+                                            s.close();
+                                            Model.this.getIPsToScan().add(ip);
+                                        }
+                                    } catch (IOException e) {
+                                    }
+                                }
+                            }.start();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -75,9 +163,11 @@ public class Model implements IModel {
     @Override
     public void fillThemesList() {
         this.getThemes().removeAll(this.themes);
-        for (int i = 0; i < this.getFolders().length; i++) {
-            Theme theme = new Theme(this, this.getFolders()[i]);
-            this.getThemes().add(theme);
+        for (File theme : this.getFolders()) {
+            if (theme.isDirectory()) {
+                Theme loadedTheme = new Theme(this, theme);
+                this.getThemes().add(loadedTheme);
+            }
         }
     }
 
@@ -141,5 +231,23 @@ public class Model implements IModel {
      */
     public void setTypes(ArrayList<String> types) {
         this.types = types;
+    }
+
+    /**
+     * Gets the i ps to scan.
+     *
+     * @return the i ps to scan
+     */
+    public ArrayList<String> getIPsToScan() {
+        return this.IPsToScan;
+    }
+
+    /**
+     * Sets the i ps to scan.
+     *
+     * @param iPsToScan the new i ps to scan
+     */
+    public void setIPsToScan(ArrayList<String> iPsToScan) {
+        this.IPsToScan = iPsToScan;
     }
 }
