@@ -105,6 +105,7 @@ public class ViewFrame extends JFrame implements Observer {
      *                     the time code
      */
     public void playMusic(String filePath, int timeCode) {
+        MyPanel panel = (MyPanel) this.getContentPane();
         this.startLoadingScreen();
         if (filePath.toLowerCase().endsWith(".mp3")) {
 
@@ -145,7 +146,7 @@ public class ViewFrame extends JFrame implements Observer {
             float dB = (float) ((Math.log(gain) / Math.log(10.0)) * 20.0);
             gainControl.setValue(dB);
             this.getClip().setMicrosecondPosition(timeCode * 1000000);
-            this.stopLoadingScreen(new ViewPanel(this));
+            this.stopLoadingScreen(panel);
             this.getClip().start();
         } catch (LineUnavailableException | IOException e) {
             // TODO Auto-generated catch block
@@ -255,7 +256,6 @@ public class ViewFrame extends JFrame implements Observer {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
         this.setUndecorated(true); // truly fullscreen
         this.setContentPane(new MenuPanel(this));
-        // this.setContentPane(new ThemePropPanel(this, 0));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
