@@ -27,6 +27,8 @@ public class FileClient {
     private Socket socket = null;
     private ArrayList<File> foldersToReceive = new ArrayList<>();
 
+    private String ip = null;
+
     /**
      * Size of the buffer to read/write data
      */
@@ -40,7 +42,7 @@ public class FileClient {
      * @param destDirectory
      * @throws IOException
      */
-    public void unzip(String zipFilePath, String destDirectory) throws IOException {
+    private void unzip(String zipFilePath, String destDirectory) throws IOException {
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
             destDir.mkdir();
@@ -85,9 +87,18 @@ public class FileClient {
         bos.close();
     }
 
-    public FileClient(Model model) {
+    public FileClient(Model model, String ip) {
+        this.setIp(ip);
         this.setModel(model);
-        this.connectToServer();
+        try {
+            this.startClient();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startClient() {
+        this.connectToServer(this.getIp());
         this.sendFolders();
         this.setFoldersToReceive(this.getStreamedFoldersToReceive());
 
@@ -96,9 +107,16 @@ public class FileClient {
             System.out.println(folderToReceive.getName());
             this.receiveTheme();
         }
+
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public void sendFolders() {
+    private void sendFolders() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
             os.writeObject(this.getModel().getFolders());
@@ -108,17 +126,16 @@ public class FileClient {
         }
     }
 
-    public void connectToServer() {
+    private void connectToServer(String ip) {
         try {
-            this.socket = new Socket("127.0.0.1", 15125, null, 15120);
+            this.socket = new Socket(ip, 15125, null, 15120);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     @SuppressWarnings("unchecked")
-    public ArrayList<File> getStreamedFoldersToReceive() {
+    private ArrayList<File> getStreamedFoldersToReceive() {
         ArrayList<File> folders = null;
         try {
             ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
@@ -130,7 +147,7 @@ public class FileClient {
         return folders;
     }
 
-    public void receiveTheme() {
+    private void receiveTheme() {
         try {
             String zipName = "files\\theme.zip";
             FileOutputStream fos = new FileOutputStream(zipName);
@@ -172,5 +189,13 @@ public class FileClient {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    public String getIp() {
+        return this.ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

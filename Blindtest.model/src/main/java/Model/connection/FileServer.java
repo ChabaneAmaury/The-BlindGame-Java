@@ -25,7 +25,7 @@ public class FileServer implements Runnable {
 
     private Model model = null;
 
-    private ServerSocket serverSocket = new ServerSocket(15125);
+    private ServerSocket serverSocket = null;
     private Socket socket = null;
 
     private ArrayList<File> clientsThemes = new ArrayList<>();
@@ -77,6 +77,16 @@ public class FileServer implements Runnable {
         for (File folder : this.getFoldersToSend()) {
             this.sendTheme(folder.getAbsolutePath());
         }
+
+        try {
+            this.socket.close();
+            this.serverSocket.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("Server stopped");
+        this.startServer();
     }
 
     public void sendFoldersToSend() {
@@ -106,7 +116,9 @@ public class FileServer implements Runnable {
 
     public void waitForClient() {
         try {
+            this.serverSocket = new ServerSocket(15125);
             this.socket = this.serverSocket.accept();
+            this.socket.setSoTimeout(100);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
