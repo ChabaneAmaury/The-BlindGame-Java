@@ -21,17 +21,36 @@ import java.util.zip.ZipOutputStream;
 
 import Model.Model;
 
+/**
+ * The Class FileServer.
+ *
+ * @author Amaury Chabane
+ */
 public class FileServer implements Runnable {
 
+    /** The model. */
     private Model model = null;
 
+    /** The server socket. */
     private ServerSocket serverSocket = null;
+    
+    /** The socket. */
     private Socket socket = null;
 
+    /** The clients themes. */
     private ArrayList<File> clientsThemes = new ArrayList<>();
 
+    /** The folders to send. */
     private ArrayList<File> foldersToSend = new ArrayList<>();
 
+    /**
+     * Zip file.
+     *
+     * @param fileToZip the file to zip
+     * @param fileName the file name
+     * @param zipOut the zip out
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
         if (fileToZip.isHidden()) {
             return;
@@ -61,10 +80,19 @@ public class FileServer implements Runnable {
         fis.close();
     }
 
+    /**
+     * Instantiates a new file server.
+     *
+     * @param model the model
+     * @throws Exception the exception
+     */
     public FileServer(Model model) throws Exception {
         this.setModel(model);
     }
 
+    /**
+     * Start server.
+     */
     public void startServer() {
         System.out.println("Server is running...");
         this.waitForClient();
@@ -89,6 +117,9 @@ public class FileServer implements Runnable {
         this.startServer();
     }
 
+    /**
+     * Send folders to send.
+     */
     public void sendFoldersToSend() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
@@ -99,6 +130,9 @@ public class FileServer implements Runnable {
         }
     }
 
+    /**
+     * Find folders to send.
+     */
     public void findFoldersToSend() {
         for (File folder : this.getModel().getFolders()) {
             boolean checked = false;
@@ -114,6 +148,9 @@ public class FileServer implements Runnable {
         }
     }
 
+    /**
+     * Wait for client.
+     */
     public void waitForClient() {
         try {
             this.serverSocket = new ServerSocket(15125);
@@ -125,6 +162,11 @@ public class FileServer implements Runnable {
         }
     }
 
+    /**
+     * Gets the streamed clients themes.
+     *
+     * @return the streamed clients themes
+     */
     public ArrayList<File> getStreamedClientsThemes() {
         ArrayList<File> clientsThemes = null;
         try {
@@ -137,6 +179,11 @@ public class FileServer implements Runnable {
         return clientsThemes;
     }
 
+    /**
+     * Send theme.
+     *
+     * @param themeFolder the theme folder
+     */
     public void sendTheme(String themeFolder) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -159,30 +206,63 @@ public class FileServer implements Runnable {
 
     }
 
+    /**
+     * Gets the model.
+     *
+     * @return the model
+     */
     public Model getModel() {
         return this.model;
     }
 
+    /**
+     * Sets the model.
+     *
+     * @param model the new model
+     */
     public void setModel(Model model) {
         this.model = model;
     }
 
+    /**
+     * Sets the clients themes.
+     *
+     * @param clientsThemes the new clients themes
+     */
     public void setClientsThemes(ArrayList<File> clientsThemes) {
         this.clientsThemes = clientsThemes;
     }
 
+    /**
+     * Gets the clients themes.
+     *
+     * @return the clients themes
+     */
     public ArrayList<File> getClientsThemes() {
         return this.clientsThemes;
     }
 
+    /**
+     * Gets the folders to send.
+     *
+     * @return the folders to send
+     */
     public ArrayList<File> getFoldersToSend() {
         return this.foldersToSend;
     }
 
+    /**
+     * Sets the folders to send.
+     *
+     * @param foldersToSend the new folders to send
+     */
     public void setFoldersToSend(ArrayList<File> foldersToSend) {
         this.foldersToSend = foldersToSend;
     }
 
+    /**
+     * Run.
+     */
     @Override
     public void run() {
         this.startServer();

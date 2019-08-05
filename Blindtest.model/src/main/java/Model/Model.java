@@ -41,6 +41,7 @@ public class Model implements IModel {
     /** The themes. */
     private ArrayList<IEntity> themes = new ArrayList<>();
 
+    /** The I ps to scan. */
     private ArrayList<String> IPsToScan = new ArrayList<>();
 
     /**
@@ -82,6 +83,9 @@ public class Model implements IModel {
 
     }
 
+    /**
+     * Scan I ps in subnet.
+     */
     public void scanIPsInSubnet() {
         this.getIPsToScan().clear();
         Enumeration<NetworkInterface> nets = null;
@@ -193,8 +197,7 @@ public class Model implements IModel {
     /**
      * Sets the folders.
      *
-     * @param folders
-     *                    the new folders
+     * @param folders the new folders
      */
     @Override
     public void setFolders(File[] folders) {
@@ -224,17 +227,26 @@ public class Model implements IModel {
     /**
      * Sets the types.
      *
-     * @param types
-     *                  the new types
+     * @param types the new types
      */
     public void setTypes(ArrayList<String> types) {
         this.types = types;
     }
 
+    /**
+     * Gets the i ps to scan.
+     *
+     * @return the i ps to scan
+     */
     public ArrayList<String> getIPsToScan() {
         return this.IPsToScan;
     }
 
+    /**
+     * Sets the i ps to scan.
+     *
+     * @param iPsToScan the new i ps to scan
+     */
     public void setIPsToScan(ArrayList<String> iPsToScan) {
         this.IPsToScan = iPsToScan;
     }

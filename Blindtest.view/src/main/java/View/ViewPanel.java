@@ -27,8 +27,7 @@ class ViewPanel extends MyPanel {
     /**
      * Instantiates a new view panel.
      *
-     * @param viewFrame
-     *                      the view frame
+     * @param viewFrame the view frame
      */
     public ViewPanel(final ViewFrame viewFrame) {
         super(viewFrame);
@@ -40,10 +39,8 @@ class ViewPanel extends MyPanel {
     /**
      * Draw theme.
      *
-     * @param graphics
-     *                     the graphics
-     * @param theme
-     *                     the theme
+     * @param graphics the graphics
+     * @param theme the theme
      */
     public void drawTheme(Graphics2D graphics, IEntity theme) {
         int metaYStart = (int) (this.getWidth() / 51.2);
@@ -86,8 +83,7 @@ class ViewPanel extends MyPanel {
     /**
      * Draw counter.
      *
-     * @param graphics
-     *                     the graphics
+     * @param graphics the graphics
      */
     public void drawCounter(Graphics2D graphics) {
         Font font = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 7.2));
@@ -100,8 +96,7 @@ class ViewPanel extends MyPanel {
     /**
      * Paint component.
      *
-     * @param g
-     *              the g
+     * @param g the g
      */
     @Override
     protected void paintComponent(final Graphics g) {

@@ -20,27 +20,34 @@ import java.util.zip.ZipInputStream;
 
 import Model.Model;
 
+/**
+ * The Class FileClient.
+ *
+ * @author Amaury Chabane
+ */
 public class FileClient {
 
+    /** The model. */
     private Model model = null;
 
+    /** The socket. */
     private Socket socket = null;
+    
+    /** The folders to receive. */
     private ArrayList<File> foldersToReceive = new ArrayList<>();
 
+    /** The ip. */
     private String ip = null;
 
-    /**
-     * Size of the buffer to read/write data
-     */
+    /** The Constant BUFFER_SIZE. */
     private static final int BUFFER_SIZE = 4096;
 
     /**
-     * Extracts a zip file specified by the zipFilePath to a directory specified by
-     * destDirectory (will be created if does not exists)
+     * Unzip.
      *
-     * @param zipFilePath
-     * @param destDirectory
-     * @throws IOException
+     * @param zipFilePath the zip file path
+     * @param destDirectory the dest directory
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     private void unzip(String zipFilePath, String destDirectory) throws IOException {
         File destDir = new File(destDirectory);
@@ -67,11 +74,11 @@ public class FileClient {
     }
 
     /**
-     * Extracts a zip entry (file entry)
+     * Extract file.
      *
-     * @param zipIn
-     * @param filePath
-     * @throws IOException
+     * @param zipIn the zip in
+     * @param filePath the file path
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         File yourFile = new File(filePath);
@@ -87,6 +94,12 @@ public class FileClient {
         bos.close();
     }
 
+    /**
+     * Instantiates a new file client.
+     *
+     * @param model the model
+     * @param ip the ip
+     */
     public FileClient(Model model, String ip) {
         this.setIp(ip);
         this.setModel(model);
@@ -97,6 +110,9 @@ public class FileClient {
         }
     }
 
+    /**
+     * Start client.
+     */
     public void startClient() {
         this.connectToServer(this.getIp());
         this.sendFolders();
@@ -116,6 +132,9 @@ public class FileClient {
         }
     }
 
+    /**
+     * Send folders.
+     */
     private void sendFolders() {
         try {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
@@ -126,6 +145,11 @@ public class FileClient {
         }
     }
 
+    /**
+     * Connect to server.
+     *
+     * @param ip the ip
+     */
     private void connectToServer(String ip) {
         try {
             this.socket = new Socket(ip, 15125, null, 15120);
@@ -134,6 +158,11 @@ public class FileClient {
         }
     }
 
+    /**
+     * Gets the streamed folders to receive.
+     *
+     * @return the streamed folders to receive
+     */
     @SuppressWarnings("unchecked")
     private ArrayList<File> getStreamedFoldersToReceive() {
         ArrayList<File> folders = null;
@@ -147,6 +176,9 @@ public class FileClient {
         return folders;
     }
 
+    /**
+     * Receive theme.
+     */
     private void receiveTheme() {
         try {
             String zipName = "files\\theme.zip";
@@ -175,26 +207,56 @@ public class FileClient {
 
     }
 
+    /**
+     * Gets the folders to receive.
+     *
+     * @return the folders to receive
+     */
     public ArrayList<File> getFoldersToReceive() {
         return this.foldersToReceive;
     }
 
+    /**
+     * Sets the folders to receive.
+     *
+     * @param foldersToReceive the new folders to receive
+     */
     public void setFoldersToReceive(ArrayList<File> foldersToReceive) {
         this.foldersToReceive = foldersToReceive;
     }
 
+    /**
+     * Gets the model.
+     *
+     * @return the model
+     */
     public Model getModel() {
         return this.model;
     }
 
+    /**
+     * Sets the model.
+     *
+     * @param model the new model
+     */
     public void setModel(Model model) {
         this.model = model;
     }
 
+    /**
+     * Gets the ip.
+     *
+     * @return the ip
+     */
     public String getIp() {
         return this.ip;
     }
 
+    /**
+     * Sets the ip.
+     *
+     * @param ip the new ip
+     */
     public void setIp(String ip) {
         this.ip = ip;
     }
