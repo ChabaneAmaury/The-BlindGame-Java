@@ -24,6 +24,9 @@ class ViewPanel extends MyPanel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -998294702363713521L;
 
+    /** The is paused. */
+    private boolean isPaused = false;
+
     /**
      * Instantiates a new view panel.
      *
@@ -43,16 +46,16 @@ class ViewPanel extends MyPanel {
      * @param theme the theme
      */
     public void drawTheme(Graphics2D graphics, IEntity theme) {
-        int metaYStart = (int) (this.getWidth() / 51.2);
+        int metaXStart = (int) (this.getWidth() / 51.2);
         int titleHeight = (int) (this.getHeight() / 28.8) + graphics.getFont().getSize();
         int composerHeight = (int) (this.getHeight() / 14.4) + titleHeight + graphics.getFont().getSize();
         int dateHeight = (int) (this.getHeight() / 14.4) + composerHeight + graphics.getFont().getSize();
         Font font = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
         graphics.setFont(font);
         graphics.setColor(Color.WHITE);
-        graphics.drawString("Title : " + theme.getTitle(), metaYStart, titleHeight);
-        graphics.drawString("Composer : " + theme.getComposer(), metaYStart, composerHeight);
-        graphics.drawString("Release date : " + theme.getReleaseDate(), metaYStart, dateHeight);
+        graphics.drawString("Title : " + theme.getTitle(), metaXStart, titleHeight);
+        graphics.drawString("Composer : " + theme.getComposer(), metaXStart, composerHeight);
+        graphics.drawString("Release date : " + theme.getReleaseDate(), metaXStart, dateHeight);
 
         List<String> strings = StringUtils.wrap(theme.getInfos(), graphics.getFontMetrics(), (int) (this.getWidth()
                 - (this.getWidth() / 17.1) - ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75)));
@@ -86,9 +89,14 @@ class ViewPanel extends MyPanel {
      * @param graphics the graphics
      */
     public void drawCounter(Graphics2D graphics) {
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 20.57)));
+        graphics.drawString(
+                (this.getViewFrame().getController().getThemeIndex() + 1) + "/"
+                        + this.getViewFrame().getController().getTmpList().size(),
+                (int) (this.getWidth() / 51.2), (int) (this.getWidth() / 51.2) + graphics.getFont().getSize());
         Font font = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 7.2));
         graphics.setFont(font);
-        graphics.setColor(Color.WHITE);
         String time = Integer.toString(this.getViewFrame().getController().getTimeLeft());
         this.drawCenteredString(graphics, time, 0, 0, this.getWidth(), this.getHeight());
     }
@@ -106,6 +114,7 @@ class ViewPanel extends MyPanel {
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
         int menuX = (int) (this.getWidth() / 51.2) + quitX + btnW;
+        int pauseX = (int) (this.getWidth() / 51.2) + menuX + btnW;
 
         IEntity theme = this.getViewFrame().getController().getTheme();
         Graphics2D graphics = (Graphics2D) g;
@@ -113,10 +122,33 @@ class ViewPanel extends MyPanel {
         this.drawGradientPaint(graphics);
         if (this.getViewFrame().getController().getTimeLeft() < 0) {
             this.drawTheme(graphics, theme);
+            if (!this.isPaused()) {
+                this.drawButton(graphics, "Pause", pauseX, btnY, btnW, btnH);
+            } else {
+                this.drawButton(graphics, "Continue", pauseX, btnY, btnW, btnH);
+            }
         } else {
             this.drawCounter(graphics);
         }
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
+    }
+
+    /**
+     * Checks if is paused.
+     *
+     * @return true, if is paused
+     */
+    public boolean isPaused() {
+        return this.isPaused;
+    }
+
+    /**
+     * Sets the paused.
+     *
+     * @param isPaused the new paused
+     */
+    public void setPaused(boolean isPaused) {
+        this.isPaused = isPaused;
     }
 }
