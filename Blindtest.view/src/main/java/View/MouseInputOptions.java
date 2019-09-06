@@ -9,6 +9,8 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JCheckBox;
 
+import Contract.Difficulties;
+
 /**
  * The Class MouseInputOptions.
  *
@@ -57,17 +59,95 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
         int btnW = this.getOptionsPanel().getWidth() / 10;
         int btnH = this.getOptionsPanel().getHeight() / 12;
         int quitX = (int) (this.getOptionsPanel().getWidth() / 51.2);
+        int mediumX = (this.getOptionsPanel().getWidth() / 2) - (btnW / 2);
+        int easyX = (int) (mediumX - (this.getOptionsPanel().getWidth() / 51.2) - btnW);
+        int hardX = (int) (mediumX + btnW + (this.getOptionsPanel().getWidth() / 51.2));
+        int nextX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 2)
+                - (this.getOptionsPanel().getWidth() / 10) - btnW) + (btnW / 2);
+        int previousX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 3)
+                - (this.getOptionsPanel().getWidth() / 10) - btnW);
 
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= quitX) && (mx <= (quitX + btnW))) {
                 System.exit(0);
+            } else if ((mx >= easyX) && (mx <= (easyX + btnW))) {
+                this.getOptionsPanel().getViewFrame().getController().setAllowedTime(Difficulties.EASY);
+                this.getOptionsPanel().setDifficulty("Easy");
+                this.getOptionsPanel().repaint();
+            } else if ((mx >= mediumX) && (mx <= (mediumX + btnW))) {
+                this.getOptionsPanel().getViewFrame().getController().setAllowedTime(Difficulties.MEDIUM);
+                this.getOptionsPanel().setDifficulty("Medium");
+                this.getOptionsPanel().repaint();
+            } else if ((mx >= hardX) && (mx <= (hardX + btnW))) {
+                this.getOptionsPanel().getViewFrame().getController().setAllowedTime(Difficulties.HARD);
+                this.getOptionsPanel().setDifficulty("Hard");
+                this.getOptionsPanel().repaint();
+            } else if ((mx >= nextX) && (mx <= (nextX + btnW))) {
+                if (this.getOptionsPanel().getViewFrame().getController().getModel().getTypes()
+                        .size() > ((this.getOptionsPanel().getShowIndex() + 16))) {
+                    for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
+                        if (checkboxe.isSelected()) {
+                            this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
+                        } else {
+                            boolean checked = false;
+                            System.out.println(
+                                    this.getOptionsPanel().getViewFrame().getController().getNotChoosenTypes());
+                            for (String type : this.getOptionsPanel().getViewFrame().getController()
+                                    .getNotChoosenTypes()) {
+                                if (type.equalsIgnoreCase(checkboxe.getText())) {
+                                    checked = true;
+                                    break;
+                                }
+                            }
+                            if (!checked) {
+                                this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                            }
+                        }
+                    }
+                    this.getOptionsPanel().removeCheckboxes();
+                    this.getOptionsPanel().setShowIndex(this.getOptionsPanel().getShowIndex() + 16);
+                    this.getOptionsPanel().createCheckboxes();
+                    this.getOptionsPanel().repaint();
+                }
+            } else if ((mx >= previousX) && (mx <= (previousX + btnW))) {
+                if (this.getOptionsPanel().getShowIndex() > 0) {
+                    for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
+                        if (checkboxe.isSelected()) {
+                            this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
+                        } else {
+                            boolean checked = false;
+                            for (String type : this.getOptionsPanel().getViewFrame().getController()
+                                    .getNotChoosenTypes()) {
+                                if (type.equalsIgnoreCase(checkboxe.getText())) {
+                                    checked = true;
+                                    break;
+                                }
+                            }
+                            if (!checked) {
+                                this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                            }
+                        }
+                    }
+                    this.getOptionsPanel().removeCheckboxes();
+                    this.getOptionsPanel().setShowIndex(this.getOptionsPanel().getShowIndex() - 16);
+                    this.getOptionsPanel().createCheckboxes();
+                    this.getOptionsPanel().repaint();
+                }
             } else if ((mx >= backX) && (mx <= (backX + btnW))) {
-                this.getOptionsPanel().getViewFrame().getController().getNotChoosenTypes().clear();
                 for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
                     if (checkboxe.isSelected()) {
                         this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
                     } else {
-                        this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                        boolean checked = false;
+                        for (String type : this.getOptionsPanel().getViewFrame().getController().getNotChoosenTypes()) {
+                            if (type.equalsIgnoreCase(checkboxe.getText())) {
+                                checked = true;
+                                break;
+                            }
+                        }
+                        if (!checked) {
+                            this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                        }
                     }
                 }
                 this.getOptionsPanel().getViewFrame()
