@@ -107,16 +107,12 @@ public class MenuPanel extends MyPanel {
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
-        int optionsX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - (this.getWidth() / 51.2) - btnW);
-        int nextX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 2) - (btnW * 2)) + (btnW / 2);
-        int previousX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 3) - (btnW * 2));
-        int refreshX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 4) - (btnW * 3));
-        int quitX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 5) - (btnW * 4));
+        int optionsX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW);
+        int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - (btnW * 2))
+                + (btnW / 2);
+        int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 4) - (this.getWidth() / 10) - (btnW * 2));
+        int refreshX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 5) - (this.getWidth() / 10) - (btnW * 3));
+        int quitX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 6) - (this.getWidth() / 10) - (btnW * 4));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);

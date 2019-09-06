@@ -13,6 +13,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 import Contract.IEntity;
 import Contract.IModel;
@@ -222,7 +224,7 @@ public class Theme extends Properties implements IEntity {
             }
         });
         if (files.length > 0) {
-            return files[0].getAbsolutePath();
+            return files[new Random().nextInt(files.length)].getAbsolutePath();
         } else {
             return "";
         }
