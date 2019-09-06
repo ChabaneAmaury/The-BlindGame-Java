@@ -33,7 +33,7 @@ public class FileServer implements Runnable {
 
     /** The server socket. */
     private ServerSocket serverSocket = null;
-    
+
     /** The socket. */
     private Socket socket = null;
 
@@ -96,14 +96,22 @@ public class FileServer implements Runnable {
     public void startServer() {
         System.out.println("Server is running...");
         this.waitForClient();
-        this.setClientsThemes(this.getStreamedClientsThemes());
-        System.out.println(this.getClientsThemes());
-        this.findFoldersToSend();
 
-        this.sendFoldersToSend();
+        try {
+            this.sendArrayList(this.getModel().getTypes());
 
-        for (File folder : this.getFoldersToSend()) {
-            this.sendTheme(folder.getAbsolutePath());
+            this.setClientsThemes(this.getStreamedClientsThemes());
+            this.findFoldersToSend();
+            System.out.println(this.getFoldersToSend());
+
+            this.sendArrayList(this.getFoldersToSend());
+
+            if (this.getFoldersToSend().size() > 0) {
+                for (File folder : this.getFoldersToSend()) {
+                    this.sendTheme(folder.getAbsolutePath());
+                }
+            }
+        } catch (NullPointerException e1) {
         }
 
         try {
@@ -118,12 +126,14 @@ public class FileServer implements Runnable {
     }
 
     /**
-     * Send folders to send.
+     * Send array list.
+     *
+     * @param arrayList the array list
      */
-    public void sendFoldersToSend() {
+    public void sendArrayList(ArrayList<?> arrayList) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
-            os.writeObject(this.getFoldersToSend());
+            os.writeObject(arrayList);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -134,6 +144,7 @@ public class FileServer implements Runnable {
      * Find folders to send.
      */
     public void findFoldersToSend() {
+        this.getFoldersToSend().clear();
         for (File folder : this.getModel().getFolders()) {
             boolean checked = false;
             for (File clientsFolder : this.getClientsThemes()) {
@@ -169,13 +180,20 @@ public class FileServer implements Runnable {
      */
     public ArrayList<File> getStreamedClientsThemes() {
         ArrayList<File> clientsThemes = null;
+
+        ObjectInputStream is = null;
         try {
-            ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
+            is = new ObjectInputStream(this.socket.getInputStream());
+        } catch (IOException e2) {
+        }
+        try {
             clientsThemes = new ArrayList<>(Arrays.asList((File[]) is.readObject()));
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (IOException e) {
         }
+
         return clientsThemes;
     }
 

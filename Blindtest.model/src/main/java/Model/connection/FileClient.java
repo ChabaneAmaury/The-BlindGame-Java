@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -32,9 +35,12 @@ public class FileClient {
 
     /** The socket. */
     private Socket socket = null;
-    
+
     /** The folders to receive. */
     private ArrayList<File> foldersToReceive = new ArrayList<>();
+
+    /** The server types. */
+    private ArrayList<String> serverTypes = new ArrayList<>();
 
     /** The ip. */
     private String ip = null;
@@ -114,18 +120,64 @@ public class FileClient {
      * Start client.
      */
     public void startClient() {
-        this.connectToServer(this.getIp());
-        this.sendFolders();
-        this.setFoldersToReceive(this.getStreamedFoldersToReceive());
+        try {
+            this.connectToServer(this.getIp());
 
-        for (@SuppressWarnings("unused")
-        File folderToReceive : this.getFoldersToReceive()) {
-            System.out.println(folderToReceive.getName());
-            this.receiveTheme();
+            this.setServerTypes(this.getStreamedTypes());
+            this.addMissingTypes();
+            this.getModel().loadTypes();
+
+            this.sendFolders();
+            this.setFoldersToReceive(this.getStreamedFoldersToReceive());
+
+            if (this.getFoldersToReceive().size() > 0) {
+                for (File folderToReceive : this.getFoldersToReceive()) {
+                    System.out.println(folderToReceive.getName());
+                    this.receiveTheme();
+                    this.getModel().fillThemesList();
+                }
+
+            }
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
 
         try {
             this.socket.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Adds the missing types.
+     */
+    public void addMissingTypes() {
+        for (String serverType : this.getServerTypes()) {
+            boolean checked = false;
+            for (String type : this.getModel().getTypes()) {
+                if (serverType.equalsIgnoreCase(type)) {
+                    checked = true;
+                    break;
+                }
+            }
+            if (!checked) {
+                this.appendNewLineToTypes(serverType);
+            }
+        }
+    }
+
+    /**
+     * Append new line to types.
+     *
+     * @param value the value
+     */
+    public void appendNewLineToTypes(String value) {
+
+        try {
+            Files.write(Paths.get("bin\\types.txt"), ("\n" + value).getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -177,11 +229,29 @@ public class FileClient {
     }
 
     /**
+     * Gets the streamed types.
+     *
+     * @return the streamed types
+     */
+    @SuppressWarnings("unchecked")
+    private ArrayList<String> getStreamedTypes() {
+        ArrayList<String> folders = null;
+        try {
+            ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
+            folders = (ArrayList<String>) is.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return folders;
+    }
+
+    /**
      * Receive theme.
      */
     private void receiveTheme() {
+        String zipName = "files\\theme.zip";
         try {
-            String zipName = "files\\theme.zip";
             FileOutputStream fos = new FileOutputStream(zipName);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
 
@@ -193,14 +263,19 @@ public class FileClient {
             System.out.println(destDir);
             this.unzip(zipName, destDir);
 
+        } catch (IOException | ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try {
             File file = new File(zipName);
             if (file.delete()) {
                 System.out.println("File deleted successfully");
             } else {
                 System.out.println("Failed to delete the file");
             }
-
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -259,5 +334,23 @@ public class FileClient {
      */
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    /**
+     * Gets the server types.
+     *
+     * @return the server types
+     */
+    public ArrayList<String> getServerTypes() {
+        return this.serverTypes;
+    }
+
+    /**
+     * Sets the server types.
+     *
+     * @param serverTypes the new server types
+     */
+    public void setServerTypes(ArrayList<String> serverTypes) {
+        this.serverTypes = serverTypes;
     }
 }
