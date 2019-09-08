@@ -20,8 +20,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Instantiates a new mouse input menu.
      *
-     * @param menuPanel2
-     *                       the menu panel 2
+     * @param menuPanel2 the menu panel 2
      */
     public MouseInputMenu(MenuPanel menuPanel2) {
         this.menuPanel = menuPanel2;
@@ -30,8 +29,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse clicked.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -42,8 +40,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse pressed.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -146,8 +143,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse released.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -158,8 +154,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse entered.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -170,8 +165,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse exited.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -181,8 +175,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse dragged.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -192,8 +185,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse moved.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {

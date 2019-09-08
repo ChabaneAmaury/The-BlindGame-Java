@@ -119,6 +119,7 @@ public class ThemePropPanel extends MyPanel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -359666814951181068L;
 
+    /** The audio input stream. */
     private AudioInputStream audioInputStream = null;
 
     /**
@@ -398,10 +399,21 @@ public class ThemePropPanel extends MyPanel {
         this.infosField = infosField;
     }
 
+    /**
+     * Gets the audio input stream.
+     *
+     * @return the audio input stream
+     */
     public AudioInputStream getAudioInputStream() {
         return this.audioInputStream;
     }
 
+    /**
+     * Sets the audio input stream.
+     *
+     * @param audioInputStream
+     *                             the new audio input stream
+     */
     public void setAudioInputStream(AudioInputStream audioInputStream) {
         this.audioInputStream = audioInputStream;
     }

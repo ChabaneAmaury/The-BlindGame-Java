@@ -80,10 +80,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Instantiates a new theme.
      *
-     * @param model
-     *                   the model
-     * @param folder
-     *                   the folder
+     * @param model the model
+     * @param folder the folder
      */
     public Theme(IModel model, File folder) {
         this.setModel(model);
@@ -138,6 +136,12 @@ public class Theme extends Properties implements IEntity {
         }
     }
 
+    /**
+     * Load image.
+     *
+     * @param path the path
+     * @return the image
+     */
     public Image loadImage(String path) {
         Image img = null;
         try {
@@ -149,6 +153,12 @@ public class Theme extends Properties implements IEntity {
         return img;
     }
 
+    /**
+     * Load resized image.
+     *
+     * @param img the img
+     * @return the image
+     */
     public Image loadResizedImage(Image img) {
         int rectW = 1980 / 11;
         int rectH = (rectW * 160) / 120;
@@ -158,10 +168,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the property value.
      *
-     * @param key
-     *                  the key
-     * @param value
-     *                  the value
+     * @param key the key
+     * @param value the value
      */
     @Override
     public void setPropertyValue(String key, String value) {
@@ -195,10 +203,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Find file by extension.
      *
-     * @param folder
-     *                       the folder
-     * @param extensions
-     *                       the extensions
+     * @param folder the folder
+     * @param extensions the extensions
      * @return the string
      */
     public String FindFileByExtension(File folder, String[] extensions) {
@@ -234,8 +240,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the composer.
      *
-     * @param composer
-     *                     the new composer
+     * @param composer the new composer
      */
     @Override
     public void setComposer(String composer) {
@@ -255,8 +260,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the file.
      *
-     * @param file
-     *                 the new file
+     * @param file the new file
      */
     public void setFile(String file) {
         this.file = file;
@@ -275,8 +279,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the cover.
      *
-     * @param cover
-     *                  the new cover
+     * @param cover the new cover
      */
     public void setCover(String cover) {
         this.cover = cover;
@@ -295,8 +298,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the type.
      *
-     * @param type
-     *                 the new type
+     * @param type the new type
      */
     @Override
     public void setType(String type) {
@@ -316,8 +318,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the timecode.
      *
-     * @param timecode
-     *                     the new timecode
+     * @param timecode the new timecode
      */
     @Override
     public void setTimecode(int timecode) {
@@ -337,8 +338,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the title.
      *
-     * @param title
-     *                  the new title
+     * @param title the new title
      */
     @Override
     public void setTitle(String title) {
@@ -357,8 +357,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the file extensions.
      *
-     * @param fileExtensions
-     *                           the new file extensions
+     * @param fileExtensions the new file extensions
      */
     public void setFileExtensions(String[] fileExtensions) {
         this.fileExtensions = fileExtensions;
@@ -376,8 +375,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the cover extensions.
      *
-     * @param coverExtensions
-     *                            the new cover extensions
+     * @param coverExtensions the new cover extensions
      */
     public void setCoverExtensions(String[] coverExtensions) {
         this.coverExtensions = coverExtensions;
@@ -396,8 +394,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the release date.
      *
-     * @param releaseDate
-     *                        the new release date
+     * @param releaseDate the new release date
      */
     @Override
     public void setReleaseDate(String releaseDate) {
@@ -417,8 +414,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the infos.
      *
-     * @param infos
-     *                  the new infos
+     * @param infos the new infos
      */
     @Override
     public void setInfos(String infos) {
@@ -438,8 +434,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the checks for error.
      *
-     * @param hasError
-     *                     the new checks for error
+     * @param hasError the new checks for error
      */
     @Override
     public void setHasError(boolean hasError) {
@@ -459,8 +454,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the cover image.
      *
-     * @param coverImage
-     *                       the new cover image
+     * @param coverImage the new cover image
      */
     @Override
     public void setCoverImage(Image coverImage) {
@@ -480,8 +474,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the resized cover image.
      *
-     * @param resizedCoverImage
-     *                              the new resized cover image
+     * @param resizedCoverImage the new resized cover image
      */
     @Override
     public void setResizedCoverImage(Image resizedCoverImage) {
@@ -500,8 +493,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the model.
      *
-     * @param model
-     *                  the new model
+     * @param model the new model
      */
     public void setModel(IModel model) {
         this.model = model;
@@ -519,8 +511,7 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the folder.
      *
-     * @param folder2
-     *                    the new folder
+     * @param folder2 the new folder
      */
     public void setFolder(File folder2) {
         this.folder = folder2;
