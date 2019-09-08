@@ -51,9 +51,12 @@ public class FileClient {
     /**
      * Unzip.
      *
-     * @param zipFilePath the zip file path
-     * @param destDirectory the dest directory
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @param zipFilePath
+     *                          the zip file path
+     * @param destDirectory
+     *                          the dest directory
+     * @throws IOException
+     *                         Signals that an I/O exception has occurred.
      */
     private void unzip(String zipFilePath, String destDirectory) throws IOException {
         File destDir = new File(destDirectory);
@@ -82,9 +85,12 @@ public class FileClient {
     /**
      * Extract file.
      *
-     * @param zipIn the zip in
-     * @param filePath the file path
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @param zipIn
+     *                     the zip in
+     * @param filePath
+     *                     the file path
+     * @throws IOException
+     *                         Signals that an I/O exception has occurred.
      */
     private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         File yourFile = new File(filePath);
@@ -103,8 +109,10 @@ public class FileClient {
     /**
      * Instantiates a new file client.
      *
-     * @param model the model
-     * @param ip the ip
+     * @param model
+     *                  the model
+     * @param ip
+     *                  the ip
      */
     public FileClient(Model model, String ip) {
         this.setIp(ip);
@@ -122,7 +130,7 @@ public class FileClient {
     public void startClient() {
         try {
             this.connectToServer(this.getIp());
-
+            System.out.println("[Client] Connected to : " + this.socket);
             this.setServerTypes(this.getStreamedTypes());
             this.addMissingTypes();
             this.getModel().loadTypes();
@@ -132,9 +140,10 @@ public class FileClient {
 
             if (this.getFoldersToReceive().size() > 0) {
                 for (File folderToReceive : this.getFoldersToReceive()) {
-                    System.out.println(folderToReceive.getName());
+                    System.out.println("[Client] Receiving " + folderToReceive + "...");
                     this.receiveTheme();
                     this.getModel().fillThemesList();
+                    System.out.println("[Client] Done!");
                 }
 
             }
@@ -149,6 +158,7 @@ public class FileClient {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        System.out.println("[Client] Client stopped!");
     }
 
     /**
@@ -172,7 +182,8 @@ public class FileClient {
     /**
      * Append new line to types.
      *
-     * @param value the value
+     * @param value
+     *                  the value
      */
     public void appendNewLineToTypes(String value) {
 
@@ -200,7 +211,8 @@ public class FileClient {
     /**
      * Connect to server.
      *
-     * @param ip the ip
+     * @param ip
+     *               the ip
      */
     private void connectToServer(String ip) {
         try {
@@ -294,7 +306,8 @@ public class FileClient {
     /**
      * Sets the folders to receive.
      *
-     * @param foldersToReceive the new folders to receive
+     * @param foldersToReceive
+     *                             the new folders to receive
      */
     public void setFoldersToReceive(ArrayList<File> foldersToReceive) {
         this.foldersToReceive = foldersToReceive;
@@ -312,7 +325,8 @@ public class FileClient {
     /**
      * Sets the model.
      *
-     * @param model the new model
+     * @param model
+     *                  the new model
      */
     public void setModel(Model model) {
         this.model = model;
@@ -330,7 +344,8 @@ public class FileClient {
     /**
      * Sets the ip.
      *
-     * @param ip the new ip
+     * @param ip
+     *               the new ip
      */
     public void setIp(String ip) {
         this.ip = ip;
@@ -348,7 +363,8 @@ public class FileClient {
     /**
      * Sets the server types.
      *
-     * @param serverTypes the new server types
+     * @param serverTypes
+     *                        the new server types
      */
     public void setServerTypes(ArrayList<String> serverTypes) {
         this.serverTypes = serverTypes;
