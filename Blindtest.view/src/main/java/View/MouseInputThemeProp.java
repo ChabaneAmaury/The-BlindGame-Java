@@ -20,7 +20,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Instantiates a new mouse input theme prop.
      *
-     * @param themePropPanel the theme prop panel
+     * @param themePropPanel
+     *                           the theme prop panel
      */
     public MouseInputThemeProp(ThemePropPanel themePropPanel) {
         this.themePropPanel = themePropPanel;
@@ -29,7 +30,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse clicked.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -40,7 +42,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse pressed.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -66,16 +69,30 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
             } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
                 this.getThemePropPanel().getTheme().setPropertyValue("title",
                         this.getThemePropPanel().getTitleField().getText());
+                this.getThemePropPanel().getTheme().setTitle(this.getThemePropPanel().getTitleField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("composer",
                         this.getThemePropPanel().getComposerField().getText());
+                this.getThemePropPanel().getTheme().setComposer(this.getThemePropPanel().getComposerField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("type",
                         this.getThemePropPanel().getTypeField().getText());
+                this.getThemePropPanel().getTheme().setType(this.getThemePropPanel().getTypeField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("timecode",
                         this.getThemePropPanel().getTimeCodeField().getText());
+                this.getThemePropPanel().getTheme()
+                        .setTimecode(Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()));
+
                 this.getThemePropPanel().getTheme().setPropertyValue("release",
                         this.getThemePropPanel().getReleaseField().getText());
+                this.getThemePropPanel().getTheme()
+                        .setReleaseDate(this.getThemePropPanel().getReleaseField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("infos",
                         this.getThemePropPanel().getInfosField().getText());
+                this.getThemePropPanel().getTheme().setInfos(this.getThemePropPanel().getInfosField().getText());
+
                 this.getThemePropPanel().getViewFrame().stopMusic();
                 this.getThemePropPanel().getViewFrame()
                         .setContentPane(new MenuPanel(this.getThemePropPanel().getViewFrame()));
@@ -96,7 +113,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse released.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -107,7 +125,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse entered.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -118,7 +137,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse exited.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -128,7 +148,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse dragged.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -139,7 +160,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
     /**
      * Mouse moved.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {
