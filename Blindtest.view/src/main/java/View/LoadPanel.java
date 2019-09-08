@@ -29,7 +29,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Instantiates a new load panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public LoadPanel(ViewFrame viewFrame) {
         super(viewFrame);
@@ -48,14 +49,16 @@ public class LoadPanel extends MyPanel {
                 }
             }
         });
-        this.setImage(this.loadImage("bin\\vinyl_icon.png"));
+        int imgW = (int) (this.getViewFrame().getHeight() / 2.4);
+        this.setImage(this.loadImage("bin\\vinyl_icon.png").getScaledInstance(imgW, imgW, Image.SCALE_SMOOTH));
         this.getRotate().start();
     }
 
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -81,7 +84,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Sets the rotate.
      *
-     * @param rotate the new rotate
+     * @param rotate
+     *                   the new rotate
      */
     public void setRotate(Thread rotate) {
         this.rotate = rotate;
@@ -99,7 +103,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Sets the rotate factor.
      *
-     * @param d the new rotate factor
+     * @param d
+     *              the new rotate factor
      */
     public void setRotateFactor(double d) {
         this.rotateFactor = d;
@@ -117,7 +122,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Sets the image.
      *
-     * @param image the new image
+     * @param image
+     *                  the new image
      */
     public void setImage(Image image) {
         this.image = image;

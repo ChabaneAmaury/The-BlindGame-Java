@@ -24,8 +24,8 @@ public class Main {
 
         Model model = new Model();
         View view = new View(model);
-        ControllerMain controller1 = new ControllerMain(view, model);
-        view.setController(controller1);
+        ControllerMain controller = new ControllerMain(view, model);
+        view.setController(controller);
     }
 
 }

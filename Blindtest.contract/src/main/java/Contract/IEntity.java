@@ -163,4 +163,6 @@ public interface IEntity {
      */
     void setCoverImage(Image coverImage);
 
+    void setResizedCoverImage(Image resizedCoverImage);
+
 }

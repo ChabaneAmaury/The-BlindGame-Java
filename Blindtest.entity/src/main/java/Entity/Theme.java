@@ -15,6 +15,7 @@ import java.util.Properties;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
 import Contract.IEntity;
 import Contract.IModel;
 
@@ -137,6 +138,23 @@ public class Theme extends Properties implements IEntity {
         }
     }
 
+    public Image loadImage(String path) {
+        Image img = null;
+        try {
+            img = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return img;
+    }
+
+    public Image loadResizedImage(Image img) {
+        int rectW = 1980 / 11;
+        int rectH = (rectW * 160) / 120;
+        return img.getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH);
+    }
+
     /**
      * Sets the property value.
      *
@@ -172,40 +190,6 @@ public class Theme extends Properties implements IEntity {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Load image.
-     *
-     * @param path
-     *                 the path
-     * @return the image
-     */
-    public Image loadImage(String path) {
-        Image img = null;
-        try {
-            img = ImageIO.read(new File(path));
-            // img = ImageResizer.resizeTrick((BufferedImage) img, rectW, rectH);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return img;
-    }
-
-    /**
-     * Load resized image.
-     *
-     * @param img
-     *                the img
-     * @return the image
-     * @throws IOException
-     *                         Signals that an I/O exception has occurred.
-     */
-    public Image loadResizedImage(Image img) throws IOException {
-        int rectW = 1980 / 11;
-        int rectH = (rectW * 160) / 120;
-        return img.getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH);
     }
 
     /**
@@ -499,6 +483,7 @@ public class Theme extends Properties implements IEntity {
      * @param resizedCoverImage
      *                              the new resized cover image
      */
+    @Override
     public void setResizedCoverImage(Image resizedCoverImage) {
         this.resizedCoverImage = resizedCoverImage;
     }

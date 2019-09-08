@@ -30,7 +30,8 @@ class ViewPanel extends MyPanel {
     /**
      * Instantiates a new view panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public ViewPanel(final ViewFrame viewFrame) {
         super(viewFrame);
@@ -42,8 +43,10 @@ class ViewPanel extends MyPanel {
     /**
      * Draw theme.
      *
-     * @param graphics the graphics
-     * @param theme the theme
+     * @param graphics
+     *                     the graphics
+     * @param theme
+     *                     the theme
      */
     public void drawTheme(Graphics2D graphics, IEntity theme) {
         int metaXStart = (int) (this.getWidth() / 51.2);
@@ -86,7 +89,8 @@ class ViewPanel extends MyPanel {
     /**
      * Draw counter.
      *
-     * @param graphics the graphics
+     * @param graphics
+     *                     the graphics
      */
     public void drawCounter(Graphics2D graphics) {
         graphics.setColor(Color.WHITE);
@@ -104,16 +108,16 @@ class ViewPanel extends MyPanel {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        int quitX = (int) (this.getWidth() / 51.2);
+        int menuX = (int) (this.getWidth() / 51.2);
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
-        int menuX = (int) (this.getWidth() / 51.2) + quitX + btnW;
         int pauseX = (int) (this.getWidth() / 51.2) + menuX + btnW;
 
         IEntity theme = this.getViewFrame().getController().getTheme();
@@ -130,7 +134,6 @@ class ViewPanel extends MyPanel {
         } else {
             this.drawCounter(graphics);
         }
-        this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
     }
 
@@ -146,7 +149,8 @@ class ViewPanel extends MyPanel {
     /**
      * Sets the paused.
      *
-     * @param isPaused the new paused
+     * @param isPaused
+     *                     the new paused
      */
     public void setPaused(boolean isPaused) {
         this.isPaused = isPaused;

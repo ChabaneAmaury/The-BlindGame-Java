@@ -15,6 +15,7 @@ import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.swing.JTextField;
 
 import Contract.IEntity;
@@ -118,6 +119,8 @@ public class ThemePropPanel extends MyPanel {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -359666814951181068L;
 
+    private AudioInputStream audioInputStream = null;
+
     /**
      * Instantiates a new theme prop panel.
      *
@@ -130,6 +133,7 @@ public class ThemePropPanel extends MyPanel {
         super(viewFrame);
         MouseInputThemeProp mouseInput = new MouseInputThemeProp(this);
         this.setTheme(this.getViewFrame().getModel().getThemes().get(themeIndex));
+
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
@@ -240,18 +244,16 @@ public class ThemePropPanel extends MyPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        int quitX = (int) (this.getWidth() / 51.2);
+        int menuX = (int) (this.getWidth() / 51.2);
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
-        int menuX = (int) (this.getWidth() / 51.2) + quitX + btnW;
         int playX = (int) (this.getWidth() / 51.2) + menuX + btnW;
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         this.drawTheme(graphics, this.getTheme());
 
-        this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
         if ((this.getViewFrame().getClip() == null) || !this.getViewFrame().getClip().isActive()) {
             this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
@@ -394,6 +396,14 @@ public class ThemePropPanel extends MyPanel {
      */
     public void setInfosField(JTextField infosField) {
         this.infosField = infosField;
+    }
+
+    public AudioInputStream getAudioInputStream() {
+        return this.audioInputStream;
+    }
+
+    public void setAudioInputStream(AudioInputStream audioInputStream) {
+        this.audioInputStream = audioInputStream;
     }
 
 }

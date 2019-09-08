@@ -40,7 +40,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Instantiates a new options panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public OptionsPanel(ViewFrame viewFrame) {
         super(viewFrame);
@@ -138,7 +139,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -147,11 +149,10 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
-        int quitX = (int) (this.getWidth() / 51.2);
         int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW)
                 + (btnW / 2);
         int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - btnW);
-        int difficultyX = ((int) (this.getWidth() / 51.2) * 2) + btnW;
+        int difficultyX = (int) (this.getWidth() / 51.2);
         int mediumX = (this.getWidth() / 2) - (btnW / 2);
         int easyX = (int) (mediumX - (this.getWidth() / 51.2) - btnW);
         int hardX = (int) (mediumX + btnW + (this.getWidth() / 51.2));
@@ -159,7 +160,6 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "Easy", easyX, btnY, btnW, btnH);
@@ -183,7 +183,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the checkboxes.
      *
-     * @param checkboxes the new checkboxes
+     * @param checkboxes
+     *                       the new checkboxes
      */
     public void setCheckboxes(List<JCheckBox> checkboxes) {
         this.checkboxes = checkboxes;
@@ -192,7 +193,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Action performed.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -212,7 +214,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the difficulty.
      *
-     * @param difficulty the new difficulty
+     * @param difficulty
+     *                       the new difficulty
      */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
@@ -230,7 +233,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the show index.
      *
-     * @param showIndex the new show index
+     * @param showIndex
+     *                      the new show index
      */
     public void setShowIndex(int showIndex) {
         this.showIndex = showIndex;

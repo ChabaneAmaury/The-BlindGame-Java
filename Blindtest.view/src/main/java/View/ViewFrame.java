@@ -36,9 +36,6 @@ public class ViewFrame extends JFrame implements Observer {
     /** The Constant ICON. */
     private final static String ICON = "bin\\icon.png";
 
-    /** The audio input stream. */
-    private AudioInputStream audioInputStream = null;
-
     /** The clip. */
     private Clip clip = null;
 
@@ -108,6 +105,8 @@ public class ViewFrame extends JFrame implements Observer {
      */
     public void playMusic(String filePath, int timeCode, MyPanel panel) {
         this.startLoadingScreen();
+
+        AudioInputStream ais = null;
         if (filePath.toLowerCase().endsWith(".mp3")) {
 
             InputStream inputStream;
@@ -128,11 +127,11 @@ public class ViewFrame extends JFrame implements Observer {
                     16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat.getSampleRate(),
                     false);
             // create stream that delivers the desired format
-            this.audioInputStream = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
+            ais = AudioSystem.getAudioInputStream(convertFormat, mp3Stream);
 
         } else {
             try {
-                this.audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+                ais = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
             } catch (UnsupportedAudioFileException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -141,7 +140,7 @@ public class ViewFrame extends JFrame implements Observer {
 
         try {
             this.setClip(AudioSystem.getClip());
-            this.getClip().open(this.audioInputStream);
+            this.getClip().open(ais);
             FloatControl gainControl = (FloatControl) this.getClip().getControl(FloatControl.Type.MASTER_GAIN);
             double gain = 1;
             float dB = (float) ((Math.log(gain) / Math.log(10.0)) * 20.0);
@@ -154,6 +153,7 @@ public class ViewFrame extends JFrame implements Observer {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -278,11 +278,11 @@ public class ViewFrame extends JFrame implements Observer {
             this.getController().setTimeLeft(this.getController().getTimeLeft() + 1);
         }
         if (this.getController().getThemeIndex() != this.getCurrentThemeIndex()) {
+            this.stopMusic();
             int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
             int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
             this.getController().getTheme().setCoverImage(this.getController().getTheme().getCoverImage()
                     .getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH));
-            this.stopMusic();
             this.playMusic(this.getController().getTheme().getFile(), this.getController().getTheme().getTimecode(),
                     new ViewPanel(this));
             this.setCurrentThemeIndex(this.getController().getThemeIndex());
