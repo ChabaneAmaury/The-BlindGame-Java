@@ -62,8 +62,7 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                 - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 3) - (btnW * 2));
         int refreshX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
                 - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 4) - (btnW * 3));
-        int quitX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 5) - (btnW * 4));
+        int quitX = (int) (this.getMenuPanel().getWidth() / 51.2);
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= previousX) && (mx <= (previousX + (btnW / 2)))) {
                 if (this.getMenuPanel().getShowIndex() > 0) {

@@ -146,4 +146,18 @@ public interface IEntity {
      */
     void setPropertyValue(String key, String value);
 
+    /**
+     * Sets the cover image.
+     *
+     * @param coverImage the new cover image
+     */
+    void setCoverImage(Image coverImage);
+
+    /**
+     * Sets the resized cover image.
+     *
+     * @param resizedCoverImage the new resized cover image
+     */
+    void setResizedCoverImage(Image resizedCoverImage);
+
 }

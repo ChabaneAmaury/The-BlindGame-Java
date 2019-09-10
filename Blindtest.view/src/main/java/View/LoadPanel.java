@@ -48,7 +48,8 @@ public class LoadPanel extends MyPanel {
                 }
             }
         });
-        this.setImage(this.loadImage("bin\\vinyl_icon.png"));
+        int imgW = (int) (this.getViewFrame().getHeight() / 2.4);
+        this.setImage(this.loadImage("bin\\vinyl_icon.png").getScaledInstance(imgW, imgW, Image.SCALE_SMOOTH));
         this.getRotate().start();
     }
 

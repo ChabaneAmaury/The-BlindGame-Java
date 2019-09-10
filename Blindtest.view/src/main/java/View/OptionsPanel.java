@@ -14,10 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 
 import Contract.Difficulties;
 
@@ -30,6 +27,9 @@ public class OptionsPanel extends MyPanel implements ActionListener {
 
     /** The difficulty. */
     private String difficulty = "Easy";
+
+    /** The show index. */
+    private int showIndex = 0;
 
     /** The checkboxes. */
     private List<JCheckBox> checkboxes = new ArrayList<>();
@@ -47,85 +47,90 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         MouseInputOptions mouseInput = new MouseInputOptions(this);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.initOptions();
+        this.setLayout(null);
+        this.createCheckboxes();
+
+        switch (this.getViewFrame().getController().getAllowedTime()) {
+            case Difficulties.EASY:
+                this.setDifficulty("Easy");
+                break;
+            case Difficulties.MEDIUM:
+                this.setDifficulty("Medium");
+                break;
+            case Difficulties.HARD:
+                this.setDifficulty("Hard");
+                break;
+        }
     }
 
     /**
-     * Inits the options.
+     * Creates the checkboxes.
      */
-    public void initOptions() {
+    public void createCheckboxes() {
+        this.getCheckboxes().clear();
 
-        // int separator = this.getViewFrame().getHeight() / 72;
-        Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getViewFrame().getHeight() / 28.8));
+        Font basicFont = new Font("Cooper Black", Font.BOLD, this.getViewFrame().getHeight() / 15);
 
-        this.getCheckboxes().removeAll(this.checkboxes);
-
-        for (String type : this.getViewFrame().getModel().getTypes()) {
-            JCheckBox chckbx = new JCheckBox(
-                    (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_', ' '),
-                    true);
-            chckbx.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            chckbx.setOpaque(false);
-            chckbx.setForeground(Color.WHITE);
-            chckbx.setFont(basicFont);
-            chckbx.setAlignmentX(CENTER_ALIGNMENT);
-            this.add(chckbx);
-            // this.add(Box.createRigidArea(new Dimension(separator, separator)));
-            for (String notChoosenType : this.getViewFrame().getController().getNotChoosenTypes()) {
-                if (notChoosenType.equals(type)) {
-                    chckbx.setSelected(false);
+        for (int i = this.getShowIndex(); i < (this.getShowIndex() + 8); i++) {
+            if (i < this.getViewFrame().getModel().getTypes().size()) {
+                String type = this.getViewFrame().getModel().getTypes().get(i);
+                JCheckBox chckbx = new JCheckBox(
+                        (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_',
+                                ' '),
+                        true);
+                for (String typeToCheck : this.getViewFrame().getController().getNotChoosenTypes()) {
+                    if (typeToCheck.equalsIgnoreCase(type)) {
+                        chckbx = new JCheckBox(
+                                (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase())
+                                        .replace('_', ' '),
+                                false);
+                    }
                 }
+
+                chckbx.setBounds((int) (this.getViewFrame().getWidth() / 25.6),
+                        ((this.getViewFrame().getHeight() / 36) + basicFont.getSize()) * (i - this.getShowIndex()),
+                        basicFont.getSize() * type.length(), basicFont.getSize());
+                chckbx.setOpaque(false);
+                chckbx.setForeground(Color.WHITE);
+                chckbx.setFont(basicFont);
+                this.add(chckbx);
+                this.getCheckboxes().add(chckbx);
             }
         }
+        for (int i = this.getShowIndex() + 8; i < (this.getShowIndex() + 16); i++) {
+            if (i < this.getViewFrame().getModel().getTypes().size()) {
+                String type = this.getViewFrame().getModel().getTypes().get(i);
+                JCheckBox chckbx = new JCheckBox(
+                        (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_',
+                                ' '),
+                        true);
+                for (String typeToCheck : this.getViewFrame().getController().getNotChoosenTypes()) {
+                    if (typeToCheck.equalsIgnoreCase(type)) {
+                        chckbx = new JCheckBox(
+                                (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase())
+                                        .replace('_', ' '),
+                                false);
+                    }
+                }
+                chckbx.setBounds((int) ((this.getViewFrame().getWidth() / 2) + (this.getViewFrame().getWidth() / 25.6)),
+                        ((this.getViewFrame().getHeight() / 36) + basicFont.getSize()) * (i - this.getShowIndex() - 8),
+                        basicFont.getSize() * type.length(), basicFont.getSize());
+                chckbx.setOpaque(false);
+                chckbx.setForeground(Color.WHITE);
+                chckbx.setFont(basicFont);
+                this.add(chckbx);
+                this.getCheckboxes().add(chckbx);
+            }
+        }
+    }
 
-        JButton easy = new JButton("Easy");
-        easy.setOpaque(false);
-        easy.setFont(basicFont);
-        easy.setAlignmentX(CENTER_ALIGNMENT);
-        easy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OptionsPanel.this.getViewFrame().getController().setAllowedTime(Difficulties.EASY);
-                OptionsPanel.this.setDifficulty("Easy");
-                OptionsPanel.this.repaint();
-            }
-        });
-        JButton medium = new JButton("Medium");
-        medium.setOpaque(false);
-        medium.setFont(basicFont);
-        medium.setAlignmentX(CENTER_ALIGNMENT);
-        medium.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OptionsPanel.this.getViewFrame().getController().setAllowedTime(Difficulties.MEDIUM);
-                OptionsPanel.this.setDifficulty("Medium");
-                OptionsPanel.this.repaint();
-            }
-        });
-        JButton hard = new JButton("Hard");
-        hard.setOpaque(false);
-        hard.setFont(basicFont);
-        hard.setAlignmentX(CENTER_ALIGNMENT);
-        hard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OptionsPanel.this.getViewFrame().getController().setAllowedTime(Difficulties.HARD);
-                OptionsPanel.this.setDifficulty("Hard");
-                OptionsPanel.this.repaint();
-            }
-        });
-        // this.add(Box.createRigidArea(new Dimension(separator * 9, separator * 9)));
-        this.add(easy);
-        // this.add(Box.createRigidArea(new Dimension(separator, separator)));
-        this.add(medium);
-        // this.add(Box.createRigidArea(new Dimension(separator, separator)));
-        this.add(hard);
-        // this.add(Box.createRigidArea(new Dimension(separator, separator)));
-
+    /**
+     * Removes the checkboxes.
+     */
+    public void removeCheckboxes() {
         for (Component comp : this.getComponents()) {
             if (comp instanceof JCheckBox) {
-                this.getCheckboxes().add((JCheckBox) comp);
+                this.remove(comp);
             }
         }
     }
@@ -142,15 +147,26 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
-        int quitX = (int) (this.getWidth() / 51.2);
-        int difficultyX = ((int) (this.getWidth() / 51.2) * 2) + btnW;
+        int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW)
+                + (btnW / 2);
+        int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - btnW);
+        int difficultyX = (int) (this.getWidth() / 51.2);
+        int mediumX = (this.getWidth() / 2) - (btnW / 2);
+        int easyX = (int) (mediumX - (this.getWidth() / 51.2) - btnW);
+        int hardX = (int) (mediumX + btnW + (this.getWidth() / 51.2));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
+        this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
+        this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
+        this.drawButton(graphics, "Easy", easyX, btnY, btnW, btnH);
+        this.drawButton(graphics, "Medium", mediumX, btnY, btnW, btnH);
+        this.drawButton(graphics, "Hard", hardX, btnY, btnW, btnH);
         graphics.setColor(Color.WHITE);
-        this.drawCenteredString(graphics, this.getDifficulty(), difficultyX, btnY, btnW, btnH);
+        graphics.setFont(graphics.getFont().deriveFont((float) (this.getHeight() / 15)));
+        this.drawCenteredString(graphics, this.getDifficulty(), difficultyX, btnY,
+                (int) (easyX - (this.getWidth() / 51.2) - difficultyX), btnH);
     }
 
     /**
@@ -198,6 +214,24 @@ public class OptionsPanel extends MyPanel implements ActionListener {
      */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    /**
+     * Gets the show index.
+     *
+     * @return the show index
+     */
+    public int getShowIndex() {
+        return this.showIndex;
+    }
+
+    /**
+     * Sets the show index.
+     *
+     * @param showIndex the new show index
+     */
+    public void setShowIndex(int showIndex) {
+        this.showIndex = showIndex;
     }
 
 }

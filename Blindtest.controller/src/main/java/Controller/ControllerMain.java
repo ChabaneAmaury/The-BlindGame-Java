@@ -40,6 +40,9 @@ public class ControllerMain extends Observable implements IControllerMain {
     /** The not choosen types. */
     private ArrayList<String> notChoosenTypes = new ArrayList<>();
 
+    /** The tmp list. */
+    private ArrayList<IEntity> tmpList = new ArrayList<>();
+
     /** The timer. */
     private Thread timer = null;
 
@@ -62,7 +65,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     @Override
     public void removeType(String strType) {
         for (String type : this.getModel().getTypes()) {
-            if (type.toString().equals(strType.toUpperCase().replace(' ', '_'))) {
+            if (type.toString().equalsIgnoreCase(strType)) {
                 this.getNotChoosenTypes().remove(type);
             }
         }
@@ -76,7 +79,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     @Override
     public void addType(String strType) {
         for (String type : this.getModel().getTypes()) {
-            if (type.toString().equals(strType.toUpperCase().replace(' ', '_'))) {
+            if (type.toString().equalsIgnoreCase(strType)) {
                 this.getNotChoosenTypes().add(type);
             }
         }
@@ -85,31 +88,33 @@ public class ControllerMain extends Observable implements IControllerMain {
     /**
      * Start game.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void startGame() {
+        this.setTmpList((ArrayList<IEntity>) this.getModel().getThemes().clone());
+
         ArrayList<IEntity> toRemove = new ArrayList<>();
-        for (IEntity theme : this.getModel().getThemes()) {
+        for (IEntity theme : this.getTmpList()) {
             for (String type : this.notChoosenTypes) {
-                if (theme.getType().equals(type)) {
+                if (theme.getType().equalsIgnoreCase(type)) {
                     toRemove.add(theme);
                 }
             }
         }
-        this.getModel().getThemes().removeAll(toRemove);
-        Collections.shuffle(this.getModel().getThemes());
+        this.getTmpList().removeAll(toRemove);
+        Collections.shuffle(this.getTmpList());
 
         this.timer = new Thread() {
             @Override
             public void run() {
-                for (int i = 0; i < ControllerMain.this.getModel().getThemes().size(); i++) {
-                    if (ControllerMain.this.getModel().getThemes().get(i).isHasError()) {
-                        ControllerMain.this.getModel().getThemes()
-                                .remove(ControllerMain.this.getModel().getThemes().get(i));
+                for (int i = 0; i < ControllerMain.this.getTmpList().size(); i++) {
+                    if (ControllerMain.this.getTmpList().get(i).isHasError()) {
+                        ControllerMain.this.getTmpList().remove(ControllerMain.this.getTmpList().get(i));
                     }
                 }
-                for (int i = 0; i < ControllerMain.this.getModel().getThemes().size(); i++) {
+                for (int i = 0; i < ControllerMain.this.getTmpList().size(); i++) {
                     ControllerMain.this.setThemeIndex(i);
-                    ControllerMain.this.setTheme(ControllerMain.this.getModel().getThemes().get(i));
+                    ControllerMain.this.setTheme(ControllerMain.this.getTmpList().get(i));
                     ControllerMain.this.setTimeLeft(ControllerMain.allowedTime);
                     ControllerMain.this.setChanged();
                     ControllerMain.this.notifyObservers();
@@ -208,6 +213,7 @@ public class ControllerMain extends Observable implements IControllerMain {
      *
      * @param timeLeft the new time left
      */
+    @Override
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
     }
@@ -263,6 +269,16 @@ public class ControllerMain extends Observable implements IControllerMain {
     }
 
     /**
+     * Gets the allowed time.
+     *
+     * @return the allowed time
+     */
+    @Override
+    public int getAllowedTime() {
+        return allowedTime;
+    }
+
+    /**
      * Sets the allowed time.
      *
      * @param aLLOWED_TIME the new allowed time
@@ -290,5 +306,24 @@ public class ControllerMain extends Observable implements IControllerMain {
     @Override
     public void setNotChoosenTypes(ArrayList<String> notChoosenTypes) {
         this.notChoosenTypes = notChoosenTypes;
+    }
+
+    /**
+     * Gets the tmp list.
+     *
+     * @return the tmp list
+     */
+    @Override
+    public ArrayList<IEntity> getTmpList() {
+        return this.tmpList;
+    }
+
+    /**
+     * Sets the tmp list.
+     *
+     * @param tmpList the new tmp list
+     */
+    public void setTmpList(ArrayList<IEntity> tmpList) {
+        this.tmpList = tmpList;
     }
 }

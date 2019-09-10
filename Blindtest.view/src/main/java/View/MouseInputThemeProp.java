@@ -51,39 +51,48 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
         int mx = e.getX();
         int my = e.getY();
 
-        int quitX = (int) (this.getThemePropPanel().getWidth() / 51.2);
+        int menuX = (int) (this.getThemePropPanel().getWidth() / 51.2);
         int btnY = (int) (this.getThemePropPanel().getHeight() - (this.getThemePropPanel().getWidth() / 51.2)
                 - (this.getThemePropPanel().getHeight() / 10.2857143));
         int btnW = this.getThemePropPanel().getWidth() / 10;
         int btnH = this.getThemePropPanel().getHeight() / 12;
-        int menuX = (int) (this.getThemePropPanel().getWidth() / 51.2) + quitX + btnW;
         int playX = (int) (this.getThemePropPanel().getWidth() / 51.2) + menuX + btnW;
         if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= quitX) && (mx <= (quitX + btnW))) {
-                System.exit(0);
-            } else if ((mx >= playX) && (mx <= (playX + btnW))) {
+            if ((mx >= playX) && (mx <= (playX + btnW))) {
                 try {
                     this.getThemePropPanel().getViewFrame().stopMusic();
                     this.getThemePropPanel().getViewFrame().playMusic(this.getThemePropPanel().getTheme().getFile(),
-                            Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()));
+                            Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()),
+                            this.getThemePropPanel());
                 } catch (Exception e1) {
                 }
             } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
                 this.getThemePropPanel().getTheme().setPropertyValue("title",
                         this.getThemePropPanel().getTitleField().getText());
+                this.getThemePropPanel().getTheme().setTitle(this.getThemePropPanel().getTitleField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("composer",
                         this.getThemePropPanel().getComposerField().getText());
+                this.getThemePropPanel().getTheme().setComposer(this.getThemePropPanel().getComposerField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("type",
                         this.getThemePropPanel().getTypeField().getText());
+                this.getThemePropPanel().getTheme().setType(this.getThemePropPanel().getTypeField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("timecode",
                         this.getThemePropPanel().getTimeCodeField().getText());
+                this.getThemePropPanel().getTheme()
+                        .setTimecode(Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()));
+
                 this.getThemePropPanel().getTheme().setPropertyValue("release",
                         this.getThemePropPanel().getReleaseField().getText());
+                this.getThemePropPanel().getTheme()
+                        .setReleaseDate(this.getThemePropPanel().getReleaseField().getText());
+
                 this.getThemePropPanel().getTheme().setPropertyValue("infos",
                         this.getThemePropPanel().getInfosField().getText());
-                this.getThemePropPanel().getViewFrame().getModel().loadTypes();
-                this.getThemePropPanel().getViewFrame().getModel().loadFolders();
-                this.getThemePropPanel().getViewFrame().getModel().fillThemesList();
+                this.getThemePropPanel().getTheme().setInfos(this.getThemePropPanel().getInfosField().getText());
+
                 this.getThemePropPanel().getViewFrame().stopMusic();
                 this.getThemePropPanel().getViewFrame()
                         .setContentPane(new MenuPanel(this.getThemePropPanel().getViewFrame()));

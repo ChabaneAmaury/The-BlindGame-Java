@@ -49,7 +49,6 @@ public class Model implements IModel {
      */
     public Model() {
         this.loadTypes();
-        this.loadFolders();
         this.fillThemesList();
 
         try {
@@ -110,10 +109,12 @@ public class Model implements IModel {
                                     try {
                                         if (InetAddress.getByName(ip).isReachable(100)
                                                 && !ip.equalsIgnoreCase(inetAddress.toString().substring(1))) {
+
                                             Socket s = new Socket();
                                             s.connect(new InetSocketAddress(ip, 15125), 100);
                                             System.out.println("Server is listening on port " + 15125 + " of " + ip);
                                             s.close();
+
                                             Model.this.getIPsToScan().add(ip);
                                         }
                                     } catch (IOException e) {
@@ -132,7 +133,7 @@ public class Model implements IModel {
      */
     @Override
     public void loadTypes() {
-        this.getTypes().removeAll(this.getTypes());
+        this.getTypes().clear();
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader("bin\\types.txt"));
@@ -143,7 +144,9 @@ public class Model implements IModel {
         String line;
         try {
             while ((line = br.readLine()) != null) {
-                this.getTypes().add(line);
+                if (line.length() > 1) {
+                    this.getTypes().add(line);
+                }
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -162,7 +165,8 @@ public class Model implements IModel {
      */
     @Override
     public void fillThemesList() {
-        this.getThemes().removeAll(this.themes);
+        this.loadFolders();
+        this.getThemes().clear();
         for (File theme : this.getFolders()) {
             if (theme.isDirectory()) {
                 Theme loadedTheme = new Theme(this, theme);
@@ -176,6 +180,17 @@ public class Model implements IModel {
      */
     @Override
     public void loadFolders() {
+        try {
+            File file = new File("files\\theme.zip");
+            if (file.delete()) {
+                System.out.println("File deleted successfully");
+            } else {
+                System.out.println("Failed to delete the file");
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         try {
             this.setFolders(new File("files\\").listFiles());
         } catch (Exception e) {

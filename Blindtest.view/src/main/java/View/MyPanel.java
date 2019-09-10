@@ -4,6 +4,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
@@ -33,6 +34,9 @@ public class MyPanel extends JPanel {
     /** The view frame. */
     private ViewFrame viewFrame = null;
 
+    /** The dimensions. */
+    private Dimension dimensions = null;
+
     /**
      * Instantiates a new my panel.
      *
@@ -40,6 +44,7 @@ public class MyPanel extends JPanel {
      */
     public MyPanel(ViewFrame viewFrame) {
         this.setViewFrame(viewFrame);
+        this.setDimensions(this.getViewFrame().getSize());
     }
 
     /**
@@ -140,6 +145,24 @@ public class MyPanel extends JPanel {
      */
     public void setViewFrame(ViewFrame viewFrame) {
         this.viewFrame = viewFrame;
+    }
+
+    /**
+     * Gets the dimensions.
+     *
+     * @return the dimensions
+     */
+    public Dimension getDimensions() {
+        return this.dimensions;
+    }
+
+    /**
+     * Sets the dimensions.
+     *
+     * @param dimensions the new dimensions
+     */
+    public void setDimensions(Dimension dimensions) {
+        this.dimensions = dimensions;
     }
 
 }

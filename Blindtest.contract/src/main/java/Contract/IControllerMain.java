@@ -109,4 +109,25 @@ public interface IControllerMain {
      */
     void setNotChoosenTypes(ArrayList<String> notChoosenTypes);
 
+    /**
+     * Gets the tmp list.
+     *
+     * @return the tmp list
+     */
+    ArrayList<IEntity> getTmpList();
+
+    /**
+     * Sets the time left.
+     *
+     * @param timeLeft the new time left
+     */
+    void setTimeLeft(int timeLeft);
+
+    /**
+     * Gets the allowed time.
+     *
+     * @return the allowed time
+     */
+    int getAllowedTime();
+
 }

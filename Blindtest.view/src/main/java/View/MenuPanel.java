@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.io.File;
@@ -37,22 +38,28 @@ public class MenuPanel extends MyPanel {
     /**
      * Instantiates a new menu panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public MenuPanel(ViewFrame viewFrame) {
         super(viewFrame);
         MouseInputMenu mouseInput = new MouseInputMenu(this);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
+        this.setDimensions(this.getViewFrame().getSize());
     }
 
     /**
      * Draw theme.
      *
-     * @param graphics the graphics
-     * @param theme the theme
-     * @param x the x
-     * @param y the y
+     * @param graphics
+     *                     the graphics
+     * @param theme
+     *                     the theme
+     * @param x
+     *                     the x
+     * @param y
+     *                     the y
      */
     public void drawTheme(Graphics2D graphics, IEntity theme, double x, double y) {
         graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1)); // remove transparency
@@ -91,14 +98,16 @@ public class MenuPanel extends MyPanel {
             this.drawCenteredString(graphics, "Image Not Found", rectX, rectY, rectW, rectH);
         }
         if (theme.isHasError()) {
-            graphics.drawImage(this.loadImage(ERROR_ICON), errorX, errorY, errorW, errorW, null);
+            graphics.drawImage(this.loadImage(ERROR_ICON).getScaledInstance(errorW, errorW, Image.SCALE_SMOOTH), errorX,
+                    errorY, errorW, errorW, null);
         }
     }
 
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -107,16 +116,12 @@ public class MenuPanel extends MyPanel {
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 10;
         int btnH = this.getHeight() / 12;
-        int optionsX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - (this.getWidth() / 51.2) - btnW);
-        int nextX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 2) - (btnW * 2)) + (btnW / 2);
-        int previousX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 3) - (btnW * 2));
-        int refreshX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 4) - (btnW * 3));
-        int quitX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10)
-                - ((this.getWidth() / 51.2) * 5) - (btnW * 4));
+        int optionsX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW);
+        int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - (btnW * 2))
+                + (btnW / 2);
+        int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 4) - (this.getWidth() / 10) - (btnW * 2));
+        int refreshX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 5) - (this.getWidth() / 10) - (btnW * 3));
+        int quitX = (int) (this.getWidth() / 51.2);
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
@@ -128,15 +133,16 @@ public class MenuPanel extends MyPanel {
         this.drawButton(graphics, "Quit", quitX, btnY, btnW, btnH);
         for (IEntity theme : this.getViewFrame().getModel().getThemes()) {
             if (theme.isHasError()) {
-                graphics.drawImage(this.loadImage(ERROR_ICON), (int) (this.getWidth() / 51.2), btnY, btnH, btnH, null);
-                graphics.setFont(new Font("Cooper Black", Font.BOLD, 20));
+                int errorX = (int) (((this.getWidth() / 51.2) * 2) + btnW);
+                graphics.drawImage(this.loadImage(ERROR_ICON).getScaledInstance(btnH, btnH, Image.SCALE_SMOOTH), errorX,
+                        btnY, btnH, btnH, null);
+                graphics.setFont(new Font("Cooper Black", Font.BOLD, this.getHeight() / 36));
                 graphics.setColor(new Color(255, 115, 115));
                 List<String> strings = StringUtils.wrap("One or more themes are missing audio file...",
-                        graphics.getFontMetrics(), 150);
+                        graphics.getFontMetrics(), (int) (this.getWidth() / 8.53));
                 int Ystart = btnY;
                 for (String string : strings) {
-                    graphics.drawString(string,
-                            (int) ((int) (this.getWidth() / 51.2) + (this.getWidth() / 51.2) + btnH), Ystart);
+                    graphics.drawString(string, (int) (errorX + (this.getWidth() / 51.2) + btnH), Ystart);
                     Ystart += graphics.getFont().getSize();
                 }
                 break;
@@ -171,7 +177,8 @@ public class MenuPanel extends MyPanel {
     /**
      * Sets the show index.
      *
-     * @param showIndex the new show index
+     * @param showIndex
+     *                      the new show index
      */
     public void setShowIndex(int showIndex) {
         this.showIndex = showIndex;

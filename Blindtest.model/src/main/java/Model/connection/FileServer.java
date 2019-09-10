@@ -33,7 +33,7 @@ public class FileServer implements Runnable {
 
     /** The server socket. */
     private ServerSocket serverSocket = null;
-    
+
     /** The socket. */
     private Socket socket = null;
 
@@ -46,10 +46,14 @@ public class FileServer implements Runnable {
     /**
      * Zip file.
      *
-     * @param fileToZip the file to zip
-     * @param fileName the file name
-     * @param zipOut the zip out
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @param fileToZip
+     *                      the file to zip
+     * @param fileName
+     *                      the file name
+     * @param zipOut
+     *                      the zip out
+     * @throws IOException
+     *                         Signals that an I/O exception has occurred.
      */
     private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
         if (fileToZip.isHidden()) {
@@ -83,8 +87,10 @@ public class FileServer implements Runnable {
     /**
      * Instantiates a new file server.
      *
-     * @param model the model
-     * @throws Exception the exception
+     * @param model
+     *                  the model
+     * @throws Exception
+     *                       the exception
      */
     public FileServer(Model model) throws Exception {
         this.setModel(model);
@@ -94,16 +100,26 @@ public class FileServer implements Runnable {
      * Start server.
      */
     public void startServer() {
-        System.out.println("Server is running...");
+        System.out.println("[Server] Server is running...");
         this.waitForClient();
-        this.setClientsThemes(this.getStreamedClientsThemes());
-        System.out.println(this.getClientsThemes());
-        this.findFoldersToSend();
 
-        this.sendFoldersToSend();
+        try {
+            this.sendArrayList(this.getModel().getTypes());
+            System.out.println("[Server] Accepted connection : " + this.socket);
+            this.setClientsThemes(this.getStreamedClientsThemes());
+            this.findFoldersToSend();
+            System.out.println(this.getFoldersToSend());
 
-        for (File folder : this.getFoldersToSend()) {
-            this.sendTheme(folder.getAbsolutePath());
+            this.sendArrayList(this.getFoldersToSend());
+
+            if (this.getFoldersToSend().size() > 0) {
+                for (File folder : this.getFoldersToSend()) {
+                    System.out.println("[Server] Sending " + folder + "...");
+                    this.sendTheme(folder.getAbsolutePath());
+                    System.out.println("[Server] Done!");
+                }
+            }
+        } catch (NullPointerException e1) {
         }
 
         try {
@@ -113,17 +129,20 @@ public class FileServer implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("Server stopped");
+        System.out.println("[Server] Server stopped !");
         this.startServer();
     }
 
     /**
-     * Send folders to send.
+     * Send array list.
+     *
+     * @param arrayList
+     *                      the array list
      */
-    public void sendFoldersToSend() {
+    public void sendArrayList(ArrayList<?> arrayList) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
-            os.writeObject(this.getFoldersToSend());
+            os.writeObject(arrayList);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -134,6 +153,7 @@ public class FileServer implements Runnable {
      * Find folders to send.
      */
     public void findFoldersToSend() {
+        this.getFoldersToSend().clear();
         for (File folder : this.getModel().getFolders()) {
             boolean checked = false;
             for (File clientsFolder : this.getClientsThemes()) {
@@ -169,20 +189,28 @@ public class FileServer implements Runnable {
      */
     public ArrayList<File> getStreamedClientsThemes() {
         ArrayList<File> clientsThemes = null;
+
+        ObjectInputStream is = null;
         try {
-            ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
+            is = new ObjectInputStream(this.socket.getInputStream());
+        } catch (IOException e2) {
+        }
+        try {
             clientsThemes = new ArrayList<>(Arrays.asList((File[]) is.readObject()));
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (IOException e) {
         }
+
         return clientsThemes;
     }
 
     /**
      * Send theme.
      *
-     * @param themeFolder the theme folder
+     * @param themeFolder
+     *                        the theme folder
      */
     public void sendTheme(String themeFolder) {
         try {
@@ -192,7 +220,7 @@ public class FileServer implements Runnable {
             File fileToZip = new File(sourceFile);
             zipFile(fileToZip, fileToZip.getName(), zipOut);
             zipOut.close();
-            System.out.println("Accepted connection : " + this.socket);
+
             ObjectOutputStream ous = new ObjectOutputStream(this.socket.getOutputStream());
             ous.writeObject(baos.toByteArray());
             ous.flush();
@@ -218,7 +246,8 @@ public class FileServer implements Runnable {
     /**
      * Sets the model.
      *
-     * @param model the new model
+     * @param model
+     *                  the new model
      */
     public void setModel(Model model) {
         this.model = model;
@@ -227,7 +256,8 @@ public class FileServer implements Runnable {
     /**
      * Sets the clients themes.
      *
-     * @param clientsThemes the new clients themes
+     * @param clientsThemes
+     *                          the new clients themes
      */
     public void setClientsThemes(ArrayList<File> clientsThemes) {
         this.clientsThemes = clientsThemes;
@@ -254,7 +284,8 @@ public class FileServer implements Runnable {
     /**
      * Sets the folders to send.
      *
-     * @param foldersToSend the new folders to send
+     * @param foldersToSend
+     *                          the new folders to send
      */
     public void setFoldersToSend(ArrayList<File> foldersToSend) {
         this.foldersToSend = foldersToSend;

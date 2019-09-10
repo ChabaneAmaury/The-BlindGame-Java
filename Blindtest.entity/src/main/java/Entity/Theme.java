@@ -4,19 +4,23 @@
 package Entity;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Properties;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
+
 import Contract.IEntity;
 import Contract.IModel;
-import Contract.ImageResizer;
 
 /**
  * The Class Theme.
@@ -79,8 +83,10 @@ public class Theme extends Properties implements IEntity {
     /**
      * Instantiates a new theme.
      *
-     * @param model the model
-     * @param folder the folder
+     * @param model
+     *                   the model
+     * @param folder
+     *                   the folder
      */
     public Theme(IModel model, File folder) {
         this.setModel(model);
@@ -102,8 +108,26 @@ public class Theme extends Properties implements IEntity {
         try {
             inputStream = new FileInputStream(properties);
         } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            try {
+                properties.createNewFile();
+
+                try (FileWriter fw = new FileWriter(properties);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        PrintWriter out = new PrintWriter(bw)) {
+                    out.println("title=");
+                    out.println("composer=");
+                    out.println("release=");
+                    out.println("timecode=");
+                    out.println("type=");
+                    out.println("infos=");
+                }
+
+                inputStream = new FileInputStream(properties);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         }
         if (inputStream != null) {
             try {
@@ -111,15 +135,25 @@ public class Theme extends Properties implements IEntity {
             } catch (final IOException e) {
                 e.printStackTrace();
             }
-            this.setTitle(this.getProperty("title"));
-            this.setComposer(this.getProperty("composer"));
-            this.setReleaseDate(this.getProperty("release"));
-            this.setInfos(this.getProperty("infos"));
+            if (!this.getProperty("title").isEmpty()) {
+                this.setTitle(this.getProperty("title"));
+            }
+            if (!this.getProperty("composer").isEmpty()) {
+                this.setComposer(this.getProperty("composer"));
+            }
+            if (!this.getProperty("release").isEmpty()) {
+                this.setReleaseDate(this.getProperty("release"));
+            }
+            if (!this.getProperty("infos").isEmpty()) {
+                this.setInfos(this.getProperty("infos"));
+            }
 
-            for (String type : this.getModel().getTypes()) {
-                if (this.getProperty("type").equalsIgnoreCase(type)) {
-                    this.setType(type);
-                    break;
+            if (!this.getProperty("type").isEmpty()) {
+                for (String type : this.getModel().getTypes()) {
+                    if (this.getProperty("type").equalsIgnoreCase(type)) {
+                        this.setType(type);
+                        break;
+                    }
                 }
             }
             try {
@@ -136,10 +170,43 @@ public class Theme extends Properties implements IEntity {
     }
 
     /**
+     * Load image.
+     *
+     * @param path
+     *                 the path
+     * @return the image
+     */
+    public Image loadImage(String path) {
+        Image img = null;
+        try {
+            img = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return img;
+    }
+
+    /**
+     * Load resized image.
+     *
+     * @param img
+     *                the img
+     * @return the image
+     */
+    public Image loadResizedImage(Image img) {
+        int rectW = 1980 / 11;
+        int rectH = (rectW * 160) / 120;
+        return img.getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH);
+    }
+
+    /**
      * Sets the property value.
      *
-     * @param key the key
-     * @param value the value
+     * @param key
+     *                  the key
+     * @param value
+     *                  the value
      */
     @Override
     public void setPropertyValue(String key, String value) {
@@ -171,41 +238,12 @@ public class Theme extends Properties implements IEntity {
     }
 
     /**
-     * Load image.
-     *
-     * @param path the path
-     * @return the image
-     */
-    public Image loadImage(String path) {
-        Image img = null;
-        try {
-            img = ImageIO.read(new File(path));
-            // img = ImageResizer.resizeTrick((BufferedImage) img, rectW, rectH);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return img;
-    }
-
-    /**
-     * Load resized image.
-     *
-     * @param img the img
-     * @return the image
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    public Image loadResizedImage(Image img) throws IOException {
-        int rectW = 1980 / 11;
-        int rectH = (rectW * 160) / 120;
-        return ImageResizer.resizeTrick((BufferedImage) img, rectW, rectH);
-    }
-
-    /**
      * Find file by extension.
      *
-     * @param folder the folder
-     * @param extensions the extensions
+     * @param folder
+     *                       the folder
+     * @param extensions
+     *                       the extensions
      * @return the string
      */
     public String FindFileByExtension(File folder, String[] extensions) {
@@ -222,7 +260,7 @@ public class Theme extends Properties implements IEntity {
             }
         });
         if (files.length > 0) {
-            return files[0].getAbsolutePath();
+            return files[new Random().nextInt(files.length)].getAbsolutePath();
         } else {
             return "";
         }
@@ -241,7 +279,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the composer.
      *
-     * @param composer the new composer
+     * @param composer
+     *                     the new composer
      */
     @Override
     public void setComposer(String composer) {
@@ -261,7 +300,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the file.
      *
-     * @param file the new file
+     * @param file
+     *                 the new file
      */
     public void setFile(String file) {
         this.file = file;
@@ -280,7 +320,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the cover.
      *
-     * @param cover the new cover
+     * @param cover
+     *                  the new cover
      */
     public void setCover(String cover) {
         this.cover = cover;
@@ -299,7 +340,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the type.
      *
-     * @param type the new type
+     * @param type
+     *                 the new type
      */
     @Override
     public void setType(String type) {
@@ -319,7 +361,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the timecode.
      *
-     * @param timecode the new timecode
+     * @param timecode
+     *                     the new timecode
      */
     @Override
     public void setTimecode(int timecode) {
@@ -339,7 +382,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the title.
      *
-     * @param title the new title
+     * @param title
+     *                  the new title
      */
     @Override
     public void setTitle(String title) {
@@ -358,7 +402,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the file extensions.
      *
-     * @param fileExtensions the new file extensions
+     * @param fileExtensions
+     *                           the new file extensions
      */
     public void setFileExtensions(String[] fileExtensions) {
         this.fileExtensions = fileExtensions;
@@ -376,7 +421,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the cover extensions.
      *
-     * @param coverExtensions the new cover extensions
+     * @param coverExtensions
+     *                            the new cover extensions
      */
     public void setCoverExtensions(String[] coverExtensions) {
         this.coverExtensions = coverExtensions;
@@ -395,7 +441,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the release date.
      *
-     * @param releaseDate the new release date
+     * @param releaseDate
+     *                        the new release date
      */
     @Override
     public void setReleaseDate(String releaseDate) {
@@ -415,7 +462,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the infos.
      *
-     * @param infos the new infos
+     * @param infos
+     *                  the new infos
      */
     @Override
     public void setInfos(String infos) {
@@ -435,7 +483,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the checks for error.
      *
-     * @param hasError the new checks for error
+     * @param hasError
+     *                     the new checks for error
      */
     @Override
     public void setHasError(boolean hasError) {
@@ -455,8 +504,10 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the cover image.
      *
-     * @param coverImage the new cover image
+     * @param coverImage
+     *                       the new cover image
      */
+    @Override
     public void setCoverImage(Image coverImage) {
         this.coverImage = coverImage;
     }
@@ -474,8 +525,10 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the resized cover image.
      *
-     * @param resizedCoverImage the new resized cover image
+     * @param resizedCoverImage
+     *                              the new resized cover image
      */
+    @Override
     public void setResizedCoverImage(Image resizedCoverImage) {
         this.resizedCoverImage = resizedCoverImage;
     }
@@ -492,7 +545,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the model.
      *
-     * @param model the new model
+     * @param model
+     *                  the new model
      */
     public void setModel(IModel model) {
         this.model = model;
@@ -510,7 +564,8 @@ public class Theme extends Properties implements IEntity {
     /**
      * Sets the folder.
      *
-     * @param folder2 the new folder
+     * @param folder2
+     *                    the new folder
      */
     public void setFolder(File folder2) {
         this.folder = folder2;
