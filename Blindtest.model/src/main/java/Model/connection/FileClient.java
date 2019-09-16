@@ -251,8 +251,6 @@ public class FileClient {
             ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
             folders = (ArrayList<String>) is.readObject();
         } catch (ClassNotFoundException | IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         return folders;
     }

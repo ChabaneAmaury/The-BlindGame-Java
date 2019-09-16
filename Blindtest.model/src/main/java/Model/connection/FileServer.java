@@ -144,8 +144,6 @@ public class FileServer implements Runnable {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
             os.writeObject(arrayList);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
