@@ -279,10 +279,6 @@ public class ViewFrame extends JFrame implements Observer {
         }
         if (this.getController().getThemeIndex() != this.getCurrentThemeIndex()) {
             this.stopMusic();
-            int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
-            int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
-            this.getController().getTheme().setCoverImage(this.getController().getTheme().getCoverImage()
-                    .getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH));
             this.playMusic(this.getController().getTheme().getFile(), this.getController().getTheme().getTimecode(),
                     new ViewPanel(this));
             this.setCurrentThemeIndex(this.getController().getThemeIndex());
