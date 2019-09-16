@@ -15,7 +15,9 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.swing.JTextField;
 
@@ -220,8 +222,13 @@ public class ThemePropPanel extends MyPanel {
             if ((theme.getResizedCoverImage() == null)
                     || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
                     || (theme.getResizedCoverImage().getHeight(null) != (int) imgDim.getHeight())) {
-                theme.setResizedCoverImage(theme.getCoverImage().getScaledInstance((int) imgDim.getWidth(),
-                        (int) imgDim.getHeight(), Image.SCALE_SMOOTH));
+                try {
+                    theme.setResizedCoverImage(ImageIO.read(new File(theme.getCover()))
+                            .getScaledInstance((int) imgDim.getWidth(), (int) imgDim.getHeight(), Image.SCALE_SMOOTH));
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
             rectX = (int) ((rectX + (rectW / 2)) - (imgDim.getWidth() / 2));
             rectY = (int) ((rectY + (rectH / 2)) - (imgDim.getHeight() / 2));
