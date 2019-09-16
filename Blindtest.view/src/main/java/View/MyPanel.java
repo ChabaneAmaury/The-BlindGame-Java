@@ -66,6 +66,17 @@ public class MyPanel extends JPanel {
         return img;
     }
 
+    /**
+     * Scale image dimensions.
+     *
+     * @param image
+     *                      the image
+     * @param maxWidth
+     *                      the max width
+     * @param maxHeight
+     *                      the max height
+     * @return the dimension
+     */
     public Dimension scaleImageDimensions(Image image, double maxWidth, double maxHeight) {
 
         double widthRatio = maxWidth / image.getWidth(null);
