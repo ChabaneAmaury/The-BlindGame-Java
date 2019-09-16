@@ -4,6 +4,7 @@
 package Entity;
 
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +17,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import Contract.IEntity;
 import Contract.IModel;
@@ -177,12 +176,7 @@ public class Theme extends Properties implements IEntity {
      */
     public Image loadImage(String path) {
         Image img = null;
-        try {
-            img = ImageIO.read(new File(path));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        img = Toolkit.getDefaultToolkit().getImage(path);
         return img;
     }
 
