@@ -120,7 +120,6 @@ public class FileClient {
         try {
             this.startClient();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -148,15 +147,11 @@ public class FileClient {
 
             }
         } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
         }
 
         try {
             this.socket.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         System.out.println("[Client] Client stopped!");
     }
