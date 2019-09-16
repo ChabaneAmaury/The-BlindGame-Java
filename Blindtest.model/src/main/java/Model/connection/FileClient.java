@@ -218,7 +218,6 @@ public class FileClient {
         try {
             this.socket = new Socket(ip, 15125, null, 15120);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
