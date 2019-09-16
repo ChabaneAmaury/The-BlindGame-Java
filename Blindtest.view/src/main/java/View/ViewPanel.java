@@ -4,9 +4,11 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.io.File;
@@ -77,7 +79,20 @@ class ViewPanel extends MyPanel {
         graphics.fill(new Rectangle(rectX - border, rectY, rectW + (border * 2), rectH + (border * 2)));
         if (new File(theme.getCover()).exists()) {
             graphics.setColor(Color.WHITE);
-            graphics.drawImage(theme.getCoverImage(), rectX, (int) (this.getWidth() / 51.2), rectW, rectH, null);
+            Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
+            if ((theme.getResizedCoverImage() == null)
+                    || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
+                    || (theme.getResizedCoverImage().getHeight(null) != (int) imgDim.getHeight())) {
+                theme.setResizedCoverImage(theme.getCoverImage().getScaledInstance((int) imgDim.getWidth(),
+                        (int) imgDim.getHeight(), Image.SCALE_SMOOTH));
+            }
+            rectX = (int) ((rectX + (rectW / 2)) - (imgDim.getWidth() / 2));
+            rectY = (int) ((rectY + (rectH / 2)) - (imgDim.getHeight() / 2));
+            rectW = (int) imgDim.getWidth();
+            rectH = (int) imgDim.getHeight();
+
+            graphics.fill(new Rectangle(rectX - border, rectY - border, rectW + (border * 2), rectH + (border * 2)));
+            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, null);
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, (int) (this.getWidth() / 51.2), rectW, rectH);

@@ -29,7 +29,8 @@ public interface IEntity {
     /**
      * Sets the composer.
      *
-     * @param composer the new composer
+     * @param composer
+     *                     the new composer
      */
     void setComposer(String composer);
 
@@ -43,7 +44,8 @@ public interface IEntity {
     /**
      * Sets the timecode.
      *
-     * @param timecode the new timecode
+     * @param timecode
+     *                     the new timecode
      */
     void setTimecode(int timecode);
 
@@ -57,7 +59,8 @@ public interface IEntity {
     /**
      * Sets the title.
      *
-     * @param title the new title
+     * @param title
+     *                  the new title
      */
     void setTitle(String title);
 
@@ -85,7 +88,8 @@ public interface IEntity {
     /**
      * Sets the release date.
      *
-     * @param releaseDate the new release date
+     * @param releaseDate
+     *                        the new release date
      */
     void setReleaseDate(String releaseDate);
 
@@ -99,14 +103,16 @@ public interface IEntity {
     /**
      * Sets the infos.
      *
-     * @param infos the new infos
+     * @param infos
+     *                  the new infos
      */
     void setInfos(String infos);
 
     /**
      * Sets the type.
      *
-     * @param type the new type
+     * @param type
+     *                 the new type
      */
     void setType(String type);
 
@@ -120,7 +126,8 @@ public interface IEntity {
     /**
      * Sets the checks for error.
      *
-     * @param hasError the new checks for error
+     * @param hasError
+     *                     the new checks for error
      */
     void setHasError(boolean hasError);
 
@@ -141,22 +148,26 @@ public interface IEntity {
     /**
      * Sets the property value.
      *
-     * @param key the key
-     * @param value the value
+     * @param key
+     *                  the key
+     * @param value
+     *                  the value
      */
     void setPropertyValue(String key, String value);
 
     /**
      * Sets the cover image.
      *
-     * @param coverImage the new cover image
+     * @param coverImage
+     *                       the new cover image
      */
     void setCoverImage(Image coverImage);
 
     /**
      * Sets the resized cover image.
      *
-     * @param resizedCoverImage the new resized cover image
+     * @param resizedCoverImage
+     *                              the new resized cover image
      */
     void setResizedCoverImage(Image resizedCoverImage);
 

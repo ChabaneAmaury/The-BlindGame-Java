@@ -4,6 +4,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -160,11 +161,6 @@ public class ThemePropPanel extends MyPanel {
         this.setInfosField(this.createTextField(this.getTheme().getInfos(),
                 (int) (this.getViewFrame().getWidth() / 51.2), this.getReleaseField().getBounds().y + fieldHeightFactor,
                 (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
-
-        int rectW = (int) ((this.getViewFrame().getHeight() - (this.getViewFrame().getWidth() / 25.6)) * 0.75);
-        int rectH = (int) (this.getViewFrame().getHeight() - (this.getViewFrame().getWidth() / 25.6));
-        this.getTheme()
-                .setCoverImage(this.getTheme().getCoverImage().getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH));
     }
 
     /**
@@ -215,18 +211,30 @@ public class ThemePropPanel extends MyPanel {
         int border = this.getHeight() / 240;
         int rectX = (int) (this.getWidth() - (this.getWidth() / 51.2)
                 - ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75));
-        int rectY = (int) ((this.getWidth() / 51.2) - border);
+        int rectY = (int) (this.getWidth() / 51.2);
         int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
         int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
-        graphics.fill(new Rectangle(rectX - border, rectY, rectW + (border * 2), rectH + (border * 2)));
         if (new File(theme.getCover()).exists()) {
             graphics.setColor(Color.WHITE);
-            graphics.drawImage(theme.getCoverImage(), rectX, (int) (this.getWidth() / 51.2), rectW, rectH, null);
+            Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
+            if ((theme.getResizedCoverImage() == null)
+                    || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
+                    || (theme.getResizedCoverImage().getHeight(null) != (int) imgDim.getHeight())) {
+                theme.setResizedCoverImage(theme.getCoverImage().getScaledInstance((int) imgDim.getWidth(),
+                        (int) imgDim.getHeight(), Image.SCALE_SMOOTH));
+            }
+            rectX = (int) ((rectX + (rectW / 2)) - (imgDim.getWidth() / 2));
+            rectY = (int) ((rectY + (rectH / 2)) - (imgDim.getHeight() / 2));
+            rectW = (int) imgDim.getWidth();
+            rectH = (int) imgDim.getHeight();
+
+            graphics.fill(new Rectangle(rectX - border, rectY - border, rectW + (border * 2), rectH + (border * 2)));
+            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, null);
         } else {
             graphics.setBackground(Color.GRAY);
-            graphics.clearRect(rectX, (int) (this.getWidth() / 51.2), rectW, rectH);
+            graphics.clearRect(rectX, rectY, rectW, rectH);
             graphics.setColor(Color.WHITE);
-            this.drawCenteredString(graphics, "Image Not Found", rectX, (int) (this.getWidth() / 51.2), rectW, rectH);
+            this.drawCenteredString(graphics, "Image Not Found", rectX, rectY, rectW, rectH);
         }
         graphics.drawString("Title :", metaXStart, titleHeight);
         graphics.drawString("Composer :", metaXStart, composerHeight);

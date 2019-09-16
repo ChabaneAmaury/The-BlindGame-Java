@@ -94,7 +94,6 @@ public class Theme extends Properties implements IEntity {
         try {
             this.setCover(this.FindFileByExtension(folder, this.getCoverExtensions()));
             this.setCoverImage(this.loadImage(this.getCover()));
-            this.setResizedCoverImage(this.loadResizedImage(this.getCoverImage()));
         } catch (Exception e2) {
             e2.printStackTrace();
         }
@@ -185,19 +184,6 @@ public class Theme extends Properties implements IEntity {
             e.printStackTrace();
         }
         return img;
-    }
-
-    /**
-     * Load resized image.
-     *
-     * @param img
-     *                the img
-     * @return the image
-     */
-    public Image loadResizedImage(Image img) {
-        int rectW = 1980 / 11;
-        int rectH = (rectW * 160) / 120;
-        return img.getScaledInstance(rectW, rectH, Image.SCALE_SMOOTH);
     }
 
     /**

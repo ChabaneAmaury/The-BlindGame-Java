@@ -5,6 +5,7 @@ package View;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -89,6 +90,18 @@ public class MenuPanel extends MyPanel {
                     }
                 }
             }
+            Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
+            if ((theme.getResizedCoverImage() == null)
+                    || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
+                    || (theme.getResizedCoverImage().getHeight(null) != (int) imgDim.getHeight())) {
+                theme.setResizedCoverImage(theme.getCoverImage().getScaledInstance((int) imgDim.getWidth(),
+                        (int) imgDim.getHeight(), Image.SCALE_SMOOTH));
+            }
+            rectX = (int) ((rectX + (rectW / 2)) - (imgDim.getWidth() / 2));
+            rectY = (int) ((rectY + (rectH / 2)) - (imgDim.getHeight() / 2));
+            rectW = (int) imgDim.getWidth();
+            rectH = (int) imgDim.getHeight();
+
             graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
         } else {
             graphics.setBackground(Color.GRAY);
