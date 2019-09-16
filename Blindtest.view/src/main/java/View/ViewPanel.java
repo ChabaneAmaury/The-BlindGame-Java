@@ -76,7 +76,6 @@ class ViewPanel extends MyPanel {
         int rectY = (int) ((this.getWidth() / 51.2) - border);
         int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
         int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
-        graphics.fill(new Rectangle(rectX - border, rectY, rectW + (border * 2), rectH + (border * 2)));
         if (new File(theme.getCover()).exists()) {
             graphics.setColor(Color.WHITE);
             Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
