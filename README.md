@@ -5,6 +5,10 @@
 * An category is supported
 * File sharing on LAN included
 
+<p align="center">
+  <img src="assets/img/play.jpg">
+</p>
+
 ## How to install
 
 Download latest version [here !](https://github.com/Gildur7161/Blindtest/releases)
@@ -37,10 +41,21 @@ All fields must be on one line, including the infos one. The game will take care
 
 ### In-game content
 
+<p align="center">
+  <img src="assets/img/main_menu.jpg">
+</p>
+
 - You can click on a theme cover to modify any informations within "theme.properties"
 - You can play the theme in this panel (will start from the timecode in corresponding field) : the play button will inform you about the current time code. You can change the timecode and restart from it without having to get back to the main menu
+<p align="center">
+  <img src="assets/img/theme_editor.jpg">
+</p>
 
 #### Options
+
+<p align="center">
+  <img src="assets/img/options.jpg">
+</p>
 
 - Easy : 20s to guess
 - Medium : 15s to guess
