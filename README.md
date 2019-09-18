@@ -42,7 +42,7 @@ All fields must be on one line, including the infos one. The game will take care
 
 #### Options
 
--Easy : 20s to guess
+- Easy : 20s to guess
 - Medium : 15s to guess
 - Hard : 10s to guess
 -Choose the category(ies) you want to use my checking the checkboxes (clicking on the category name will work too)
