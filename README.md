@@ -17,7 +17,7 @@
 
 Download latest version [here !](https://github.com/Gildur7161/Blindtest/releases)
 
-If you have already Java installed on your computer, just download the "without JRE" version. If you're not sure or you don't know what is Java or what is JRE, download the "with JRE" version.
+If you have already Java installed on your computer, just download the "without JRE" version. If you're not sure or you don't know what is Java or what is JRE, or just if you want a portable version, download the "with JRE" version.
 
 No need to install, just uncompress it wherever you want and you're done !
 
