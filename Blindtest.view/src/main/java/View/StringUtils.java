@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -11,26 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Globally available utility classes, mostly for string manipulation.
+ * The Class StringUtils.
  *
- * @author Jim Menard, <a href="mailto:jimm@io.com">jimm@io.com</a>
+ * @author Amaury Chabane
  */
 public class StringUtils {
+    
     /**
-     * Returns an array of strings, one for each line in the string after it has
-     * been wrapped to fit lines of <var>maxWidth</var>. Lines end with any of cr,
-     * lf, or cr lf. A line ending at the end of the string will not output a
-     * further, empty string.
-     * <p>
-     * This code assumes <var>str</var> is not <code>null</code>.
+     * Wrap.
      *
-     * @param str
-     *                     the string to split
-     * @param fm
-     *                     needed for string width calculations
-     * @param maxWidth
-     *                     the max line width, in points
-     * @return a non-empty list of strings
+     * @param str the str
+     * @param fm the fm
+     * @param maxWidth the max width
+     * @return the list
      */
     public static List<String> wrap(String str, FontMetrics fm, int maxWidth) {
         List<String> lines = splitIntoLines(str);
@@ -46,17 +39,12 @@ public class StringUtils {
     }
 
     /**
-     * Given a line of text and font metrics information, wrap the line and add the
-     * new line(s) to <var>list</var>.
+     * Wrap line into.
      *
-     * @param line
-     *                     a line of text
-     * @param list
-     *                     an output list of strings
-     * @param fm
-     *                     font metrics
-     * @param maxWidth
-     *                     maximum width of the line(s)
+     * @param line the line
+     * @param list the list
+     * @param fm the fm
+     * @param maxWidth the max width
      */
     public static void wrapLineInto(String line, List<String> list, FontMetrics fm, int maxWidth) {
         int len = line.length();
@@ -94,14 +82,11 @@ public class StringUtils {
     }
 
     /**
-     * Returns the index of the first whitespace character or '-' in <var>line</var>
-     * that is at or before <var>start</var>. Returns -1 if no such character is
-     * found.
+     * Find break before.
      *
-     * @param line
-     *                  a string
-     * @param start
-     *                  where to star looking
+     * @param line the line
+     * @param start the start
+     * @return the int
      */
     public static int findBreakBefore(String line, int start) {
         for (int i = start; i >= 0; --i) {
@@ -114,14 +99,11 @@ public class StringUtils {
     }
 
     /**
-     * Returns the index of the first whitespace character or '-' in <var>line</var>
-     * that is at or after <var>start</var>. Returns -1 if no such character is
-     * found.
+     * Find break after.
      *
-     * @param line
-     *                  a string
-     * @param start
-     *                  where to star looking
+     * @param line the line
+     * @param start the start
+     * @return the int
      */
     public static int findBreakAfter(String line, int start) {
         int len = line.length();
@@ -135,15 +117,10 @@ public class StringUtils {
     }
 
     /**
-     * Returns an array of strings, one for each line in the string. Lines end with
-     * any of cr, lf, or cr lf. A line ending at the end of the string will not
-     * output a further, empty string.
-     * <p>
-     * This code assumes <var>str</var> is not <code>null</code>.
+     * Split into lines.
      *
-     * @param str
-     *                the string to split
-     * @return a non-empty list of strings
+     * @param str the str
+     * @return the list
      */
     public static List<String> splitIntoLines(String str) {
         ArrayList<String> strings = new ArrayList<>();

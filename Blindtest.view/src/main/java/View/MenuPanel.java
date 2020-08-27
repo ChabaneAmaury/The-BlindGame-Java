@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -39,8 +39,7 @@ public class MenuPanel extends MyPanel {
     /**
      * Instantiates a new menu panel.
      *
-     * @param viewFrame
-     *                      the view frame
+     * @param viewFrame the view frame
      */
     public MenuPanel(ViewFrame viewFrame) {
         super(viewFrame);
@@ -53,14 +52,10 @@ public class MenuPanel extends MyPanel {
     /**
      * Draw theme.
      *
-     * @param graphics
-     *                     the graphics
-     * @param theme
-     *                     the theme
-     * @param x
-     *                     the x
-     * @param y
-     *                     the y
+     * @param graphics the graphics
+     * @param theme the theme
+     * @param x the x
+     * @param y the y
      */
     public void drawTheme(Graphics2D graphics, IEntity theme, double x, double y) {
         graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1)); // remove transparency
@@ -118,8 +113,7 @@ public class MenuPanel extends MyPanel {
     /**
      * Paint component.
      *
-     * @param g
-     *              the g
+     * @param g the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -191,8 +185,7 @@ public class MenuPanel extends MyPanel {
     /**
      * Sets the show index.
      *
-     * @param showIndex
-     *                      the new show index
+     * @param showIndex the new show index
      */
     public void setShowIndex(int showIndex) {
         this.showIndex = showIndex;

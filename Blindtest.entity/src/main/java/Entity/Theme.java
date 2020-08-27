@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package Entity;
 
@@ -72,6 +72,7 @@ public class Theme extends Properties implements IEntity {
     /** The resized cover image. */
     private Image resizedCoverImage = null;
 
+    /** The thumbnail cover image. */
     private Image thumbnailCoverImage = null;
 
     /** The has error. */
@@ -559,11 +560,24 @@ public class Theme extends Properties implements IEntity {
         this.folder = folder2;
     }
 
+    /**
+     * Gets the thumbnail cover image.
+     *
+     * @return the thumbnail cover image
+     */
     @Override
     public Image getThumbnailCoverImage() {
         return this.thumbnailCoverImage;
     }
 
+    /**
+     * Sets the thumbnail cover image.
+     *
+     * @param width
+     *                   the width
+     * @param height
+     *                   the height
+     */
     @Override
     public void setThumbnailCoverImage(int width, int height) {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -583,6 +597,12 @@ public class Theme extends Properties implements IEntity {
         this.setThumbnailCoverImage(img);
     }
 
+    /**
+     * Sets the thumbnail cover image.
+     *
+     * @param thumbnailCoverImage
+     *                                the new thumbnail cover image
+     */
     @Override
     public void setThumbnailCoverImage(Image thumbnailCoverImage) {
         this.thumbnailCoverImage = thumbnailCoverImage;

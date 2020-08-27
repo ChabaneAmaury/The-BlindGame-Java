@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -40,8 +40,7 @@ public class MyPanel extends JPanel {
     /**
      * Instantiates a new my panel.
      *
-     * @param viewFrame
-     *                      the view frame
+     * @param viewFrame the view frame
      */
     public MyPanel(ViewFrame viewFrame) {
         this.setViewFrame(viewFrame);
@@ -51,8 +50,7 @@ public class MyPanel extends JPanel {
     /**
      * Load image.
      *
-     * @param path
-     *                 the path
+     * @param path the path
      * @return the image
      */
     public Image loadImage(String path) {
@@ -69,12 +67,9 @@ public class MyPanel extends JPanel {
     /**
      * Scale image dimensions.
      *
-     * @param image
-     *                      the image
-     * @param maxWidth
-     *                      the max width
-     * @param maxHeight
-     *                      the max height
+     * @param image the image
+     * @param maxWidth the max width
+     * @param maxHeight the max height
      * @return the dimension
      */
     public Dimension scaleImageDimensions(Image image, double maxWidth, double maxHeight) {
@@ -92,18 +87,12 @@ public class MyPanel extends JPanel {
     /**
      * Draw centered string.
      *
-     * @param page
-     *                   the page
-     * @param s
-     *                   the s
-     * @param x
-     *                   the x
-     * @param y
-     *                   the y
-     * @param width
-     *                   the width
-     * @param height
-     *                   the height
+     * @param page the page
+     * @param s the s
+     * @param x the x
+     * @param y the y
+     * @param width the width
+     * @param height the height
      */
     public void drawCenteredString(Graphics page, String s, int x, int y, int width, int height) {
         // Find the size of string s in the font of the Graphics context "page"
@@ -121,8 +110,7 @@ public class MyPanel extends JPanel {
     /**
      * Draw gradient paint.
      *
-     * @param graphics
-     *                     the graphics
+     * @param graphics the graphics
      */
     public void drawGradientPaint(Graphics2D graphics) {
         Paint paint = new GradientPaint(this.getWidth() / 2, 0, Color.blue.darker().darker(), this.getWidth() / 2,
@@ -134,18 +122,12 @@ public class MyPanel extends JPanel {
     /**
      * Draw button.
      *
-     * @param graphics
-     *                     the graphics
-     * @param text
-     *                     the text
-     * @param x
-     *                     the x
-     * @param y
-     *                     the y
-     * @param width
-     *                     the width
-     * @param height
-     *                     the height
+     * @param graphics the graphics
+     * @param text the text
+     * @param x the x
+     * @param y the y
+     * @param width the width
+     * @param height the height
      */
     public void drawButton(Graphics2D graphics, String text, int x, int y, int width, int height) {
         Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
@@ -179,8 +161,7 @@ public class MyPanel extends JPanel {
     /**
      * Sets the view frame.
      *
-     * @param viewFrame
-     *                      the new view frame
+     * @param viewFrame the new view frame
      */
     public void setViewFrame(ViewFrame viewFrame) {
         this.viewFrame = viewFrame;
@@ -198,8 +179,7 @@ public class MyPanel extends JPanel {
     /**
      * Sets the dimensions.
      *
-     * @param dimensions
-     *                       the new dimensions
+     * @param dimensions the new dimensions
      */
     public void setDimensions(Dimension dimensions) {
         this.dimensions = dimensions;

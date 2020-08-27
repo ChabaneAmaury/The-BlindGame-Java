@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package Controller;
 

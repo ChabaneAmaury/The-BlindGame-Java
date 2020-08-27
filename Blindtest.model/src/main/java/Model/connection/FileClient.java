@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package Model.connection;
 
@@ -45,12 +45,9 @@ public class FileClient {
     /**
      * Unzip.
      *
-     * @param zipFilePath
-     *                          the zip file path
-     * @param destDirectory
-     *                          the dest directory
-     * @throws IOException
-     *                         Signals that an I/O exception has occurred.
+     * @param zipFilePath the zip file path
+     * @param destDirectory the dest directory
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     private void unzip(String zipFilePath, String destDirectory) throws IOException {
         File destDir = new File(destDirectory);
@@ -79,12 +76,9 @@ public class FileClient {
     /**
      * Extract file.
      *
-     * @param zipIn
-     *                     the zip in
-     * @param filePath
-     *                     the file path
-     * @throws IOException
-     *                         Signals that an I/O exception has occurred.
+     * @param zipIn the zip in
+     * @param filePath the file path
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         File yourFile = new File(filePath);
@@ -103,10 +97,8 @@ public class FileClient {
     /**
      * Instantiates a new file client.
      *
-     * @param model
-     *                  the model
-     * @param ip
-     *                  the ip
+     * @param model the model
+     * @param ip the ip
      */
     public FileClient(Model model, String ip) {
         this.setIp(ip);
@@ -163,8 +155,7 @@ public class FileClient {
     /**
      * Connect to server.
      *
-     * @param ip
-     *               the ip
+     * @param ip the ip
      */
     private void connectToServer(String ip) {
         try {
@@ -239,8 +230,7 @@ public class FileClient {
     /**
      * Sets the folders to receive.
      *
-     * @param foldersToReceive
-     *                             the new folders to receive
+     * @param foldersToReceive the new folders to receive
      */
     public void setFoldersToReceive(ArrayList<File> foldersToReceive) {
         this.foldersToReceive = foldersToReceive;
@@ -258,8 +248,7 @@ public class FileClient {
     /**
      * Sets the model.
      *
-     * @param model
-     *                  the new model
+     * @param model the new model
      */
     public void setModel(Model model) {
         this.model = model;
@@ -277,8 +266,7 @@ public class FileClient {
     /**
      * Sets the ip.
      *
-     * @param ip
-     *               the new ip
+     * @param ip the new ip
      */
     public void setIp(String ip) {
         this.ip = ip;
