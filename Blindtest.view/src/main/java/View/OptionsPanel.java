@@ -40,7 +40,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Instantiates a new options panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public OptionsPanel(ViewFrame viewFrame) {
         super(viewFrame);
@@ -138,7 +139,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -156,6 +158,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         int hardX = (int) (mediumX + btnW + (this.getWidth() / 51.2));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
         this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
@@ -181,7 +185,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the checkboxes.
      *
-     * @param checkboxes the new checkboxes
+     * @param checkboxes
+     *                       the new checkboxes
      */
     public void setCheckboxes(List<JCheckBox> checkboxes) {
         this.checkboxes = checkboxes;
@@ -190,7 +195,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Action performed.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -210,7 +216,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the difficulty.
      *
-     * @param difficulty the new difficulty
+     * @param difficulty
+     *                       the new difficulty
      */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
@@ -228,7 +235,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the show index.
      *
-     * @param showIndex the new show index
+     * @param showIndex
+     *                      the new show index
      */
     public void setShowIndex(int showIndex) {
         this.showIndex = showIndex;

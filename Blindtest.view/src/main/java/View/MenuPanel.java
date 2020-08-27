@@ -91,18 +91,17 @@ public class MenuPanel extends MyPanel {
                 }
             }
             Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
-            if ((theme.getResizedCoverImage() == null)
-                    || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
-                    || (theme.getResizedCoverImage().getHeight(null) != (int) imgDim.getHeight())) {
-                theme.setResizedCoverImage(theme.getCoverImage().getScaledInstance((int) imgDim.getWidth(),
-                        (int) imgDim.getHeight(), Image.SCALE_SMOOTH));
+            if ((theme.getThumbnailCoverImage() == null)
+                    || (theme.getThumbnailCoverImage().getWidth(null) != (int) imgDim.getWidth())
+                    || (theme.getThumbnailCoverImage().getHeight(null) != (int) imgDim.getHeight())) {
+                theme.setThumbnailCoverImage((int) imgDim.getWidth(), (int) imgDim.getHeight());
             }
             rectX = (int) ((rectX + (rectW / 2)) - (imgDim.getWidth() / 2));
             rectY = (int) ((rectY + (rectH / 2)) - (imgDim.getHeight() / 2));
             rectW = (int) imgDim.getWidth();
             rectH = (int) imgDim.getHeight();
 
-            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
+            graphics.drawImage(theme.getThumbnailCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
@@ -137,6 +136,8 @@ public class MenuPanel extends MyPanel {
         int quitX = (int) (this.getWidth() / 51.2);
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
         this.drawButton(graphics, "Options", optionsX, btnY, btnW, btnH);

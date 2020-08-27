@@ -6,6 +6,7 @@ package View;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
 /**
  * The Class LoadPanel.
@@ -29,7 +30,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Instantiates a new load panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public LoadPanel(ViewFrame viewFrame) {
         super(viewFrame);
@@ -56,7 +58,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -65,6 +68,9 @@ public class LoadPanel extends MyPanel {
         int imgX = (this.getWidth() / 2) - (imgW / 2);
         int imgY = (this.getHeight() / 2) - (imgW / 2);
         Graphics2D graphics = (Graphics2D) g;
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         this.drawGradientPaint(graphics);
         graphics.rotate(this.getRotateFactor(), this.getWidth() / 2, this.getHeight() / 2);
         graphics.drawImage(this.getImage(), imgX, imgY, imgW, imgW, null);
@@ -82,7 +88,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Sets the rotate.
      *
-     * @param rotate the new rotate
+     * @param rotate
+     *                   the new rotate
      */
     public void setRotate(Thread rotate) {
         this.rotate = rotate;
@@ -100,7 +107,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Sets the rotate factor.
      *
-     * @param d the new rotate factor
+     * @param d
+     *              the new rotate factor
      */
     public void setRotateFactor(double d) {
         this.rotateFactor = d;
@@ -118,7 +126,8 @@ public class LoadPanel extends MyPanel {
     /**
      * Sets the image.
      *
-     * @param image the new image
+     * @param image
+     *                  the new image
      */
     public void setImage(Image image) {
         this.image = image;
