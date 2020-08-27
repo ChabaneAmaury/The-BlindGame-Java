@@ -3,8 +3,11 @@
  */
 package Entity;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +20,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import Contract.IEntity;
 import Contract.IModel;
@@ -67,6 +72,8 @@ public class Theme extends Properties implements IEntity {
     /** The resized cover image. */
     private Image resizedCoverImage = null;
 
+    private Image thumbnailCoverImage = null;
+
     /** The has error. */
     private boolean hasError = false;
 
@@ -96,6 +103,12 @@ public class Theme extends Properties implements IEntity {
         } catch (Exception e2) {
             e2.printStackTrace();
         }
+
+        File thumb = new File(folder.getAbsolutePath() + "\\cover_thumb.jpg");
+        if (thumb.exists()) {
+            this.setThumbnailCoverImage(this.loadImage(thumb.getAbsolutePath()));
+        }
+
         if (new File(this.FindFileByExtension(folder, this.getFileExtensions())).exists()) {
             this.setFile(this.FindFileByExtension(folder, this.getFileExtensions()));
         } else {
@@ -147,12 +160,7 @@ public class Theme extends Properties implements IEntity {
             }
 
             if (!this.getProperty("type").isEmpty()) {
-                for (String type : this.getModel().getTypes()) {
-                    if (this.getProperty("type").equalsIgnoreCase(type)) {
-                        this.setType(type);
-                        break;
-                    }
-                }
+                this.setType(this.getProperty("type"));
             }
             try {
                 this.setTimecode(Integer.parseInt(this.getProperty("timecode")));
@@ -232,7 +240,7 @@ public class Theme extends Properties implements IEntity {
             @Override
             public boolean accept(File dir, String name) {
                 for (String extension : extensions) {
-                    if (name.toLowerCase().endsWith(extension)) {
+                    if (!name.equalsIgnoreCase("cover_thumb.jpg") && name.toLowerCase().endsWith(extension)) {
                         return true;
                     }
                 }
@@ -551,4 +559,32 @@ public class Theme extends Properties implements IEntity {
         this.folder = folder2;
     }
 
+    @Override
+    public Image getThumbnailCoverImage() {
+        return this.thumbnailCoverImage;
+    }
+
+    @Override
+    public void setThumbnailCoverImage(int width, int height) {
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        try {
+            Graphics2D g = img.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g.drawImage(this.getCoverImage(), 0, 0, width, height, null);
+            g.dispose();
+            ImageIO.write(img, "jpg", new File(this.getFolder().getAbsolutePath() + "\\cover_thumb.jpg"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        this.setThumbnailCoverImage(img);
+    }
+
+    @Override
+    public void setThumbnailCoverImage(Image thumbnailCoverImage) {
+        this.thumbnailCoverImage = thumbnailCoverImage;
+    }
 }
