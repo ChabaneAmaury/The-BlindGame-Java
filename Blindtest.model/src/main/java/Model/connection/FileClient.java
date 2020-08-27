@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -38,9 +35,6 @@ public class FileClient {
 
     /** The folders to receive. */
     private ArrayList<File> foldersToReceive = new ArrayList<>();
-
-    /** The server types. */
-    private ArrayList<String> serverTypes = new ArrayList<>();
 
     /** The ip. */
     private String ip = null;
@@ -130,9 +124,6 @@ public class FileClient {
         try {
             this.connectToServer(this.getIp());
             System.out.println("[Client] Connected to : " + this.socket);
-            this.setServerTypes(this.getStreamedTypes());
-            this.addMissingTypes();
-            this.getModel().loadTypes();
 
             this.sendFolders();
             this.setFoldersToReceive(this.getStreamedFoldersToReceive());
@@ -154,40 +145,6 @@ public class FileClient {
         } catch (IOException e) {
         }
         System.out.println("[Client] Client stopped!");
-    }
-
-    /**
-     * Adds the missing types.
-     */
-    public void addMissingTypes() {
-        for (String serverType : this.getServerTypes()) {
-            boolean checked = false;
-            for (String type : this.getModel().getTypes()) {
-                if (serverType.equalsIgnoreCase(type)) {
-                    checked = true;
-                    break;
-                }
-            }
-            if (!checked) {
-                this.appendNewLineToTypes(serverType);
-            }
-        }
-    }
-
-    /**
-     * Append new line to types.
-     *
-     * @param value
-     *                  the value
-     */
-    public void appendNewLineToTypes(String value) {
-
-        try {
-            Files.write(Paths.get("bin\\types.txt"), ("\n" + value).getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -235,26 +192,10 @@ public class FileClient {
     }
 
     /**
-     * Gets the streamed types.
-     *
-     * @return the streamed types
-     */
-    @SuppressWarnings("unchecked")
-    private ArrayList<String> getStreamedTypes() {
-        ArrayList<String> folders = null;
-        try {
-            ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
-            folders = (ArrayList<String>) is.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-        }
-        return folders;
-    }
-
-    /**
      * Receive theme.
      */
     private void receiveTheme() {
-        String zipName = "files\\theme.zip";
+        String zipName = "files\\rcv_theme.zip";
         try {
             FileOutputStream fos = new FileOutputStream(zipName);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
@@ -341,24 +282,5 @@ public class FileClient {
      */
     public void setIp(String ip) {
         this.ip = ip;
-    }
-
-    /**
-     * Gets the server types.
-     *
-     * @return the server types
-     */
-    public ArrayList<String> getServerTypes() {
-        return this.serverTypes;
-    }
-
-    /**
-     * Sets the server types.
-     *
-     * @param serverTypes
-     *                        the new server types
-     */
-    public void setServerTypes(ArrayList<String> serverTypes) {
-        this.serverTypes = serverTypes;
     }
 }

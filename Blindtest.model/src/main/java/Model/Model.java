@@ -4,10 +4,7 @@
 
 package Model;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -48,8 +45,8 @@ public class Model implements IModel {
      * Instantiates a new model.
      */
     public Model() {
-        this.loadTypes();
         this.fillThemesList();
+        this.loadTypes();
 
         try {
             Thread server = new Thread(new FileServer(this));
@@ -64,8 +61,8 @@ public class Model implements IModel {
             public void run() {
                 try {
                     while (true) {
+                        Thread.sleep(30000);
                         Model.this.scanIPsInSubnet();
-                        Thread.sleep(100);
                         for (String addr : Model.this.getIPsToScan()) {
                             System.out.println("Trying " + addr);
                             @SuppressWarnings("unused")
@@ -134,30 +131,16 @@ public class Model implements IModel {
     @Override
     public void loadTypes() {
         this.getTypes().clear();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader("bin\\types.txt"));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        String line;
-        try {
-            while ((line = br.readLine()) != null) {
-                if (line.length() > 1) {
-                    this.getTypes().add(line);
+        for (IEntity theme : this.getThemes()) {
+            if (this.getTypes().isEmpty()) {
+                this.getTypes().add(theme.getType().toUpperCase());
+            } else {
+                if (!this.getTypes().contains(theme.getType().toUpperCase())) {
+                    this.getTypes().add(theme.getType().toUpperCase());
                 }
             }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
-        try {
-            br.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -212,7 +195,8 @@ public class Model implements IModel {
     /**
      * Sets the folders.
      *
-     * @param folders the new folders
+     * @param folders
+     *                    the new folders
      */
     @Override
     public void setFolders(File[] folders) {
@@ -242,7 +226,8 @@ public class Model implements IModel {
     /**
      * Sets the types.
      *
-     * @param types the new types
+     * @param types
+     *                  the new types
      */
     public void setTypes(ArrayList<String> types) {
         this.types = types;
@@ -260,7 +245,8 @@ public class Model implements IModel {
     /**
      * Sets the i ps to scan.
      *
-     * @param iPsToScan the new i ps to scan
+     * @param iPsToScan
+     *                      the new i ps to scan
      */
     public void setIPsToScan(ArrayList<String> iPsToScan) {
         this.IPsToScan = iPsToScan;
