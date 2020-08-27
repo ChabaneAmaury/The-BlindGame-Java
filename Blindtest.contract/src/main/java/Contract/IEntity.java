@@ -171,4 +171,10 @@ public interface IEntity {
      */
     void setResizedCoverImage(Image resizedCoverImage);
 
+    Image getThumbnailCoverImage();
+
+    void setThumbnailCoverImage(int width, int height);
+
+    void setThumbnailCoverImage(Image thumbnailCoverImage);
+
 }

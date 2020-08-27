@@ -54,6 +54,7 @@ class ViewPanel extends MyPanel {
      *                     the theme
      */
     public void drawTheme(Graphics2D graphics, IEntity theme) {
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int metaXStart = (int) (this.getWidth() / 51.2);
         int titleHeight = (int) (this.getHeight() / 28.8) + graphics.getFont().getSize();
         int composerHeight = (int) (this.getHeight() / 14.4) + titleHeight + graphics.getFont().getSize();
@@ -99,6 +100,7 @@ class ViewPanel extends MyPanel {
             rectH = (int) imgDim.getHeight();
 
             graphics.fill(new Rectangle(rectX - border, rectY - border, rectW + (border * 2), rectH + (border * 2)));
+            graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, null);
         } else {
             graphics.setBackground(Color.GRAY);
@@ -115,6 +117,7 @@ class ViewPanel extends MyPanel {
      *                     the graphics
      */
     public void drawCounter(Graphics2D graphics) {
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 20.57)));
         graphics.drawString(
@@ -144,7 +147,6 @@ class ViewPanel extends MyPanel {
 
         IEntity theme = this.getViewFrame().getController().getTheme();
         Graphics2D graphics = (Graphics2D) g;
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.drawGradientPaint(graphics);
         if (this.getViewFrame().getController().getTimeLeft() < 0) {
             this.drawTheme(graphics, theme);
