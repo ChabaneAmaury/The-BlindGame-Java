@@ -6,7 +6,6 @@ package Controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
-import Contract.Difficulties;
 import Contract.IControllerMain;
 import Contract.IEntity;
 import Contract.IModel;
@@ -27,7 +26,7 @@ public class ControllerMain extends Observable implements IControllerMain {
     private IModel model;
 
     /** The allowed time. */
-    private static int allowedTime = Difficulties.EASY;
+    private static int allowedTime = 20;
 
     /** The time left. */
     private int timeLeft = ControllerMain.allowedTime;

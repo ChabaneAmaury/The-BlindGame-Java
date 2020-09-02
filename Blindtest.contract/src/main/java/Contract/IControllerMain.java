@@ -70,9 +70,9 @@ public interface IControllerMain {
     /**
      * Sets the allowed time.
      *
-     * @param aLLOWED_TIME the new allowed time
+     * @param ALLOWED_TIME the new allowed time
      */
-    void setAllowedTime(int aLLOWED_TIME);
+    void setAllowedTime(int ALLOWED_TIME);
 
     /**
      * Removes the type.

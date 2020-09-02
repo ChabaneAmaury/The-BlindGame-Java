@@ -12,8 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 
 import javax.sound.sampled.AudioInputStream;
@@ -27,71 +25,6 @@ import Contract.IEntity;
  * @author Amaury Chabane
  */
 public class ThemePropPanel extends MyPanel {
-
-    /**
-     * The Class RoundJTextField.
-     *
-     * @author Amaury Chabane
-     */
-    @SuppressWarnings("serial")
-    public class RoundJTextField extends JTextField {
-
-        /** The shape. */
-        private Shape shape;
-
-        /**
-         * Instantiates a new round J text field.
-         *
-         * @param size
-         *                 the size
-         */
-        public RoundJTextField(int size) {
-            super(size);
-            this.setOpaque(false); // As suggested by @AVD in comment.
-        }
-
-        /**
-         * Paint component.
-         *
-         * @param g
-         *              the g
-         */
-        @Override
-        protected void paintComponent(Graphics g) {
-            g.setColor(this.getBackground());
-            g.fillRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, 15, 15);
-            super.paintComponent(g);
-        }
-
-        /**
-         * Paint border.
-         *
-         * @param g
-         *              the g
-         */
-        @Override
-        protected void paintBorder(Graphics g) {
-            g.setColor(this.getForeground());
-            g.drawRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, 15, 15);
-        }
-
-        /**
-         * Contains.
-         *
-         * @param x
-         *              the x
-         * @param y
-         *              the y
-         * @return true, if successful
-         */
-        @Override
-        public boolean contains(int x, int y) {
-            if ((this.shape == null) || !this.shape.getBounds().equals(this.getBounds())) {
-                this.shape = new RoundRectangle2D.Float(0, 0, this.getWidth() - 1, this.getHeight() - 1, 15, 15);
-            }
-            return this.shape.contains(x, y);
-        }
-    }
 
     /** The title field. */
     private JTextField titleField = null;
@@ -167,31 +100,6 @@ public class ThemePropPanel extends MyPanel {
         this.setInfosField(this.createTextField(this.getTheme().getInfos(),
                 (int) (this.getViewFrame().getWidth() / 51.2), this.getReleaseField().getBounds().y + fieldHeightFactor,
                 (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
-    }
-
-    /**
-     * Creates the text field.
-     *
-     * @param string
-     *                   the string
-     * @param x
-     *                   the x
-     * @param y
-     *                   the y
-     * @param width
-     *                   the width
-     * @param height
-     *                   the height
-     * @return the round J text field
-     */
-    public RoundJTextField createTextField(String string, int x, int y, int width, int height) {
-        RoundJTextField textField = new RoundJTextField(0);
-        textField.setFont(new Font(this.getFontName(), Font.PLAIN, (int) (this.getViewFrame().getWidth() / 51.2)));
-        textField.setText(string);
-        textField.setForeground(Color.BLACK);
-        textField.setBounds(x, y, width, height);
-        this.add(textField);
-        return textField;
     }
 
     /**
