@@ -195,7 +195,8 @@ public class Model implements IModel {
     /**
      * Sets the folders.
      *
-     * @param folders the new folders
+     * @param folders
+     *                    the new folders
      */
     @Override
     public void setFolders(File[] folders) {
@@ -225,7 +226,8 @@ public class Model implements IModel {
     /**
      * Sets the types.
      *
-     * @param types the new types
+     * @param types
+     *                  the new types
      */
     public void setTypes(ArrayList<String> types) {
         this.types = types;
@@ -243,7 +245,8 @@ public class Model implements IModel {
     /**
      * Sets the i ps to scan.
      *
-     * @param iPsToScan the new i ps to scan
+     * @param iPsToScan
+     *                      the new i ps to scan
      */
     public void setIPsToScan(ArrayList<String> iPsToScan) {
         this.IPsToScan = iPsToScan;
