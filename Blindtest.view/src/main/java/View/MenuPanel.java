@@ -130,8 +130,8 @@ public class MenuPanel extends MyPanel {
         super.paintComponent(g);
         int playX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10));
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
-        int btnW = this.getWidth() / 10;
-        int btnH = this.getHeight() / 12;
+        int btnW = this.getWidth() / 12;
+        int btnH = this.getHeight() / 14;
         int optionsX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW);
         int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - (btnW * 2))
                 + (btnW / 2);

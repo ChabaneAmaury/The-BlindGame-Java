@@ -42,7 +42,8 @@ public class ThemePropPanel extends MyPanel {
         /**
          * Instantiates a new round J text field.
          *
-         * @param size the size
+         * @param size
+         *                 the size
          */
         public RoundJTextField(int size) {
             super(size);
@@ -52,7 +53,8 @@ public class ThemePropPanel extends MyPanel {
         /**
          * Paint component.
          *
-         * @param g the g
+         * @param g
+         *              the g
          */
         @Override
         protected void paintComponent(Graphics g) {
@@ -64,7 +66,8 @@ public class ThemePropPanel extends MyPanel {
         /**
          * Paint border.
          *
-         * @param g the g
+         * @param g
+         *              the g
          */
         @Override
         protected void paintBorder(Graphics g) {
@@ -75,8 +78,10 @@ public class ThemePropPanel extends MyPanel {
         /**
          * Contains.
          *
-         * @param x the x
-         * @param y the y
+         * @param x
+         *              the x
+         * @param y
+         *              the y
          * @return true, if successful
          */
         @Override
@@ -124,9 +129,12 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Instantiates a new theme prop panel.
      *
-     * @param viewFrame the view frame
-     * @param themeIndex the theme index
-     * @param originalShowIndex the original show index
+     * @param viewFrame
+     *                              the view frame
+     * @param themeIndex
+     *                              the theme index
+     * @param originalShowIndex
+     *                              the original show index
      */
     public ThemePropPanel(ViewFrame viewFrame, int themeIndex, int originalShowIndex) {
         super(viewFrame);
@@ -164,11 +172,16 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Creates the text field.
      *
-     * @param string the string
-     * @param x the x
-     * @param y the y
-     * @param width the width
-     * @param height the height
+     * @param string
+     *                   the string
+     * @param x
+     *                   the x
+     * @param y
+     *                   the y
+     * @param width
+     *                   the width
+     * @param height
+     *                   the height
      * @return the round J text field
      */
     public RoundJTextField createTextField(String string, int x, int y, int width, int height) {
@@ -184,8 +197,10 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Draw theme.
      *
-     * @param graphics the graphics
-     * @param theme the theme
+     * @param graphics
+     *                     the graphics
+     * @param theme
+     *                     the theme
      */
     public void drawTheme(Graphics2D graphics, IEntity theme) {
         int metaXStart = (int) (this.getWidth() / 51.2);
@@ -238,15 +253,16 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         int menuX = (int) (this.getWidth() / 51.2);
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
-        int btnW = this.getWidth() / 10;
-        int btnH = this.getHeight() / 12;
+        int btnW = this.getWidth() / 12;
+        int btnH = this.getHeight() / 14;
         int playX = (int) (this.getWidth() / 51.2) + menuX + btnW;
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -278,7 +294,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the theme.
      *
-     * @param theme the new theme
+     * @param theme
+     *                  the new theme
      */
     public void setTheme(IEntity theme) {
         this.theme = theme;
@@ -296,7 +313,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the title field.
      *
-     * @param titleField the new title field
+     * @param titleField
+     *                       the new title field
      */
     public void setTitleField(JTextField titleField) {
         this.titleField = titleField;
@@ -314,7 +332,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the composer field.
      *
-     * @param composerField the new composer field
+     * @param composerField
+     *                          the new composer field
      */
     public void setComposerField(JTextField composerField) {
         this.composerField = composerField;
@@ -332,7 +351,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the type field.
      *
-     * @param typeField the new type field
+     * @param typeField
+     *                      the new type field
      */
     public void setTypeField(JTextField typeField) {
         this.typeField = typeField;
@@ -350,7 +370,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the time code field.
      *
-     * @param timeCodeField the new time code field
+     * @param timeCodeField
+     *                          the new time code field
      */
     public void setTimeCodeField(JTextField timeCodeField) {
         this.timeCodeField = timeCodeField;
@@ -368,7 +389,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the release field.
      *
-     * @param releaseField the new release field
+     * @param releaseField
+     *                         the new release field
      */
     public void setReleaseField(JTextField releaseField) {
         this.releaseField = releaseField;
@@ -386,7 +408,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the infos field.
      *
-     * @param infosField the new infos field
+     * @param infosField
+     *                       the new infos field
      */
     public void setInfosField(JTextField infosField) {
         this.infosField = infosField;
@@ -404,7 +427,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the audio input stream.
      *
-     * @param audioInputStream the new audio input stream
+     * @param audioInputStream
+     *                             the new audio input stream
      */
     public void setAudioInputStream(AudioInputStream audioInputStream) {
         this.audioInputStream = audioInputStream;
@@ -422,7 +446,8 @@ public class ThemePropPanel extends MyPanel {
     /**
      * Sets the original show index.
      *
-     * @param originalShowIndex the new original show index
+     * @param originalShowIndex
+     *                              the new original show index
      */
     public void setOriginalShowIndex(int originalShowIndex) {
         this.originalShowIndex = originalShowIndex;
