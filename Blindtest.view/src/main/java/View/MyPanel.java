@@ -38,7 +38,7 @@ public class MyPanel extends JPanel {
     private Dimension dimensions = null;
 
     /** The font name. */
-    private String fontName = "Arial";
+    private String fontName = "Helvetica";
 
     /**
      * Instantiates a new my panel.
