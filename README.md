@@ -71,3 +71,6 @@ All fields must be on one line, including the infos one. The game will take care
 ## License
 
 This project is under Apache License 2.0 - see [LICENSE.md](LICENSE.md) for more details.
+
+# Donate
+You can buy me a coffee using this link (trust me, it helps keeping projects like this updated): https://paypal.me/AmauryChabane
