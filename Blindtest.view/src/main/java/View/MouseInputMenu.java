@@ -20,7 +20,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Instantiates a new mouse input menu.
      *
-     * @param menuPanel2 the menu panel 2
+     * @param menuPanel2
+     *                       the menu panel 2
      */
     public MouseInputMenu(MenuPanel menuPanel2) {
         this.menuPanel = menuPanel2;
@@ -29,7 +30,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse clicked.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -40,19 +42,20 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse pressed.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
+        this.getMenuPanel();
         int mx = e.getX();
         int my = e.getY();
         int playX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
                 - (this.getMenuPanel().getWidth() / 10));
         int btnY = (int) (this.getMenuPanel().getHeight() - (this.getMenuPanel().getWidth() / 51.2)
                 - (this.getMenuPanel().getHeight() / 10.2857143));
-        int btnW = this.getMenuPanel().getWidth() / 10;
-        int btnH = this.getMenuPanel().getHeight() / 12;
+        int btnW = this.getMenuPanel().getWidth() / 12;
+        int btnH = this.getMenuPanel().getHeight() / 14;
         int optionsX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
                 - (this.getMenuPanel().getWidth() / 10) - (this.getMenuPanel().getWidth() / 51.2) - btnW);
         int nextX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
@@ -91,12 +94,14 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
         } else {
             for (int i = this.getMenuPanel().getShowIndex(); i < (this.getMenuPanel().getShowIndex() + 3); i++) {
                 if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
-                    int tY = (int) (((((i - this.getMenuPanel().getShowIndex()) + 1) * this.getMenuPanel().getWidth())
-                            / 51.2)
-                            + ((((this.getMenuPanel().getWidth() / 11) * 160) / 120)
-                                    * (i - this.getMenuPanel().getShowIndex())));
-                    int tX = (int) (this.getMenuPanel().getWidth() / 51.2);
-                    int tW = this.getMenuPanel().getWidth() / 11;
+                    int tY = (int) ((((((i - this.getMenuPanel().getShowIndex()) + 1)
+                            * (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null))) / 51.2)
+                            + (((((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11) * 160) / 120)
+                                    * (i - this.getMenuPanel().getShowIndex()))))
+                            + MenuPanel.LOGO.getHeight(null);
+                    int tX = (int) ((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 51.2)
+                            + MenuPanel.LOGO.getWidth(null);
+                    int tW = (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11;
                     int tH = (tW * 160) / 120;
                     if ((my >= tY) && (my <= (tY + tH))) {
                         if ((mx >= tX) && (mx <= (tX + tW))) {
@@ -111,11 +116,14 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
             for (int i = this.getMenuPanel().getShowIndex() + 3; i < (this.getMenuPanel().getShowIndex() + 6); i++) {
                 if (i < this.getMenuPanel().getViewFrame().getModel().getThemes().size()) {
                     int tY = ((int) (((((i - 3 - this.getMenuPanel().getShowIndex()) + 1)
-                            * this.getMenuPanel().getWidth()) / 51.2))
-                            + ((((this.getMenuPanel().getWidth() / 11) * 160) / 120)
-                                    * (i - 3 - this.getMenuPanel().getShowIndex())));
-                    int tX = (int) (this.getMenuPanel().getWidth() / 51.2) + (this.getMenuPanel().getWidth() / 2);
-                    int tW = this.getMenuPanel().getWidth() / 11;
+                            * (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null))) / 51.2))
+                            + (((((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11) * 160) / 120)
+                                    * (i - 3 - this.getMenuPanel().getShowIndex())))
+                            + MenuPanel.LOGO.getHeight(null);
+                    int tX = (int) ((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 51.2)
+                            + ((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 2)
+                            + MenuPanel.LOGO.getWidth(null);
+                    int tW = (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11;
                     int tH = (tW * 160) / 120;
                     if ((my >= tY) && (my <= (tY + tH))) {
                         if ((mx >= tX) && (mx <= (tX + tW))) {
@@ -143,7 +151,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse released.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -154,7 +163,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse entered.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -165,7 +175,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse exited.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -175,7 +186,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse dragged.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -185,7 +197,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     /**
      * Mouse moved.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {

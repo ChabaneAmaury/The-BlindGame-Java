@@ -15,6 +15,7 @@ import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 
@@ -128,8 +129,8 @@ public class MyPanel extends JPanel {
      *                     the graphics
      */
     public void drawGradientPaint(Graphics2D graphics) {
-        Paint paint = new GradientPaint(this.getWidth() / 2, 0, Color.white, this.getWidth() / 2, this.getHeight(),
-                Color.gray);
+        Paint paint = new GradientPaint(0, 0, new Color(179, 1, 190), this.getWidth(), this.getHeight(),
+                new Color(11, 102, 135));
         graphics.setPaint(paint);
         graphics.fill(new Rectangle(this.getWidth(), this.getHeight()));
     }
@@ -152,19 +153,16 @@ public class MyPanel extends JPanel {
      */
     public void drawButton(Graphics2D graphics, String text, int x, int y, int width, int height) {
         Font basicFont = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
-        graphics.setColor(Color.DARK_GRAY);
-        graphics.fillRect(x - (this.getWidth() / 128), y - (this.getHeight() / 72), width + (this.getWidth() / 64),
-                height + (this.getHeight() / 36));
+        graphics.setColor(new Color(115, 115, 255));
+        graphics.fill(new RoundRectangle2D.Double(x - (this.getWidth() / 128), y - (this.getHeight() / 72),
+                width + (this.getWidth() / 64), height + (this.getHeight() / 36), 90, 90));
         Point mousePos = this.getMousePosition();
-        graphics.setColor(Color.GRAY);
-        if (mousePos != null) {
-            if ((mousePos.getX() >= x) && (mousePos.getX() <= (x + width))) {
-                if ((mousePos.getY() >= y) && (mousePos.getY() <= (y + height))) {
-                    graphics.setColor(Color.WHITE);
-                }
-            }
+        graphics.setColor(Color.BLUE);
+        if ((mousePos != null) && ((mousePos.getX() >= x) && (mousePos.getX() <= (x + width)))
+                && ((mousePos.getY() >= y) && (mousePos.getY() <= (y + height)))) {
+            graphics.setColor(Color.WHITE);
         }
-        graphics.fillRect(x, y, width, height);
+        graphics.fill(new RoundRectangle2D.Double(x, y, width, height, 70, 70));
         graphics.setColor(Color.BLACK);
         graphics.setFont(basicFont);
         this.drawCenteredString(graphics, text, x, y, width, height);
