@@ -118,16 +118,21 @@ public class ThemePropPanel extends MyPanel {
     /** The audio input stream. */
     private AudioInputStream audioInputStream = null;
 
+    /** The original show index. */
+    private int originalShowIndex = 0;
+
     /**
      * Instantiates a new theme prop panel.
      *
      * @param viewFrame the view frame
      * @param themeIndex the theme index
+     * @param originalShowIndex the original show index
      */
-    public ThemePropPanel(ViewFrame viewFrame, int themeIndex) {
+    public ThemePropPanel(ViewFrame viewFrame, int themeIndex, int originalShowIndex) {
         super(viewFrame);
         MouseInputThemeProp mouseInput = new MouseInputThemeProp(this);
         this.setTheme(this.getViewFrame().getModel().getThemes().get(themeIndex));
+        this.setOriginalShowIndex(originalShowIndex);
 
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.addMouseListener(mouseInput);
@@ -168,7 +173,7 @@ public class ThemePropPanel extends MyPanel {
      */
     public RoundJTextField createTextField(String string, int x, int y, int width, int height) {
         RoundJTextField textField = new RoundJTextField(0);
-        textField.setFont(new Font("Cooper Black", Font.PLAIN, (int) (this.getViewFrame().getWidth() / 51.2)));
+        textField.setFont(new Font(this.getFontName(), Font.PLAIN, (int) (this.getViewFrame().getWidth() / 51.2)));
         textField.setText(string);
         textField.setForeground(Color.BLACK);
         textField.setBounds(x, y, width, height);
@@ -190,9 +195,9 @@ public class ThemePropPanel extends MyPanel {
         int timecodeHeight = this.getTimeCodeField().getBounds().y - graphics.getFont().getSize();
         int dateHeight = this.getReleaseField().getBounds().y - graphics.getFont().getSize();
         int infosHeight = this.getInfosField().getBounds().y - graphics.getFont().getSize();
-        Font font = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
+        Font font = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
         graphics.setFont(font);
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(Color.BLACK);
 
         int border = this.getHeight() / 240;
         int rectX = (int) (this.getWidth() - (this.getWidth() / 51.2)
@@ -201,7 +206,7 @@ public class ThemePropPanel extends MyPanel {
         int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
         int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
         if (new File(theme.getCover()).exists()) {
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(Color.BLACK);
             Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
             if ((theme.getResizedCoverImage() == null)
                     || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
@@ -219,7 +224,7 @@ public class ThemePropPanel extends MyPanel {
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(Color.BLACK);
             this.drawCenteredString(graphics, "Image Not Found", rectX, rectY, rectW, rectH);
         }
         graphics.drawString("Title :", metaXStart, titleHeight);
@@ -403,6 +408,24 @@ public class ThemePropPanel extends MyPanel {
      */
     public void setAudioInputStream(AudioInputStream audioInputStream) {
         this.audioInputStream = audioInputStream;
+    }
+
+    /**
+     * Gets the original show index.
+     *
+     * @return the original show index
+     */
+    public int getOriginalShowIndex() {
+        return this.originalShowIndex;
+    }
+
+    /**
+     * Sets the original show index.
+     *
+     * @param originalShowIndex the new original show index
+     */
+    public void setOriginalShowIndex(int originalShowIndex) {
+        this.originalShowIndex = originalShowIndex;
     }
 
 }

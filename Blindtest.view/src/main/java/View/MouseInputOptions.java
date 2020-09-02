@@ -148,7 +148,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                     }
                 }
                 this.getOptionsPanel().getViewFrame()
-                        .setContentPane(new MenuPanel(this.getOptionsPanel().getViewFrame()));
+                        .setContentPane(new MenuPanel(this.getOptionsPanel().getViewFrame(), 0));
                 this.getOptionsPanel().getViewFrame().revalidate();
             }
         }

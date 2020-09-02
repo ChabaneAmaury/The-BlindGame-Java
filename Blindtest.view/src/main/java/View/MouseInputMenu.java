@@ -100,8 +100,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                     int tH = (tW * 160) / 120;
                     if ((my >= tY) && (my <= (tY + tH))) {
                         if ((mx >= tX) && (mx <= (tX + tW))) {
-                            this.getMenuPanel().getViewFrame()
-                                    .setContentPane(new ThemePropPanel(this.getMenuPanel().getViewFrame(), i));
+                            this.getMenuPanel().getViewFrame().setContentPane(new ThemePropPanel(
+                                    this.getMenuPanel().getViewFrame(), i, this.getMenuPanel().getShowIndex()));
                             this.getMenuPanel().getViewFrame().revalidate();
                             break;
                         }
@@ -119,8 +119,8 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
                     int tH = (tW * 160) / 120;
                     if ((my >= tY) && (my <= (tY + tH))) {
                         if ((mx >= tX) && (mx <= (tX + tW))) {
-                            this.getMenuPanel().getViewFrame()
-                                    .setContentPane(new ThemePropPanel(this.getMenuPanel().getViewFrame(), i));
+                            this.getMenuPanel().getViewFrame().setContentPane(new ThemePropPanel(
+                                    this.getMenuPanel().getViewFrame(), i, this.getMenuPanel().getShowIndex()));
                             this.getMenuPanel().getViewFrame().revalidate();
                             break;
                         }

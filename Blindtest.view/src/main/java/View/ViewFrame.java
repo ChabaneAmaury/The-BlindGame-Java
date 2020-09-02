@@ -245,7 +245,7 @@ public class ViewFrame extends JFrame implements Observer {
         this.setIconImage(this.loadImage(ICON));
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
         this.setUndecorated(true); // truly fullscreen
-        this.setContentPane(new MenuPanel(this));
+        this.setContentPane(new MenuPanel(this, 0));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }

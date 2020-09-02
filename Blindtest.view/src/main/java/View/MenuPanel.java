@@ -39,11 +39,15 @@ public class MenuPanel extends MyPanel {
     /**
      * Instantiates a new menu panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
+     * @param showIndex
+     *                      the show index
      */
-    public MenuPanel(ViewFrame viewFrame) {
+    public MenuPanel(ViewFrame viewFrame, int showIndex) {
         super(viewFrame);
         MouseInputMenu mouseInput = new MouseInputMenu(this);
+        this.setShowIndex(showIndex);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
         this.setDimensions(this.getViewFrame().getSize());
@@ -52,17 +56,21 @@ public class MenuPanel extends MyPanel {
     /**
      * Draw theme.
      *
-     * @param graphics the graphics
-     * @param theme the theme
-     * @param x the x
-     * @param y the y
+     * @param graphics
+     *                     the graphics
+     * @param theme
+     *                     the theme
+     * @param x
+     *                     the x
+     * @param y
+     *                     the y
      */
     public void drawTheme(Graphics2D graphics, IEntity theme, double x, double y) {
         graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1)); // remove transparency
-        Font basicFont = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
-        graphics.setColor(Color.WHITE);
+        Font basicFont = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
+        graphics.setColor(Color.BLACK);
         graphics.setFont(basicFont);
-        Font miniFont = new Font("Cooper Black", Font.BOLD, this.getHeight() / 90);
+        Font miniFont = new Font(this.getFontName(), Font.BOLD, this.getHeight() / 90);
         int rectX = (int) x;
         int rectY = (int) y;
         int rectW = this.getWidth() / 11;
@@ -74,7 +82,7 @@ public class MenuPanel extends MyPanel {
         int titleY = rectY + (rectH / 2) + (graphics.getFont().getSize() / 2);
         graphics.drawString(theme.getTitle(), titleX, titleY);
         if (new File(theme.getCover()).exists()) {
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(Color.BLACK);
             Point mousePos = this.getMousePosition();
             if (mousePos != null) {
                 if ((mousePos.getX() >= rectX) && (mousePos.getX() <= (rectX + rectW))) {
@@ -97,10 +105,11 @@ public class MenuPanel extends MyPanel {
             rectH = (int) imgDim.getHeight();
 
             graphics.drawImage(theme.getThumbnailCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
+            this.repaint();
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(Color.BLACK);
             graphics.setFont(miniFont);
             this.drawCenteredString(graphics, "Image Not Found", rectX, rectY, rectW, rectH);
         }
@@ -113,7 +122,8 @@ public class MenuPanel extends MyPanel {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
@@ -144,8 +154,8 @@ public class MenuPanel extends MyPanel {
                 int errorX = (int) (((this.getWidth() / 51.2) * 2) + btnW);
                 graphics.drawImage(this.loadImage(ERROR_ICON).getScaledInstance(btnH, btnH, Image.SCALE_SMOOTH), errorX,
                         btnY, btnH, btnH, null);
-                graphics.setFont(new Font("Cooper Black", Font.BOLD, this.getHeight() / 36));
-                graphics.setColor(new Color(255, 115, 115));
+                graphics.setFont(new Font(this.getFontName(), Font.BOLD, this.getHeight() / 36));
+                graphics.setColor(new Color(255, 0, 0));
                 List<String> strings = StringUtils.wrap("One or more themes are missing audio file...",
                         graphics.getFontMetrics(), (int) (this.getWidth() / 8.53));
                 int Ystart = btnY;
@@ -185,7 +195,8 @@ public class MenuPanel extends MyPanel {
     /**
      * Sets the show index.
      *
-     * @param showIndex the new show index
+     * @param showIndex
+     *                      the new show index
      */
     public void setShowIndex(int showIndex) {
         this.showIndex = showIndex;

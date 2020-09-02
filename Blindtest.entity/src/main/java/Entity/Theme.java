@@ -3,10 +3,7 @@
  */
 package Entity;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -183,9 +180,14 @@ public class Theme extends Properties implements IEntity {
      *                 the path
      * @return the image
      */
-    public Image loadImage(String path) {
-        Image img = null;
-        img = Toolkit.getDefaultToolkit().getImage(path);
+    public BufferedImage loadImage(String path) {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return img;
     }
 
@@ -241,7 +243,7 @@ public class Theme extends Properties implements IEntity {
             @Override
             public boolean accept(File dir, String name) {
                 for (String extension : extensions) {
-                    if (!name.equalsIgnoreCase("cover_thumb.jpg") && name.toLowerCase().endsWith(extension)) {
+                    if (!name.toLowerCase().contains("cover_thumb") && name.toLowerCase().endsWith(extension)) {
                         return true;
                     }
                 }
@@ -580,21 +582,22 @@ public class Theme extends Properties implements IEntity {
      */
     @Override
     public void setThumbnailCoverImage(int width, int height) {
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        File outputFile = null;
         try {
-            Graphics2D g = img.createGraphics();
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            g.drawImage(this.getCoverImage(), 0, 0, width, height, null);
-            g.dispose();
-            ImageIO.write(img, "jpg", new File(this.getFolder().getAbsolutePath() + "\\cover_thumb.jpg"));
+            BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            img.createGraphics().drawImage(this.getCoverImage().getScaledInstance(width, height, Image.SCALE_SMOOTH), 0,
+                    0, null);
+            outputFile = new File(this.getFolder().getAbsolutePath() + "\\cover_thumb.jpg");
+            ImageIO.write(img, "jpg", outputFile);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Exception while generating thumbnail " + e.getMessage());
         }
 
-        this.setThumbnailCoverImage(img);
+        this.setThumbnailCoverImage(this.loadImage(this.getFolder().getAbsolutePath() + "\\cover_thumb.jpg"));
+
+        // this.setThumbnailCoverImage(this.getCoverImage().getScaledInstance(width,
+        // height, Image.SCALE_SMOOTH));
     }
 
     /**

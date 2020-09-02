@@ -56,9 +56,9 @@ class ViewPanel extends MyPanel {
         int titleHeight = (int) (this.getHeight() / 28.8) + graphics.getFont().getSize();
         int composerHeight = (int) (this.getHeight() / 14.4) + titleHeight + graphics.getFont().getSize();
         int dateHeight = (int) (this.getHeight() / 14.4) + composerHeight + graphics.getFont().getSize();
-        Font font = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 28.8));
+        Font font = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
         graphics.setFont(font);
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(Color.BLACK);
         graphics.drawString("Title : " + theme.getTitle(), metaXStart, titleHeight);
         graphics.drawString("Composer : " + theme.getComposer(), metaXStart, composerHeight);
         graphics.drawString("Release date : " + theme.getReleaseDate(), metaXStart, dateHeight);
@@ -78,7 +78,7 @@ class ViewPanel extends MyPanel {
         int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
         int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
         if (new File(theme.getCover()).exists()) {
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(Color.BLACK);
             Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
             if ((theme.getResizedCoverImage() == null)
                     || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
@@ -102,7 +102,7 @@ class ViewPanel extends MyPanel {
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, (int) (this.getWidth() / 51.2), rectW, rectH);
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(Color.BLACK);
             this.drawCenteredString(graphics, "Image Not Found", rectX, (int) (this.getWidth() / 51.2), rectW, rectH);
         }
     }
@@ -114,13 +114,13 @@ class ViewPanel extends MyPanel {
      */
     public void drawCounter(Graphics2D graphics) {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 20.57)));
+        graphics.setColor(Color.BLACK);
+        graphics.setFont(new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 20.57)));
         graphics.drawString(
                 (this.getViewFrame().getController().getThemeIndex() + 1) + "/"
                         + this.getViewFrame().getController().getTmpList().size(),
                 (int) (this.getWidth() / 51.2), (int) (this.getWidth() / 51.2) + graphics.getFont().getSize());
-        Font font = new Font("Cooper Black", Font.BOLD, (int) (this.getHeight() / 7.2));
+        Font font = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 7.2));
         graphics.setFont(font);
         String time = Integer.toString(this.getViewFrame().getController().getTimeLeft());
         this.drawCenteredString(graphics, time, 0, 0, this.getWidth(), this.getHeight());

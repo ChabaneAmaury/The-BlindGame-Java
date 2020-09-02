@@ -60,7 +60,7 @@ public class MouseInputGame implements MouseListener, MouseMotionListener {
                 this.getViewPanel().getViewFrame().stopMusic();
                 this.getViewPanel().getViewFrame().getController().getTimer().stop();
                 this.getViewPanel().getViewFrame().setCurrentThemeIndex(9999);
-                this.getViewPanel().getViewFrame().setContentPane(new MenuPanel(this.getViewPanel().getViewFrame()));
+                this.getViewPanel().getViewFrame().setContentPane(new MenuPanel(this.getViewPanel().getViewFrame(), 0));
                 this.getViewPanel().getViewFrame().revalidate();
             } else if ((this.getViewPanel().getViewFrame().getController().getTimeLeft() < 0) && (mx >= pauseX)
                     && (mx <= (pauseX + btnW))) {

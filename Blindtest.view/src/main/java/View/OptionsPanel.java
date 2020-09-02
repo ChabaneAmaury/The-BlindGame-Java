@@ -69,7 +69,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     public void createCheckboxes() {
         this.getCheckboxes().clear();
 
-        Font basicFont = new Font("Cooper Black", Font.BOLD, this.getViewFrame().getHeight() / 15);
+        Font basicFont = new Font(this.getFontName(), Font.BOLD, this.getViewFrame().getHeight() / 15);
 
         for (int i = this.getShowIndex(); i < (this.getShowIndex() + 8); i++) {
             if (i < this.getViewFrame().getModel().getTypes().size()) {
@@ -91,7 +91,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
                         ((this.getViewFrame().getHeight() / 36) + basicFont.getSize()) * (i - this.getShowIndex()),
                         basicFont.getSize() * type.length(), basicFont.getSize());
                 chckbx.setOpaque(false);
-                chckbx.setForeground(Color.WHITE);
+                chckbx.setForeground(Color.BLACK);
                 chckbx.setFont(basicFont);
                 this.add(chckbx);
                 this.getCheckboxes().add(chckbx);
@@ -116,7 +116,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
                         ((this.getViewFrame().getHeight() / 36) + basicFont.getSize()) * (i - this.getShowIndex() - 8),
                         basicFont.getSize() * type.length(), basicFont.getSize());
                 chckbx.setOpaque(false);
-                chckbx.setForeground(Color.WHITE);
+                chckbx.setForeground(Color.BLACK);
                 chckbx.setFont(basicFont);
                 this.add(chckbx);
                 this.getCheckboxes().add(chckbx);
@@ -165,7 +165,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         this.drawButton(graphics, "Easy", easyX, btnY, btnW, btnH);
         this.drawButton(graphics, "Medium", mediumX, btnY, btnW, btnH);
         this.drawButton(graphics, "Hard", hardX, btnY, btnW, btnH);
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(Color.BLACK);
         graphics.setFont(graphics.getFont().deriveFont((float) (this.getHeight() / 15)));
         this.drawCenteredString(graphics, this.getDifficulty(), difficultyX, btnY,
                 (int) (easyX - (this.getWidth() / 51.2) - difficultyX), btnH);
