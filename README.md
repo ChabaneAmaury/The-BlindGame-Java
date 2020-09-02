@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="Blindtest.main/bin/icon.png" align="center">
-</p>
-
 # Blindtest
 * Easy to use
 * Simple interface
