@@ -1,6 +1,6 @@
 <p align="center"><img src="Blindtest.main/bin/icon.png" height="128" alt="The-Blindgame"></p>
 <h3 align="center">The Blindgame</h3>
-<p align="center"><i>A Community based blindtest game</i><p>
+<p align="center"><i>A community based blindtest game</i><p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0">
