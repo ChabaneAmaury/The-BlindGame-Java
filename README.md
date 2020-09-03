@@ -39,7 +39,7 @@
   <img src="assets/img/play.jpg">
 </p>
 
-## How to install
+# How to install
 
 Download latest version [here !](https://github.com/Gildur7161/Blindtest/releases)
 
@@ -47,9 +47,9 @@ If you have already Java installed on your computer, just download the "without 
 
 No need to install, just uncompress it wherever you want and you're done !
 
-## How to use
+# How to use
 
-### Create your theme
+## Create your theme
 
 You can add as many themes as you want. 
 1) Create a folder in the "files" directory
@@ -58,7 +58,7 @@ You can add as many themes as you want.
 4) Copy the "theme.properties" file from another theme or from the one in the "bin" directory. You you don't, one will be created automatically on launch
 5) Add the theme type in the "bin\types.txt" file if it is not already in 
 
-#### theme.properties infos
+### theme.properties infos
 
 - `title` - The movie/TV show/cartoon/... the theme is from
 - `composer` - The theme composer(s)
@@ -69,7 +69,7 @@ You can add as many themes as you want.
 
 All fields must be on one line, including the infos one. The game will take care of it
 
-### In-game content
+## In-game content
 
 <p align="center">
   <img src="assets/img/main_menu.jpg">
@@ -81,7 +81,7 @@ All fields must be on one line, including the infos one. The game will take care
   <img src="assets/img/theme_editor.jpg">
 </p>
 
-#### Options
+## Options
 
 <p align="center">
   <img src="assets/img/options.jpg">
@@ -94,7 +94,7 @@ All fields must be on one line, including the infos one. The game will take care
 - Choose the category(ies) you want to use my checking the checkboxes (clicking on the category name will work too)
 
 
-## License
+# License
 
 This project is under Apache License 2.0 - see [LICENSE.md](LICENSE.md) for more details.
 
