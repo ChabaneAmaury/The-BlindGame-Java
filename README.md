@@ -4,19 +4,19 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0">
-    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License"/>
+    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="Apache 2.0 License"/>
   </a>
   <a href="https://github.com/Gildur7161/The-BlindGame-Java/issues">
-    <img src="https://img.shields.io/github/issues/Gildur7161/The-BlindGame-Java.svg?style=for-the-badge" alt="issues"/>
+    <img src="https://img.shields.io/github/issues/Gildur7161/The-BlindGame-Java.svg" alt="issues"/>
   </a>
-  <a href="https://forthebadge.com">
-    <img src="https://forthebadge.com/images/badges/made-with-java.svg" alt="Java">
+  <a href="https://www.java.com/fr/">
+    <img src="https://img.shields.io/badge/MADE%20WITH-JAVA-red.svg" alt="Java">
   </a>
   <a href="https://github.com/Gildur7161/The-BlindGame-Java/stargazers">
-      <img src="https://img.shields.io/github/stars/Gildur7161/The-BlindGame-Java.svg?style=for-the-badge">
+      <img src="https://img.shields.io/github/stars/Gildur7161/The-BlindGame-Java.svg">
   </a>
   <a href="https://paypal.me/AmauryChabane">
-    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=for-the-badge">
+    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg">
   </a>
 </p>
 
