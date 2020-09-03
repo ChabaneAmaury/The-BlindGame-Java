@@ -1,5 +1,7 @@
 <p align="center">
-  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+  <a href="https://opensource.org/licenses/Apache-2.0">
+    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License"/>
+  </a>
   <a href="https://github.com/Gildur7161/The-BlindGame-Java/issues">
     <img src="https://img.shields.io/github/issues/Gildur7161/The-BlindGame-Java.svg?style=for-the-badge" alt="issues"/>
   </a>
