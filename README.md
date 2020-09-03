@@ -16,6 +16,14 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="#blindtest">Fonctionnalités</a> •
+  <a href="#how-to-install">Installation</a> •
+  <a href="#how-to-use">Utilisation</a> •
+  <a href="#license">Conçu avec</a> •
+  <a href="#donate">License</a>
+</p>
+
 # Blindtest
 * Easy to use
 * Simple interface
