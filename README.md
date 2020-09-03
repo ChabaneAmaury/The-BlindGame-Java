@@ -1,3 +1,7 @@
+<p align="center"><img src="Blindtest.main/bin/icon.png" height="128" alt="The-Blindgame"></p>
+<h3 align="center">The Blindgame</h3>
+<p align="center"><i>A Community based blindtest game</i><p>
+
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0">
     <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License"/>
@@ -17,14 +21,14 @@
 </p>
 
 <p align="center">
-  <a href="#blindtest">Fonctionnalités</a> •
-  <a href="#how-to-install">Installation</a> •
-  <a href="#how-to-use">Utilisation</a> •
-  <a href="#license">Conçu avec</a> •
-  <a href="#donate">License</a>
+  <a href="#overview">Overview</a> •
+  <a href="#how-to-install">How to install</a> •
+  <a href="#how-to-use">How to use</a> •
+  <a href="#license">License</a> •
+  <a href="#donate">Donate</a>
 </p>
 
-# Blindtest
+# Overview
 * Easy to use
 * Simple interface
 * Any theme is supported
