@@ -1,3 +1,22 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+[![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
+
+<p align="center">
+  <a href="https://github.com/Gildur7161/The-BlindGame-Java/issues">
+    <img src="https://img.shields.io/github/issues/Gildur7161/The-BlindGame-Java.svg?style=for-the-badge" alt="issues"/>
+  </a>
+  <a href="https://forthebadge.com">
+    <img src="https://forthebadge.com/images/badges/made-with-java.svg" alt="Java">
+  </a>
+  <a href="https://github.com/Gildur7161/The-BlindGame-Java/stargazers">
+      <img src="https://img.shields.io/github/stars/Gildur7161/The-BlindGame-Java.svg?style=for-the-badge">
+  </a>
+  <a href="https://paypal.me/AmauryChabane">
+    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=for-the-badge">
+  </a>
+</p>
+
 # Blindtest
 * Easy to use
 * Simple interface
