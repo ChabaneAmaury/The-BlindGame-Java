@@ -44,11 +44,13 @@ public class ThemePropPanel extends MyPanel {
     /** The infos field. */
     private JTextField infosField = null;
 
+    private JTextField ytUrlField = null;
+
     /** The activate. */
     boolean activate = false;
 
     /** The theme. */
-    private IEntity theme = null;
+    private int theme = 0;
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -359666814951181068L;
@@ -72,7 +74,7 @@ public class ThemePropPanel extends MyPanel {
     public ThemePropPanel(ViewFrame viewFrame, int themeIndex, int originalShowIndex) {
         super(viewFrame);
         MouseInputThemeProp mouseInput = new MouseInputThemeProp(this);
-        this.setTheme(this.getViewFrame().getModel().getThemes().get(themeIndex));
+        this.setTheme(themeIndex);
         this.setOriginalShowIndex(originalShowIndex);
 
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -100,6 +102,13 @@ public class ThemePropPanel extends MyPanel {
         this.setInfosField(this.createTextField(this.getTheme().getInfos(),
                 (int) (this.getViewFrame().getWidth() / 51.2), this.getReleaseField().getBounds().y + fieldHeightFactor,
                 (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
+
+        if (this.getTheme().isHasError()) {
+            this.setYtUrlField(this.createTextField("",
+                    (int) ((this.getViewFrame().getWidth() / 51.2) + (this.getViewFrame().getWidth() / 7.2)),
+                    this.getInfosField().getBounds().y + (fieldHeightFactor / 2),
+                    (int) (this.getViewFrame().getWidth() / 3.6), this.getViewFrame().getHeight() / 18));
+        }
     }
 
     /**
@@ -156,6 +165,11 @@ public class ThemePropPanel extends MyPanel {
         graphics.drawString("Timecode :", metaXStart, timecodeHeight);
         graphics.drawString("Release Date :", metaXStart, dateHeight);
         graphics.drawString("Infos :", metaXStart, infosHeight);
+
+        if (this.getTheme().isHasError()) {
+            int ytUrlHeight = this.getYtUrlField().getBounds().y + graphics.getFont().getSize();
+            graphics.drawString("Yt Video Url :", metaXStart, ytUrlHeight);
+        }
     }
 
     /**
@@ -180,13 +194,17 @@ public class ThemePropPanel extends MyPanel {
         this.drawTheme(graphics, this.getTheme());
 
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
-        if ((this.getViewFrame().getClip() == null) || !this.getViewFrame().getClip().isActive()) {
-            this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
-        } else {
-            this.drawButton(graphics, "" + (this.getViewFrame().getClip().getMicrosecondPosition() / 1000000), playX,
-                    btnY, btnW, btnH);
-        }
 
+        if (this.getTheme().isHasError()) {
+            this.drawButton(graphics, " Download ", playX, btnY, btnW + (this.getWidth() / 50), btnH);
+        } else {
+            if ((this.getViewFrame().getClip() == null) || !this.getViewFrame().getClip().isActive()) {
+                this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
+            } else {
+                this.drawButton(graphics, "" + (this.getViewFrame().getClip().getMicrosecondPosition() / 1000000),
+                        playX, btnY, btnW, btnH);
+            }
+        }
         this.repaint();
     }
 
@@ -196,7 +214,7 @@ public class ThemePropPanel extends MyPanel {
      * @return the theme
      */
     public IEntity getTheme() {
-        return this.theme;
+        return this.getViewFrame().getModel().getThemes().get(this.theme);
     }
 
     /**
@@ -205,7 +223,7 @@ public class ThemePropPanel extends MyPanel {
      * @param theme
      *                  the new theme
      */
-    public void setTheme(IEntity theme) {
+    public void setTheme(int theme) {
         this.theme = theme;
     }
 
@@ -359,6 +377,14 @@ public class ThemePropPanel extends MyPanel {
      */
     public void setOriginalShowIndex(int originalShowIndex) {
         this.originalShowIndex = originalShowIndex;
+    }
+
+    public JTextField getYtUrlField() {
+        return this.ytUrlField;
+    }
+
+    public void setYtUrlField(JTextField ytUrlField) {
+        this.ytUrlField = ytUrlField;
     }
 
 }

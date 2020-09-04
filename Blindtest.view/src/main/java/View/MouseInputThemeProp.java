@@ -58,14 +58,30 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
         int btnH = this.getThemePropPanel().getHeight() / 14;
         int playX = (int) (this.getThemePropPanel().getWidth() / 51.2) + menuX + btnW;
         if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= playX) && (mx <= (playX + btnW))) {
-                try {
-                    this.getThemePropPanel().getViewFrame().stopMusic();
-                    this.getThemePropPanel().getViewFrame().playMusic(this.getThemePropPanel().getTheme().getFile(),
-                            Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()),
-                            this.getThemePropPanel());
-                } catch (Exception e1) {
+            if ((mx >= playX) && (mx <= ((this.getThemePropPanel().getTheme().isHasError())
+                    ? playX + btnW + (this.getThemePropPanel().getWidth() / 50)
+                    : playX + btnW))) {
+                if (this.getThemePropPanel().getTheme().isHasError()) {
+                    String youtubeUrl = this.getThemePropPanel().getYtUrlField().getText();
+                    String filepath = this.getThemePropPanel().getTheme().getFolder().getAbsolutePath();
+                    this.getThemePropPanel().getViewFrame().getController().downloadYtVideoToMP3(filepath, youtubeUrl);
+
+                    this.getThemePropPanel().getTheme()
+                            .setFile(this.getThemePropPanel().getTheme().FindFileByExtension(
+                                    this.getThemePropPanel().getTheme().getFolder(),
+                                    this.getThemePropPanel().getTheme().getFileExtensions()));
+                    this.getThemePropPanel().getTheme().setHasError(false);
+                    this.getThemePropPanel().remove(this.getThemePropPanel().getYtUrlField());
+                } else {
+                    try {
+                        this.getThemePropPanel().getViewFrame().stopMusic();
+                        this.getThemePropPanel().getViewFrame().playMusic(this.getThemePropPanel().getTheme().getFile(),
+                                Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()),
+                                this.getThemePropPanel());
+                    } catch (Exception e1) {
+                    }
                 }
+
             } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
                 this.getThemePropPanel().getTheme().setPropertyValue("title",
                         this.getThemePropPanel().getTitleField().getText());
@@ -93,7 +109,6 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
                         this.getThemePropPanel().getInfosField().getText());
                 this.getThemePropPanel().getTheme().setInfos(this.getThemePropPanel().getInfosField().getText());
 
-                this.getThemePropPanel().getViewFrame().getModel().fillThemesList();
                 this.getThemePropPanel().getViewFrame().getModel().loadTypes();
                 this.getThemePropPanel().getViewFrame().stopMusic();
                 this.getThemePropPanel().getViewFrame().setContentPane(new MenuPanel(

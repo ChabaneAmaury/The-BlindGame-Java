@@ -237,6 +237,7 @@ public class Theme extends Properties implements IEntity {
      *                       the extensions
      * @return the string
      */
+    @Override
     public String FindFileByExtension(File folder, String[] extensions) {
         File[] files = folder.listFiles(new FilenameFilter() {
 
@@ -294,6 +295,7 @@ public class Theme extends Properties implements IEntity {
      * @param file
      *                 the new file
      */
+    @Override
     public void setFile(String file) {
         this.file = file;
     }
@@ -386,6 +388,7 @@ public class Theme extends Properties implements IEntity {
      *
      * @return the file extensions
      */
+    @Override
     public String[] getFileExtensions() {
         return this.fileExtensions;
     }
@@ -548,6 +551,7 @@ public class Theme extends Properties implements IEntity {
      *
      * @return the folder
      */
+    @Override
     public File getFolder() {
         return this.folder;
     }

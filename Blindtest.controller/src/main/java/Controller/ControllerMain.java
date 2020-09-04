@@ -3,6 +3,7 @@
  */
 package Controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
@@ -57,6 +58,17 @@ public class ControllerMain extends Observable implements IControllerMain {
     public ControllerMain(IView view, IModel model) {
         this.setModel(model);
         this.setView(view);
+    }
+
+    @Override
+    public void downloadYtVideoToMP3(String filepath, String youtubeUrl) {
+        try {
+            ArrayList<Object> mp3_raw = YoutubeToMP3.youtubeToMP3(youtubeUrl);
+            YoutubeToMP3.saveFile(filepath + "\\" + (String) mp3_raw.get(0) + ".mp3", (byte[]) mp3_raw.get(1));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -51,7 +51,8 @@ public interface IControllerMain {
     /**
      * Sets the theme.
      *
-     * @param theme the new theme
+     * @param theme
+     *                  the new theme
      */
     void setTheme(IEntity theme);
 
@@ -70,21 +71,24 @@ public interface IControllerMain {
     /**
      * Sets the allowed time.
      *
-     * @param ALLOWED_TIME the new allowed time
+     * @param ALLOWED_TIME
+     *                         the new allowed time
      */
     void setAllowedTime(int ALLOWED_TIME);
 
     /**
      * Removes the type.
      *
-     * @param type the type
+     * @param type
+     *                 the type
      */
     void removeType(String type);
 
     /**
      * Adds the type.
      *
-     * @param type the type
+     * @param type
+     *                 the type
      */
     void addType(String type);
 
@@ -105,7 +109,8 @@ public interface IControllerMain {
     /**
      * Sets the not choosen types.
      *
-     * @param notChoosenTypes the new not choosen types
+     * @param notChoosenTypes
+     *                            the new not choosen types
      */
     void setNotChoosenTypes(ArrayList<String> notChoosenTypes);
 
@@ -119,7 +124,8 @@ public interface IControllerMain {
     /**
      * Sets the time left.
      *
-     * @param timeLeft the new time left
+     * @param timeLeft
+     *                     the new time left
      */
     void setTimeLeft(int timeLeft);
 
@@ -129,5 +135,15 @@ public interface IControllerMain {
      * @return the allowed time
      */
     int getAllowedTime();
+
+    /**
+     * Download yt video to MP 3.
+     *
+     * @param filepath
+     *                       the filepath
+     * @param youtubeUrl
+     *                       the youtube url
+     */
+    void downloadYtVideoToMP3(String filepath, String youtubeUrl);
 
 }

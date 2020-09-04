@@ -4,6 +4,7 @@
 package Contract;
 
 import java.awt.Image;
+import java.io.File;
 
 /**
  * The Interface IEntity.
@@ -195,5 +196,38 @@ public interface IEntity {
      *                                the new thumbnail cover image
      */
     void setThumbnailCoverImage(Image thumbnailCoverImage);
+
+    /**
+     * Gets the folder.
+     *
+     * @return the folder
+     */
+    File getFolder();
+
+    /**
+     * Sets the file.
+     *
+     * @param file
+     *                 the new file
+     */
+    void setFile(String file);
+
+    /**
+     * Find file by extension.
+     *
+     * @param folder
+     *                       the folder
+     * @param extensions
+     *                       the extensions
+     * @return the string
+     */
+    String FindFileByExtension(File folder, String[] extensions);
+
+    /**
+     * Gets the file extensions.
+     *
+     * @return the file extensions
+     */
+    String[] getFileExtensions();
 
 }
