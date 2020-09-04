@@ -56,7 +56,6 @@ You can add as many themes as you want.
 2) Add in your freshly created folder the audio file (currently support mp3 and wav files). If you don't, a warning icon will be displayed on the main screen and beside the theme. You can aunch anyway, but the theme will not be used
 3) Add the theme cover as a png, jpg, or jpeg file. If you don't, an "Image not found" cover will be displayed
 4) Copy the "theme.properties" file from another theme or from the one in the "bin" directory. You you don't, one will be created automatically on launch
-5) Add the theme type in the "bin\types.txt" file if it is not already in 
 
 ### theme.properties infos
 
@@ -77,8 +76,13 @@ All fields must be on one line, including the infos one. The game will take care
 
 - You can click on a theme cover to modify any informations within "theme.properties"
 - You can play the theme in this panel (will start from the timecode in corresponding field) : the play button will inform you about the current time code. You can change the timecode and restart from it without having to get back to the main menu
+- If and audio file is missing, you can download it directly from youtube URL:
 <p align="center">
-  <img src="assets/img/theme_editor.jpg">
+  <img src="assets/img/theme_editor_1.jpg">
+</p>
+- If an audio file is detected:
+<p align="center">
+  <img src="assets/img/theme_editor_2.jpg">
 </p>
 
 ## Options
@@ -86,12 +90,8 @@ All fields must be on one line, including the infos one. The game will take care
 <p align="center">
   <img src="assets/img/options.jpg">
 </p>
-
-- Easy : 20s to guess
-- Medium : 15s to guess
-- Hard : 10s to guess
-
 - Choose the category(ies) you want to use my checking the checkboxes (clicking on the category name will work too)
+- Set the time to guess as you prefer (in seconds)
 
 
 # License
