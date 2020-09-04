@@ -25,9 +25,6 @@ import javax.swing.JTextField;
  */
 public class OptionsPanel extends MyPanel implements ActionListener {
 
-    /** The difficulty. */
-    private String difficulty = "Easy";
-
     /** The show index. */
     private int showIndex = 0;
 
@@ -75,16 +72,10 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         for (int i = this.getShowIndex(); i < (this.getShowIndex() + 8); i++) {
             if (i < this.getViewFrame().getModel().getTypes().size()) {
                 String type = this.getViewFrame().getModel().getTypes().get(i);
-                JCheckBox chckbx = new JCheckBox(
-                        (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_',
-                                ' '),
-                        true);
+                JCheckBox chckbx = new JCheckBox(type.replace('_', ' '), true);
                 for (String typeToCheck : this.getViewFrame().getController().getNotChoosenTypes()) {
-                    if (typeToCheck.equalsIgnoreCase(type)) {
-                        chckbx = new JCheckBox(
-                                (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase())
-                                        .replace('_', ' '),
-                                false);
+                    if (typeToCheck.replace('_', ' ').equalsIgnoreCase(type.replace('_', ' '))) {
+                        chckbx = new JCheckBox(type.replace('_', ' '), false);
                     }
                 }
 
@@ -101,16 +92,10 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         for (int i = this.getShowIndex() + 8; i < (this.getShowIndex() + 16); i++) {
             if (i < this.getViewFrame().getModel().getTypes().size()) {
                 String type = this.getViewFrame().getModel().getTypes().get(i);
-                JCheckBox chckbx = new JCheckBox(
-                        (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase()).replace('_',
-                                ' '),
-                        true);
+                JCheckBox chckbx = new JCheckBox(type.substring(1).replace('_', ' '), true);
                 for (String typeToCheck : this.getViewFrame().getController().getNotChoosenTypes()) {
-                    if (typeToCheck.equalsIgnoreCase(type)) {
-                        chckbx = new JCheckBox(
-                                (type.toString().substring(0, 1) + type.toString().substring(1).toLowerCase())
-                                        .replace('_', ' '),
-                                false);
+                    if (typeToCheck.replace('_', ' ').equalsIgnoreCase(type.replace('_', ' '))) {
+                        chckbx = new JCheckBox(type.toString().replace('_', ' '), false);
                     }
                 }
                 chckbx.setBounds((int) ((this.getViewFrame().getWidth() / 2) + (this.getViewFrame().getWidth() / 25.6)),
@@ -196,25 +181,6 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
 
-    }
-
-    /**
-     * Gets the difficulty.
-     *
-     * @return the difficulty
-     */
-    public String getDifficulty() {
-        return this.difficulty;
-    }
-
-    /**
-     * Sets the difficulty.
-     *
-     * @param difficulty
-     *                       the new difficulty
-     */
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
     }
 
     /**

@@ -133,10 +133,10 @@ public class Model implements IModel {
         this.getTypes().clear();
         for (IEntity theme : this.getThemes()) {
             if (this.getTypes().isEmpty()) {
-                this.getTypes().add(theme.getType().toUpperCase());
+                this.getTypes().add(theme.getType());
             } else {
-                if (!this.getTypes().contains(theme.getType().toUpperCase())) {
-                    this.getTypes().add(theme.getType().toUpperCase());
+                if (!this.getTypes().contains(theme.getType())) {
+                    this.getTypes().add(theme.getType());
                 }
             }
         }

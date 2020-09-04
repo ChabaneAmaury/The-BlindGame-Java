@@ -93,6 +93,9 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
                         this.getThemePropPanel().getInfosField().getText());
                 this.getThemePropPanel().getTheme().setInfos(this.getThemePropPanel().getInfosField().getText());
 
+                this.getThemePropPanel().getViewFrame().getModel().loadFolders();
+                this.getThemePropPanel().getViewFrame().getModel().fillThemesList();
+                this.getThemePropPanel().getViewFrame().getModel().loadTypes();
                 this.getThemePropPanel().getViewFrame().stopMusic();
                 this.getThemePropPanel().getViewFrame().setContentPane(new MenuPanel(
                         this.getThemePropPanel().getViewFrame(), this.getThemePropPanel().getOriginalShowIndex()));
