@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -20,8 +20,7 @@ public final class View implements IView, Runnable {
     /**
      * Instantiates a new view.
      *
-     * @param model
-     *                  the model
+     * @param model the model
      */
     public View(final IModel model) {
         this.viewFrame = new ViewFrame(model, "The BlindGame");
@@ -52,8 +51,7 @@ public final class View implements IView, Runnable {
     /**
      * Sets the controller.
      *
-     * @param controller
-     *                       the new controller
+     * @param controller the new controller
      */
     @Override
     public void setController(final IControllerMain controller) {

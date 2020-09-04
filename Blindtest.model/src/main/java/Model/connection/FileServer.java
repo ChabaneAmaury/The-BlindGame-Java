@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package Model.connection;
 
@@ -100,7 +100,7 @@ public class FileServer implements Runnable {
      * Start server.
      */
     public void startServer() {
-        System.out.println("[Server] Server is running...");
+        System.out.println("[Server] Server is running on port 15125...");
         this.waitForClient();
 
         try {

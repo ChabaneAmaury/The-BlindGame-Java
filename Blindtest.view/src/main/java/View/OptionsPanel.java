@@ -1,10 +1,11 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JCheckBox;
-
-import Contract.Difficulties;
+import javax.swing.JTextField;
 
 /**
  * The Class OptionsPanel.
@@ -37,30 +37,31 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8514600715581652162L;
 
+    /** The time field. */
+    private JTextField timeField = null;
+
     /**
      * Instantiates a new options panel.
      *
-     * @param viewFrame the view frame
+     * @param viewFrame
+     *                      the view frame
      */
     public OptionsPanel(ViewFrame viewFrame) {
         super(viewFrame);
         MouseInputOptions mouseInput = new MouseInputOptions(this);
+
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
-        this.setLayout(null);
-        this.createCheckboxes();
 
-        switch (this.getViewFrame().getController().getAllowedTime()) {
-            case Difficulties.EASY:
-                this.setDifficulty("Easy");
-                break;
-            case Difficulties.MEDIUM:
-                this.setDifficulty("Medium");
-                break;
-            case Difficulties.HARD:
-                this.setDifficulty("Hard");
-                break;
-        }
+        this.setLayout(null);
+
+        this.createCheckboxes();
+        this.setTimeField(this.createTextField(String.valueOf(this.getViewFrame().getController().getAllowedTime()),
+                this.getViewFrame().getWidth() / 3,
+                (int) (this.getViewFrame().getHeight() - (this.getViewFrame().getWidth() / 51.2)
+                        - (this.getViewFrame().getHeight() / 10.2857143)),
+                this.getViewFrame().getWidth() / 12, this.getViewFrame().getHeight() / 14));
     }
 
     /**
@@ -69,7 +70,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     public void createCheckboxes() {
         this.getCheckboxes().clear();
 
-        Font basicFont = new Font("Cooper Black", Font.BOLD, this.getViewFrame().getHeight() / 15);
+        Font basicFont = new Font(this.getFontName(), Font.BOLD, this.getViewFrame().getHeight() / 15);
 
         for (int i = this.getShowIndex(); i < (this.getShowIndex() + 8); i++) {
             if (i < this.getViewFrame().getModel().getTypes().size()) {
@@ -91,7 +92,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
                         ((this.getViewFrame().getHeight() / 36) + basicFont.getSize()) * (i - this.getShowIndex()),
                         basicFont.getSize() * type.length(), basicFont.getSize());
                 chckbx.setOpaque(false);
-                chckbx.setForeground(Color.WHITE);
+                chckbx.setForeground(Color.BLACK);
                 chckbx.setFont(basicFont);
                 this.add(chckbx);
                 this.getCheckboxes().add(chckbx);
@@ -116,7 +117,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
                         ((this.getViewFrame().getHeight() / 36) + basicFont.getSize()) * (i - this.getShowIndex() - 8),
                         basicFont.getSize() * type.length(), basicFont.getSize());
                 chckbx.setOpaque(false);
-                chckbx.setForeground(Color.WHITE);
+                chckbx.setForeground(Color.BLACK);
                 chckbx.setFont(basicFont);
                 this.add(chckbx);
                 this.getCheckboxes().add(chckbx);
@@ -138,35 +139,32 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Paint component.
      *
-     * @param g the g
+     * @param g
+     *              the g
      */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         int backX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10));
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
-        int btnW = this.getWidth() / 10;
-        int btnH = this.getHeight() / 12;
+        int btnW = this.getWidth() / 12;
+        int btnH = this.getHeight() / 14;
         int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW)
                 + (btnW / 2);
         int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - btnW);
-        int difficultyX = (int) (this.getWidth() / 51.2);
-        int mediumX = (this.getWidth() / 2) - (btnW / 2);
-        int easyX = (int) (mediumX - (this.getWidth() / 51.2) - btnW);
-        int hardX = (int) (mediumX + btnW + (this.getWidth() / 51.2));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         this.drawGradientPaint(graphics);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
         this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
-        this.drawButton(graphics, "Easy", easyX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Medium", mediumX, btnY, btnW, btnH);
-        this.drawButton(graphics, "Hard", hardX, btnY, btnW, btnH);
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(graphics.getFont().deriveFont((float) (this.getHeight() / 15)));
-        this.drawCenteredString(graphics, this.getDifficulty(), difficultyX, btnY,
-                (int) (easyX - (this.getWidth() / 51.2) - difficultyX), btnH);
+        graphics.setColor(Color.BLACK);
+        graphics.setFont(graphics.getFont().deriveFont((float) (this.getHeight() / 22)));
+        int metaXStart = (int) (this.getWidth() / 51.2);
+        int timeHeight = this.getTimeField().getBounds().y + graphics.getFont().getSize();
+        graphics.drawString("Time to guess (seconds):", metaXStart, timeHeight);
     }
 
     /**
@@ -181,7 +179,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the checkboxes.
      *
-     * @param checkboxes the new checkboxes
+     * @param checkboxes
+     *                       the new checkboxes
      */
     public void setCheckboxes(List<JCheckBox> checkboxes) {
         this.checkboxes = checkboxes;
@@ -190,7 +189,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Action performed.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -210,7 +210,8 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the difficulty.
      *
-     * @param difficulty the new difficulty
+     * @param difficulty
+     *                       the new difficulty
      */
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
@@ -228,10 +229,30 @@ public class OptionsPanel extends MyPanel implements ActionListener {
     /**
      * Sets the show index.
      *
-     * @param showIndex the new show index
+     * @param showIndex
+     *                      the new show index
      */
     public void setShowIndex(int showIndex) {
         this.showIndex = showIndex;
+    }
+
+    /**
+     * Gets the time field.
+     *
+     * @return the time field
+     */
+    public JTextField getTimeField() {
+        return this.timeField;
+    }
+
+    /**
+     * Sets the time field.
+     *
+     * @param timeField
+     *                      the new time field
+     */
+    public void setTimeField(JTextField timeField) {
+        this.timeField = timeField;
     }
 
 }

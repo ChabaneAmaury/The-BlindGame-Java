@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package Contract;
 
@@ -170,5 +170,30 @@ public interface IEntity {
      *                              the new resized cover image
      */
     void setResizedCoverImage(Image resizedCoverImage);
+
+    /**
+     * Gets the thumbnail cover image.
+     *
+     * @return the thumbnail cover image
+     */
+    Image getThumbnailCoverImage();
+
+    /**
+     * Sets the thumbnail cover image.
+     *
+     * @param width
+     *                   the width
+     * @param height
+     *                   the height
+     */
+    void setThumbnailCoverImage(int width, int height);
+
+    /**
+     * Sets the thumbnail cover image.
+     *
+     * @param thumbnailCoverImage
+     *                                the new thumbnail cover image
+     */
+    void setThumbnailCoverImage(Image thumbnailCoverImage);
 
 }

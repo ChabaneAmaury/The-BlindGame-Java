@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -54,8 +54,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
         int menuX = (int) (this.getThemePropPanel().getWidth() / 51.2);
         int btnY = (int) (this.getThemePropPanel().getHeight() - (this.getThemePropPanel().getWidth() / 51.2)
                 - (this.getThemePropPanel().getHeight() / 10.2857143));
-        int btnW = this.getThemePropPanel().getWidth() / 10;
-        int btnH = this.getThemePropPanel().getHeight() / 12;
+        int btnW = this.getThemePropPanel().getWidth() / 12;
+        int btnH = this.getThemePropPanel().getHeight() / 14;
         int playX = (int) (this.getThemePropPanel().getWidth() / 51.2) + menuX + btnW;
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= playX) && (mx <= (playX + btnW))) {
@@ -94,8 +94,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
                 this.getThemePropPanel().getTheme().setInfos(this.getThemePropPanel().getInfosField().getText());
 
                 this.getThemePropPanel().getViewFrame().stopMusic();
-                this.getThemePropPanel().getViewFrame()
-                        .setContentPane(new MenuPanel(this.getThemePropPanel().getViewFrame()));
+                this.getThemePropPanel().getViewFrame().setContentPane(new MenuPanel(
+                        this.getThemePropPanel().getViewFrame(), this.getThemePropPanel().getOriginalShowIndex()));
                 this.getThemePropPanel().getViewFrame().revalidate();
             }
         }

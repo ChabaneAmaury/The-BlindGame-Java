@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -8,8 +8,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JCheckBox;
-
-import Contract.Difficulties;
 
 /**
  * The Class MouseInputOptions.
@@ -24,7 +22,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Instantiates a new mouse input options.
      *
-     * @param optionsPanel the options panel
+     * @param optionsPanel
+     *                         the options panel
      */
     public MouseInputOptions(OptionsPanel optionsPanel) {
         this.optionsPanel = optionsPanel;
@@ -33,7 +32,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse clicked.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -44,7 +44,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse pressed.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -56,30 +57,15 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                 - (this.getOptionsPanel().getWidth() / 10));
         int btnY = (int) (this.getOptionsPanel().getHeight() - (this.getOptionsPanel().getWidth() / 51.2)
                 - (this.getOptionsPanel().getHeight() / 10.2857143));
-        int btnW = this.getOptionsPanel().getWidth() / 10;
-        int btnH = this.getOptionsPanel().getHeight() / 12;
-        int mediumX = (this.getOptionsPanel().getWidth() / 2) - (btnW / 2);
-        int easyX = (int) (mediumX - (this.getOptionsPanel().getWidth() / 51.2) - btnW);
-        int hardX = (int) (mediumX + btnW + (this.getOptionsPanel().getWidth() / 51.2));
+        int btnW = this.getOptionsPanel().getWidth() / 12;
+        int btnH = this.getOptionsPanel().getHeight() / 14;
         int nextX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 2)
                 - (this.getOptionsPanel().getWidth() / 10) - btnW) + (btnW / 2);
         int previousX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 3)
                 - (this.getOptionsPanel().getWidth() / 10) - btnW);
 
         if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= easyX) && (mx <= (easyX + btnW))) {
-                this.getOptionsPanel().getViewFrame().getController().setAllowedTime(Difficulties.EASY);
-                this.getOptionsPanel().setDifficulty("Easy");
-                this.getOptionsPanel().repaint();
-            } else if ((mx >= mediumX) && (mx <= (mediumX + btnW))) {
-                this.getOptionsPanel().getViewFrame().getController().setAllowedTime(Difficulties.MEDIUM);
-                this.getOptionsPanel().setDifficulty("Medium");
-                this.getOptionsPanel().repaint();
-            } else if ((mx >= hardX) && (mx <= (hardX + btnW))) {
-                this.getOptionsPanel().getViewFrame().getController().setAllowedTime(Difficulties.HARD);
-                this.getOptionsPanel().setDifficulty("Hard");
-                this.getOptionsPanel().repaint();
-            } else if ((mx >= nextX) && (mx <= (nextX + btnW))) {
+            if ((mx >= nextX) && (mx <= (nextX + btnW))) {
                 if (this.getOptionsPanel().getViewFrame().getController().getModel().getTypes()
                         .size() > ((this.getOptionsPanel().getShowIndex() + 16))) {
                     for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
@@ -131,6 +117,14 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                     this.getOptionsPanel().repaint();
                 }
             } else if ((mx >= backX) && (mx <= (backX + btnW))) {
+                try {
+                    this.getOptionsPanel().getViewFrame().getController()
+                            .setAllowedTime(Integer.parseInt(this.getOptionsPanel().getTimeField().getText()));
+                } catch (NumberFormatException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
                 for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
                     if (checkboxe.isSelected()) {
                         this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
@@ -148,7 +142,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                     }
                 }
                 this.getOptionsPanel().getViewFrame()
-                        .setContentPane(new MenuPanel(this.getOptionsPanel().getViewFrame()));
+                        .setContentPane(new MenuPanel(this.getOptionsPanel().getViewFrame(), 0));
                 this.getOptionsPanel().getViewFrame().revalidate();
             }
         }
@@ -167,7 +161,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse released.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -178,7 +173,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse entered.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -189,7 +185,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse exited.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -199,7 +196,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse dragged.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -210,7 +208,8 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
     /**
      * Mouse moved.
      *
-     * @param e the e
+     * @param e
+     *              the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {

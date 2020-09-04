@@ -1,5 +1,5 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
@@ -60,12 +60,9 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Instantiates a new view frame.
      *
-     * @param model
-     *                  the model
-     * @param title
-     *                  the title
-     * @throws HeadlessException
-     *                               the headless exception
+     * @param model the model
+     * @param title the title
+     * @throws HeadlessException the headless exception
      */
     public ViewFrame(final IModel model, final String title) throws HeadlessException {
         super(title);
@@ -83,8 +80,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Stop loading screen.
      *
-     * @param panel
-     *                  the panel
+     * @param panel the panel
      */
     @SuppressWarnings("deprecation")
     public void stopLoadingScreen(MyPanel panel) {
@@ -96,12 +92,9 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Play music.
      *
-     * @param filePath
-     *                     the file path
-     * @param timeCode
-     *                     the time code
-     * @param panel
-     *                     the panel
+     * @param filePath the file path
+     * @param timeCode the time code
+     * @param panel the panel
      */
     public void playMusic(String filePath, int timeCode, MyPanel panel) {
         this.startLoadingScreen();
@@ -178,8 +171,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Sets the clip.
      *
-     * @param clip
-     *                 the new clip
+     * @param clip the new clip
      */
     public void setClip(Clip clip) {
         this.clip = clip;
@@ -197,8 +189,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Sets the controller.
      *
-     * @param controller
-     *                       the new controller
+     * @param controller the new controller
      */
     public void setController(final IControllerMain controller) {
         this.controller = controller;
@@ -217,8 +208,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Sets the model.
      *
-     * @param model
-     *                  the new model
+     * @param model the new model
      */
     void setModel(final IModel model) {
         this.model = model;
@@ -227,8 +217,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Load image.
      *
-     * @param path
-     *                 the path
+     * @param path the path
      * @return the image
      */
     public Image loadImage(String path) {
@@ -245,8 +234,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Builds the view frame.
      *
-     * @param model
-     *                  the model
+     * @param model the model
      */
     private void buildViewFrame(final IModel model) {
         this.setModel(model);
@@ -257,7 +245,7 @@ public class ViewFrame extends JFrame implements Observer {
         this.setIconImage(this.loadImage(ICON));
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); // fullscreen
         this.setUndecorated(true); // truly fullscreen
-        this.setContentPane(new MenuPanel(this));
+        this.setContentPane(new MenuPanel(this, 0));
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -265,10 +253,8 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Update.
      *
-     * @param o
-     *                the o
-     * @param arg
-     *                the arg
+     * @param o the o
+     * @param arg the arg
      */
     @Override
     public void update(Observable o, Object arg) {
@@ -297,8 +283,7 @@ public class ViewFrame extends JFrame implements Observer {
     /**
      * Sets the current theme index.
      *
-     * @param currentThemeIndex
-     *                              the new current theme index
+     * @param currentThemeIndex the new current theme index
      */
     public void setCurrentThemeIndex(int currentThemeIndex) {
         this.currentThemeIndex = currentThemeIndex;

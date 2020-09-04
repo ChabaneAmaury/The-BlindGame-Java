@@ -1,11 +1,12 @@
 /*
- *
+ * @author Amaury Chabane
  */
 package View;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
 /**
  * The Class LoadPanel.
@@ -65,6 +66,9 @@ public class LoadPanel extends MyPanel {
         int imgX = (this.getWidth() / 2) - (imgW / 2);
         int imgY = (this.getHeight() / 2) - (imgW / 2);
         Graphics2D graphics = (Graphics2D) g;
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         this.drawGradientPaint(graphics);
         graphics.rotate(this.getRotateFactor(), this.getWidth() / 2, this.getHeight() / 2);
         graphics.drawImage(this.getImage(), imgX, imgY, imgW, imgW, null);
