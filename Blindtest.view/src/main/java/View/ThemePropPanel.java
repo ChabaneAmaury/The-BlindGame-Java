@@ -107,7 +107,7 @@ public class ThemePropPanel extends MyPanel {
             this.setYtUrlField(this.createTextField("",
                     (int) ((this.getViewFrame().getWidth() / 51.2) + (this.getViewFrame().getWidth() / 7.2)),
                     this.getInfosField().getBounds().y + (fieldHeightFactor / 2),
-                    (int) (this.getViewFrame().getWidth() / 3.6), this.getViewFrame().getHeight() / 18));
+                    (int) ((this.getViewFrame().getWidth() / 2.4)), this.getViewFrame().getHeight() / 18));
         }
     }
 
