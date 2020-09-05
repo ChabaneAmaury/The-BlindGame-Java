@@ -138,7 +138,6 @@ public class ThemePropPanel extends MyPanel {
         int rectW = (int) ((this.getHeight() - (this.getWidth() / 25.6)) * 0.75);
         int rectH = (int) (this.getHeight() - (this.getWidth() / 25.6));
         if (new File(theme.getCover()).exists()) {
-            graphics.setColor(Color.BLACK);
             Dimension imgDim = this.scaleImageDimensions(theme.getCoverImage(), rectW, rectH);
             if ((theme.getResizedCoverImage() == null)
                     || (theme.getResizedCoverImage().getWidth(null) != (int) imgDim.getWidth())
@@ -151,9 +150,12 @@ public class ThemePropPanel extends MyPanel {
             rectW = (int) imgDim.getWidth();
             rectH = (int) imgDim.getHeight();
 
-            graphics.fill(new Rectangle(rectX - border, rectY - border, rectW + (border * 2), rectH + (border * 2)));
-            graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH, null);
+            this.drawImageRoundedCorners(graphics, theme.getResizedCoverImage(), 15, rectX, rectY, rectW, rectH);
+            // graphics.drawImage(theme.getResizedCoverImage(), rectX, rectY, rectW, rectH,
+            // null);
         } else {
+            graphics.setColor(Color.BLACK);
+            graphics.fill(new Rectangle(rectX - border, rectY - border, rectW + (border * 2), rectH + (border * 2)));
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
             graphics.setColor(Color.BLACK);

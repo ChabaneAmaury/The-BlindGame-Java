@@ -118,7 +118,9 @@ public class MenuPanel extends MyPanel {
             rectW = (int) imgDim.getWidth();
             rectH = (int) imgDim.getHeight();
 
-            graphics.drawImage(theme.getThumbnailCoverImage(), rectX, rectY, rectW, rectH, Color.WHITE, null);
+            this.drawImageRoundedCorners(graphics, theme.getThumbnailCoverImage(), 15, rectX, rectY, rectW, rectH);
+            // graphics.drawImage(theme.getThumbnailCoverImage(), rectX, rectY, rectW,
+            // rectH, Color.WHITE, null);
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
