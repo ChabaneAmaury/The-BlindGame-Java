@@ -38,6 +38,8 @@ public class AddThemePanel extends MyPanel {
 
     private Map<String, Image> searchResultImages = new HashMap<>();
 
+    private String type = "Movie";
+
     /**
      *
      */
@@ -84,9 +86,9 @@ public class AddThemePanel extends MyPanel {
 
         String title = null;
 
-        if (this.getAddList().getSelectedItem() == "Movie") {
+        if (this.type == "Movie") {
             title = theme.getString("original_title");
-        } else if (this.getAddList().getSelectedItem() == "TV Show") {
+        } else if (this.type == "TV Show") {
             title = theme.getString("original_name");
         }
 
@@ -141,6 +143,7 @@ public class AddThemePanel extends MyPanel {
             graphics.setFont(miniFont);
             this.drawCenteredString(graphics, "Image Not Found", rectX, rectY, rectW, rectH);
         }
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1)); // remove transparency
     }
 
     /**
@@ -229,6 +232,14 @@ public class AddThemePanel extends MyPanel {
 
     public void setSearchResultImages(Map<String, Image> searchResultImages) {
         this.searchResultImages = searchResultImages;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

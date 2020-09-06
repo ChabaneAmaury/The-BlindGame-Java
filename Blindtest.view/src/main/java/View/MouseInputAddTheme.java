@@ -79,6 +79,7 @@ public class MouseInputAddTheme implements MouseListener, MouseMotionListener {
                             this.getAddThemePanel().getSearchField().getText());
                 }
                 this.getAddThemePanel().setResultArr(result);
+                this.getAddThemePanel().setType((String) this.getAddThemePanel().getAddList().getSelectedItem());
             }
         }
         if ((my >= btnY) && (my <= (btnY + btnH))) {
