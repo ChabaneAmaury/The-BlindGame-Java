@@ -207,6 +207,13 @@ public class ThemePropPanel extends MyPanel {
                         playX, btnY, btnW, btnH);
             }
         }
+
+        try {
+            Thread.sleep((long) 16.6666667);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         this.repaint();
     }
 

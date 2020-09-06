@@ -3,8 +3,11 @@
  */
 package Contract;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Observable;
+
+import org.json.JSONArray;
 
 /**
  * The Interface IControllerMain.
@@ -145,5 +148,9 @@ public interface IControllerMain {
      *                       the youtube url
      */
     void downloadYtVideoToMP3(String filepath, String youtubeUrl);
+
+    JSONArray requestTMDbMovie(String type, String searchString);
+
+    BufferedImage loadTMDbImage(String url);
 
 }

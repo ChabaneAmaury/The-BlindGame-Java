@@ -64,6 +64,9 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
         int previousX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 3)
                 - (this.getOptionsPanel().getWidth() / 10) - btnW);
 
+        int addX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 4)
+                - (this.getOptionsPanel().getWidth() / 10) - (btnW * 2));
+
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= nextX) && (mx <= (nextX + btnW))) {
                 if (this.getOptionsPanel().getViewFrame().getController().getModel().getTypes()
@@ -143,6 +146,10 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                 }
                 this.getOptionsPanel().getViewFrame()
                         .setContentPane(new MenuPanel(this.getOptionsPanel().getViewFrame(), 0));
+                this.getOptionsPanel().getViewFrame().revalidate();
+            } else if ((mx >= addX) && (mx <= (addX + addX))) {
+                this.getOptionsPanel().getViewFrame()
+                        .setContentPane(new AddThemePanel(this.getOptionsPanel().getViewFrame()));
                 this.getOptionsPanel().getViewFrame().revalidate();
             }
         }

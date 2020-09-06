@@ -3,10 +3,24 @@
  */
 package Controller;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
+
+import javax.imageio.ImageIO;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import Contract.IControllerMain;
 import Contract.IEntity;
 import Contract.IModel;
@@ -349,5 +363,37 @@ public class ControllerMain extends Observable implements IControllerMain {
      */
     public void setTmpList(ArrayList<IEntity> tmpList) {
         this.tmpList = tmpList;
+    }
+
+    @Override
+    public JSONArray requestTMDbMovie(String type, String searchString) {
+        String api_key = "1abb592ea8abdca659fe768691191c91";
+        int page = 1;
+        String query = URLEncoder.encode(searchString, StandardCharsets.UTF_8);
+        JSONObject json = null;
+        try {
+            json = TMDbAPIQuery.readJsonFromUrl("https://api.themoviedb.org/3/search/" + type + "?api_key=" + api_key
+                    + "&page=" + page + "&query=" + query);
+        } catch (JSONException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return json.getJSONArray("results");
+    }
+
+    @Override
+    public BufferedImage loadTMDbImage(String url) {
+        URL url2;
+        BufferedImage img = null;
+        try {
+            url2 = new URL("https://image.tmdb.org/t/p/w500" + url);
+            img = ImageIO.read(url2);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return img;
     }
 }

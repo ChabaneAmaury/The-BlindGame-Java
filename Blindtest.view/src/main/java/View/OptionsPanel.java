@@ -137,6 +137,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW)
                 + (btnW / 2);
         int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - btnW);
+        int addX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 4) - (this.getWidth() / 10) - (btnW * 2));
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -145,6 +146,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
         this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
+        this.drawButton(graphics, "Add new", addX, btnY, btnW, btnH);
         graphics.setColor(Color.BLACK);
         graphics.setFont(graphics.getFont().deriveFont((float) (this.getHeight() / 22)));
         int metaXStart = (int) (this.getWidth() / 51.2);
