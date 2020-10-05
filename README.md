@@ -55,7 +55,7 @@ You can add as many themes as you want.
 1) Create a folder in the "files" directory
 2) Add in your freshly created folder the audio file (currently support mp3 and wav files). If you don't, a warning icon will be displayed on the main screen and beside the theme. You can aunch anyway, but the theme will not be used
 3) Add the theme cover as a png, jpg, or jpeg file. If you don't, an "Image not found" cover will be displayed
-4) Copy the "theme.properties" file from another theme or from the one in the "bin" directory. You you don't, one will be created automatically on launch
+4) Copy the "theme.properties" file from another theme or from the one in the "bin" directory. If you don't, one will be created automatically on launch
 
 ### theme.properties infos
 
