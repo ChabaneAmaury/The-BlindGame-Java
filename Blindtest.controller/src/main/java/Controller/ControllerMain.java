@@ -4,15 +4,22 @@
 package Controller;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.io.PrintWriter;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 import javax.imageio.ImageIO;
@@ -61,6 +68,8 @@ public class ControllerMain extends Observable implements IControllerMain {
     /** The timer. */
     private Thread timer = null;
 
+    private Map<String, String> releaseMap = new HashMap<>();
+
     /**
      * Instantiates a new controller main.
      *
@@ -72,6 +81,9 @@ public class ControllerMain extends Observable implements IControllerMain {
     public ControllerMain(IView view, IModel model) {
         this.setModel(model);
         this.setView(view);
+
+        this.releaseMap.put("Movie", "release_date");
+        this.releaseMap.put("TV Show", "first_air_date");
     }
 
     @Override
@@ -395,5 +407,48 @@ public class ControllerMain extends Observable implements IControllerMain {
         }
 
         return img;
+    }
+
+    @Override
+    public void createThemeFromSearch(JSONObject theme, String type, Map<String, String> titlesMap) {
+        String title = theme.getString(titlesMap.get(type));
+        System.out.println(title);
+        System.out.println(type);
+        try {
+            Files.createDirectories(Paths.get("files/" + title));
+        } catch (IOException e) {
+            System.err.println("Failed to create directory!" + e.getMessage());
+        }
+
+        try {
+            // retrieve image
+            BufferedImage bi = this.loadTMDbImage(theme.getString("poster_path"));
+            File outputfile = new File("files/" + title + "/poster.png");
+            ImageIO.write(bi, "png", outputfile);
+        } catch (IOException e) {
+        }
+
+        File properties = new File("files/" + title + "/theme.properties");
+        InputStream inputStream = null;
+        try {
+            properties.createNewFile();
+
+            try (FileWriter fw = new FileWriter(properties);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    PrintWriter out = new PrintWriter(bw)) {
+                out.println("title=" + title);
+                out.println("composer=");
+                out.println("release=" + theme.getString(this.releaseMap.get(type)).substring(0, 4));
+                out.println("timecode=");
+                out.println("type=" + type);
+                out.println("infos=");
+            }
+
+            inputStream = new FileInputStream(properties);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 }

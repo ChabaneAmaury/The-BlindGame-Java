@@ -51,6 +51,7 @@ public class MouseInputAddTheme implements MouseListener, MouseMotionListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        ViewFrame viewframe = this.getAddThemePanel().getViewFrame();
 
         int mx = e.getX();
         int my = e.getY();
@@ -72,21 +73,74 @@ public class MouseInputAddTheme implements MouseListener, MouseMotionListener {
             if ((mx >= searchX) && (mx <= (searchX + btnW))) {
                 JSONArray result = null;
                 if (this.getAddThemePanel().getAddList().getSelectedItem() == "Movie") {
-                    result = this.getAddThemePanel().getViewFrame().getController().requestTMDbMovie("movie",
+                    result = viewframe.getController().requestTMDbMovie("movie",
                             this.getAddThemePanel().getSearchField().getText());
                 } else if (this.getAddThemePanel().getAddList().getSelectedItem() == "TV Show") {
-                    result = this.getAddThemePanel().getViewFrame().getController().requestTMDbMovie("tv",
+                    result = viewframe.getController().requestTMDbMovie("tv",
                             this.getAddThemePanel().getSearchField().getText());
                 }
                 this.getAddThemePanel().setResultArr(result);
                 this.getAddThemePanel().setType((String) this.getAddThemePanel().getAddList().getSelectedItem());
             }
-        }
-        if ((my >= btnY) && (my <= (btnY + btnH))) {
+        } else if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= backX) && (mx <= (backX + btnW))) {
-                this.getAddThemePanel().getViewFrame()
-                        .setContentPane(new OptionsPanel(this.getAddThemePanel().getViewFrame()));
-                this.getAddThemePanel().getViewFrame().revalidate();
+                viewframe.setContentPane(new OptionsPanel(viewframe));
+                viewframe.revalidate();
+            }
+        }
+
+        else {
+            if (this.getAddThemePanel().getResultArr() != null) {
+                for (int i = 0; i < 3; i++) {
+                    if (i < this.getAddThemePanel().getResultArr().length()) {
+
+                        int tY = (int) (this.getAddThemePanel().getSearchField().getY()
+                                + this.getAddThemePanel().getSearchField().getHeight()
+                                + (((((i + 1) * this.getAddThemePanel().getWidth()) / 51.2)
+                                        + ((((this.getAddThemePanel().getWidth() / 11) * 160) / 120) * i))));
+                        int tX = (int) (this.getAddThemePanel().getWidth() / 51.2);
+                        int tW = this.getAddThemePanel().getWidth() / 11;
+                        int tH = (tW * 160) / 120;
+
+                        if ((my >= tY) && (my <= (tY + tH))) {
+                            if ((mx >= tX) && (mx <= (tX + tW))) {
+                                viewframe.getController().createThemeFromSearch(
+                                        this.getAddThemePanel().getResultArr().getJSONObject(i),
+                                        this.getAddThemePanel().getType(), this.getAddThemePanel().getTitlesMap());
+                                viewframe.getModel().fillThemesList();
+                                viewframe.getModel().loadTypes();
+                                viewframe.setContentPane(new MenuPanel(viewframe, 0));
+                                viewframe.revalidate();
+                            }
+                        }
+
+                    }
+                }
+                for (int i = 3; i < 6; i++) {
+                    if (i < this.getAddThemePanel().getResultArr().length()) {
+
+                        int tY = (int) (this.getAddThemePanel().getSearchField().getY()
+                                + this.getAddThemePanel().getSearchField().getHeight()
+                                + ((((i - 3) + 1) * this.getAddThemePanel().getWidth()) / 51.2)
+                                + ((((this.getAddThemePanel().getWidth() / 11) * 160) / 120) * (i - 3)));
+                        int tX = (int) (this.getAddThemePanel().getWidth() / 51.2)
+                                + (this.getAddThemePanel().getWidth() / 2);
+                        int tW = this.getAddThemePanel().getWidth() / 11;
+                        int tH = (tW * 160) / 120;
+
+                        if ((my >= tY) && (my <= (tY + tH))) {
+                            if ((mx >= tX) && (mx <= (tX + tW))) {
+                                viewframe.getController().createThemeFromSearch(
+                                        this.getAddThemePanel().getResultArr().getJSONObject(i),
+                                        this.getAddThemePanel().getType(), this.getAddThemePanel().getTitlesMap());
+                                viewframe.getModel().fillThemesList();
+                                viewframe.getModel().loadTypes();
+                                viewframe.setContentPane(new MenuPanel(viewframe, 0));
+                                viewframe.revalidate();
+                            }
+                        }
+                    }
+                }
             }
         }
     }

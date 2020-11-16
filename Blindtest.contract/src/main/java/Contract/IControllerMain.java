@@ -5,9 +5,11 @@ package Contract;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * The Interface IControllerMain.
@@ -152,5 +154,7 @@ public interface IControllerMain {
     JSONArray requestTMDbMovie(String type, String searchString);
 
     BufferedImage loadTMDbImage(String url);
+
+    void createThemeFromSearch(JSONObject theme, String type, Map<String, String> titlesMap);
 
 }

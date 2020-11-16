@@ -13,7 +13,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +29,8 @@ public class AddThemePanel extends MyPanel {
     private JTextField searchField = null;
 
     private String[] addStrings = { "Movie", "TV Show" };
+
+    private Map<String, String> titlesMap = new HashMap<>();
 
     // Create the combo box, select item at index 4.
     // Indices start at 0, so 4 specifies the pig.
@@ -47,6 +49,10 @@ public class AddThemePanel extends MyPanel {
 
     public AddThemePanel(ViewFrame viewFrame) {
         super(viewFrame);
+
+        this.getTitlesMap().put("Movie", "original_title");
+        this.getTitlesMap().put("TV Show", "original_name");
+
         // TODO Auto-generated constructor stub
         MouseInputAddTheme mouseInput = new MouseInputAddTheme(this);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -86,11 +92,7 @@ public class AddThemePanel extends MyPanel {
 
         String title = null;
 
-        if (this.type == "Movie") {
-            title = theme.getString("original_title");
-        } else if (this.type == "TV Show") {
-            title = theme.getString("original_name");
-        }
+        title = theme.getString(this.getTitlesMap().get(this.type));
 
         graphics.drawString(title, titleX, titleY);
 
@@ -121,21 +123,20 @@ public class AddThemePanel extends MyPanel {
             poster = null;
         }
 
-        if (poster != null) {
-            graphics.setColor(Color.BLACK);
-            Point mousePos = this.getMousePosition();
-            if (mousePos != null) {
-                if ((mousePos.getX() >= rectX) && (mousePos.getX() <= (rectX + rectW))) {
-                    if ((mousePos.getY() >= rectY) && (mousePos.getY() <= (rectY + rectH))) {
-                        float alpha = (float) 0.5; // draw half transparent
-                        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-                        graphics.setComposite(ac);
-                    }
+        graphics.setColor(Color.BLACK);
+        Point mousePos = this.getMousePosition();
+        if (mousePos != null) {
+            if ((mousePos.getX() >= rectX) && (mousePos.getX() <= (rectX + rectW))) {
+                if ((mousePos.getY() >= rectY) && (mousePos.getY() <= (rectY + rectH))) {
+                    float alpha = (float) 0.5; // draw half transparent
+                    AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+                    graphics.setComposite(ac);
                 }
             }
+        }
 
+        if (poster != null) {
             this.drawImageRoundedCorners(graphics, poster, 15, rectX, rectY, rectW, rectH);
-
         } else {
             graphics.setBackground(Color.GRAY);
             graphics.clearRect(rectX, rectY, rectW, rectH);
@@ -240,6 +241,10 @@ public class AddThemePanel extends MyPanel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Map<String, String> getTitlesMap() {
+        return this.titlesMap;
     }
 
 }
