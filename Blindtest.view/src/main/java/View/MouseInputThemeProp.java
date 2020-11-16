@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import Contract.IEntity;
+
 /**
  * The Class MouseInputThemeProp.
  *
@@ -47,6 +49,8 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        ViewFrame viewframe = this.getThemePropPanel().getViewFrame();
+        IEntity theme = this.getThemePropPanel().getTheme();
 
         int mx = e.getX();
         int my = e.getY();
@@ -58,24 +62,21 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
         int btnH = this.getThemePropPanel().getHeight() / 14;
         int playX = (int) (this.getThemePropPanel().getWidth() / 51.2) + menuX + btnW;
         if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= playX) && (mx <= ((this.getThemePropPanel().getTheme().isHasError())
-                    ? playX + btnW + (this.getThemePropPanel().getWidth() / 50)
-                    : playX + btnW))) {
-                if (this.getThemePropPanel().getTheme().isHasError()) {
+            if ((mx >= playX)
+                    && (mx <= ((theme.isHasError()) ? playX + btnW + (this.getThemePropPanel().getWidth() / 50)
+                            : playX + btnW))) {
+                if (theme.isHasError()) {
                     String youtubeUrl = this.getThemePropPanel().getYtUrlField().getText();
-                    String filepath = this.getThemePropPanel().getTheme().getFolder().getAbsolutePath();
-                    this.getThemePropPanel().getViewFrame().getController().downloadYtVideoToMP3(filepath, youtubeUrl);
+                    String filepath = theme.getFolder().getAbsolutePath();
+                    viewframe.getController().downloadYtVideoToMP3(filepath, youtubeUrl);
 
-                    this.getThemePropPanel().getTheme()
-                            .setFile(this.getThemePropPanel().getTheme().FindFileByExtension(
-                                    this.getThemePropPanel().getTheme().getFolder(),
-                                    this.getThemePropPanel().getTheme().getFileExtensions()));
-                    this.getThemePropPanel().getTheme().setHasError(false);
+                    theme.setFile(theme.FindFileByExtension(theme.getFolder(), theme.getFileExtensions()));
+                    theme.setHasError(false);
                     this.getThemePropPanel().remove(this.getThemePropPanel().getYtUrlField());
                 } else {
                     try {
-                        this.getThemePropPanel().getViewFrame().stopMusic();
-                        this.getThemePropPanel().getViewFrame().playMusic(this.getThemePropPanel().getTheme().getFile(),
+                        viewframe.stopMusic();
+                        viewframe.playMusic(theme.getFile(),
                                 Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()),
                                 this.getThemePropPanel());
                     } catch (Exception e1) {
@@ -83,37 +84,28 @@ public class MouseInputThemeProp implements MouseListener, MouseMotionListener {
                 }
 
             } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
-                this.getThemePropPanel().getTheme().setPropertyValue("title",
-                        this.getThemePropPanel().getTitleField().getText());
-                this.getThemePropPanel().getTheme().setTitle(this.getThemePropPanel().getTitleField().getText());
+                theme.setPropertyValue("title", this.getThemePropPanel().getTitleField().getText());
+                theme.setTitle(this.getThemePropPanel().getTitleField().getText());
 
-                this.getThemePropPanel().getTheme().setPropertyValue("composer",
-                        this.getThemePropPanel().getComposerField().getText());
-                this.getThemePropPanel().getTheme().setComposer(this.getThemePropPanel().getComposerField().getText());
+                theme.setPropertyValue("composer", this.getThemePropPanel().getComposerField().getText());
+                theme.setComposer(this.getThemePropPanel().getComposerField().getText());
 
-                this.getThemePropPanel().getTheme().setPropertyValue("type",
-                        this.getThemePropPanel().getTypeField().getText());
-                this.getThemePropPanel().getTheme().setType(this.getThemePropPanel().getTypeField().getText());
+                theme.setPropertyValue("type", this.getThemePropPanel().getTypeField().getText());
+                theme.setType(this.getThemePropPanel().getTypeField().getText());
 
-                this.getThemePropPanel().getTheme().setPropertyValue("timecode",
-                        this.getThemePropPanel().getTimeCodeField().getText());
-                this.getThemePropPanel().getTheme()
-                        .setTimecode(Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()));
+                theme.setPropertyValue("timecode", this.getThemePropPanel().getTimeCodeField().getText());
+                theme.setTimecode(Integer.parseInt(this.getThemePropPanel().getTimeCodeField().getText()));
 
-                this.getThemePropPanel().getTheme().setPropertyValue("release",
-                        this.getThemePropPanel().getReleaseField().getText());
-                this.getThemePropPanel().getTheme()
-                        .setReleaseDate(this.getThemePropPanel().getReleaseField().getText());
+                theme.setPropertyValue("release", this.getThemePropPanel().getReleaseField().getText());
+                theme.setReleaseDate(this.getThemePropPanel().getReleaseField().getText());
 
-                this.getThemePropPanel().getTheme().setPropertyValue("infos",
-                        this.getThemePropPanel().getInfosField().getText());
-                this.getThemePropPanel().getTheme().setInfos(this.getThemePropPanel().getInfosField().getText());
+                theme.setPropertyValue("infos", this.getThemePropPanel().getInfosField().getText());
+                theme.setInfos(this.getThemePropPanel().getInfosField().getText());
 
-                this.getThemePropPanel().getViewFrame().getModel().loadTypes();
-                this.getThemePropPanel().getViewFrame().stopMusic();
-                this.getThemePropPanel().getViewFrame().setContentPane(new MenuPanel(
-                        this.getThemePropPanel().getViewFrame(), this.getThemePropPanel().getOriginalShowIndex()));
-                this.getThemePropPanel().getViewFrame().revalidate();
+                viewframe.getModel().loadTypes();
+                viewframe.stopMusic();
+                viewframe.setContentPane(new MenuPanel(viewframe, this.getThemePropPanel().getOriginalShowIndex()));
+                viewframe.revalidate();
             }
         }
     }

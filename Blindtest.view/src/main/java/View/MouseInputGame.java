@@ -49,6 +49,8 @@ public class MouseInputGame implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
 
+        ViewFrame viewframe = this.getViewPanel().getViewFrame();
+
         int mx = e.getX();
         int my = e.getY();
 
@@ -60,13 +62,12 @@ public class MouseInputGame implements MouseListener, MouseMotionListener {
         int pauseX = (int) (this.getViewPanel().getWidth() / 51.2) + menuX + btnW;
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= menuX) && (mx <= (menuX + btnW))) {
-                this.getViewPanel().getViewFrame().stopMusic();
-                this.getViewPanel().getViewFrame().getController().getTimer().stop();
-                this.getViewPanel().getViewFrame().setCurrentThemeIndex(9999);
-                this.getViewPanel().getViewFrame().setContentPane(new MenuPanel(this.getViewPanel().getViewFrame(), 0));
-                this.getViewPanel().getViewFrame().revalidate();
-            } else if ((this.getViewPanel().getViewFrame().getController().getTimeLeft() < 0) && (mx >= pauseX)
-                    && (mx <= (pauseX + btnW))) {
+                viewframe.stopMusic();
+                viewframe.getController().getTimer().stop();
+                viewframe.setCurrentThemeIndex(9999);
+                viewframe.setContentPane(new MenuPanel(viewframe, 0));
+                viewframe.revalidate();
+            } else if ((viewframe.getController().getTimeLeft() < 0) && (mx >= pauseX) && (mx <= (pauseX + btnW))) {
                 this.getViewPanel().setPaused(!this.getViewPanel().isPaused());
             }
         }

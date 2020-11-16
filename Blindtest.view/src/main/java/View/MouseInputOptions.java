@@ -49,6 +49,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
+        ViewFrame viewframe = this.getOptionsPanel().getViewFrame();
 
         int mx = e.getX();
         int my = e.getY();
@@ -69,24 +70,22 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
 
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= nextX) && (mx <= (nextX + btnW))) {
-                if (this.getOptionsPanel().getViewFrame().getController().getModel().getTypes()
+                if (viewframe.getController().getModel().getTypes()
                         .size() > ((this.getOptionsPanel().getShowIndex() + 16))) {
                     for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
                         if (checkboxe.isSelected()) {
-                            this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
+                            viewframe.getController().removeType(checkboxe.getText());
                         } else {
                             boolean checked = false;
-                            System.out.println(
-                                    this.getOptionsPanel().getViewFrame().getController().getNotChoosenTypes());
-                            for (String type : this.getOptionsPanel().getViewFrame().getController()
-                                    .getNotChoosenTypes()) {
+                            System.out.println(viewframe.getController().getNotChoosenTypes());
+                            for (String type : viewframe.getController().getNotChoosenTypes()) {
                                 if (type.equalsIgnoreCase(checkboxe.getText())) {
                                     checked = true;
                                     break;
                                 }
                             }
                             if (!checked) {
-                                this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                                viewframe.getController().addType(checkboxe.getText());
                             }
                         }
                     }
@@ -99,18 +98,17 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                 if (this.getOptionsPanel().getShowIndex() > 0) {
                     for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
                         if (checkboxe.isSelected()) {
-                            this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
+                            viewframe.getController().removeType(checkboxe.getText());
                         } else {
                             boolean checked = false;
-                            for (String type : this.getOptionsPanel().getViewFrame().getController()
-                                    .getNotChoosenTypes()) {
+                            for (String type : viewframe.getController().getNotChoosenTypes()) {
                                 if (type.equalsIgnoreCase(checkboxe.getText())) {
                                     checked = true;
                                     break;
                                 }
                             }
                             if (!checked) {
-                                this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                                viewframe.getController().addType(checkboxe.getText());
                             }
                         }
                     }
@@ -121,7 +119,7 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
                 }
             } else if ((mx >= backX) && (mx <= (backX + btnW))) {
                 try {
-                    this.getOptionsPanel().getViewFrame().getController()
+                    viewframe.getController()
                             .setAllowedTime(Integer.parseInt(this.getOptionsPanel().getTimeField().getText()));
                 } catch (NumberFormatException e1) {
                     // TODO Auto-generated catch block
@@ -130,27 +128,25 @@ public class MouseInputOptions implements MouseListener, MouseMotionListener {
 
                 for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
                     if (checkboxe.isSelected()) {
-                        this.getOptionsPanel().getViewFrame().getController().removeType(checkboxe.getText());
+                        viewframe.getController().removeType(checkboxe.getText());
                     } else {
                         boolean checked = false;
-                        for (String type : this.getOptionsPanel().getViewFrame().getController().getNotChoosenTypes()) {
+                        for (String type : viewframe.getController().getNotChoosenTypes()) {
                             if (type.equalsIgnoreCase(checkboxe.getText())) {
                                 checked = true;
                                 break;
                             }
                         }
                         if (!checked) {
-                            this.getOptionsPanel().getViewFrame().getController().addType(checkboxe.getText());
+                            viewframe.getController().addType(checkboxe.getText());
                         }
                     }
                 }
-                this.getOptionsPanel().getViewFrame()
-                        .setContentPane(new MenuPanel(this.getOptionsPanel().getViewFrame(), 0));
-                this.getOptionsPanel().getViewFrame().revalidate();
+                viewframe.setContentPane(new MenuPanel(viewframe, 0));
+                viewframe.revalidate();
             } else if ((mx >= addX) && (mx <= (addX + addX))) {
-                this.getOptionsPanel().getViewFrame()
-                        .setContentPane(new AddThemePanel(this.getOptionsPanel().getViewFrame()));
-                this.getOptionsPanel().getViewFrame().revalidate();
+                viewframe.setContentPane(new AddThemePanel(viewframe));
+                viewframe.revalidate();
             }
         }
 
