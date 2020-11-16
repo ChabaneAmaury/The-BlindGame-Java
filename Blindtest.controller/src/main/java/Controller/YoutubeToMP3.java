@@ -34,7 +34,7 @@ public class YoutubeToMP3 {
 
     /** The Constant MP3_TITLE_PATTERN. */
     private static final Pattern MP3_TITLE_PATTERN = Pattern
-            .compile("(?<=<b>Title\\: <\\/b>)(\\w|\\d|\\s|[()\\-\\_])+(?=<\\/p>)");
+            .compile("(?<=<b>Title\\: <\\/b>)([()\\-\\_]|[0-9A-Za-zÀ-ÿ '-])+(?=<\\/p>)");
 
     /**
      * Youtube to MP 3.
