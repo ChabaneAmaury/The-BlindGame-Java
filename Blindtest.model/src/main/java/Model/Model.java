@@ -93,36 +93,74 @@ public class Model implements IModel {
         }
         for (NetworkInterface netint : Collections.list(nets)) {
             Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
-            if (inetAddresses.hasMoreElements()) {
-                for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-                    if ((inetAddress instanceof Inet4Address) && !inetAddress.toString()
-                            .substring(1, inetAddress.toString().lastIndexOf('.') + 1).equals("127.0.0.")) {
-                        for (int i = 1; i <= 254; i++) {
-                            String ip = inetAddress.toString().substring(1, inetAddress.toString().lastIndexOf('.') + 1)
-                                    + i;
-                            new Thread() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        if (InetAddress.getByName(ip).isReachable(100)
-                                                && !ip.equalsIgnoreCase(inetAddress.toString().substring(1))) {
 
-                                            Socket s = new Socket();
-                                            s.connect(new InetSocketAddress(ip, 15125), 100);
-                                            System.out.println("Server is listening on port " + 15125 + " of " + ip);
-                                            s.close();
+            while (inetAddresses.hasMoreElements()) {
+                InetAddress inetAddress = inetAddresses.nextElement();
 
-                                            Model.this.getIPsToScan().add(ip);
-                                        }
-                                    } catch (IOException e) {
+                String ip = inetAddress.getHostAddress();
+
+                String sip = ip.substring(0, ip.indexOf('.', ip.indexOf('.', ip.indexOf('.') + 1) + 1) + 1);
+                if (!sip.equals("127.0.0.")) {
+
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            for (int it = 1; it <= 255; it++) {
+                                try {
+                                    String ipToTest = sip + it;
+                                    boolean online = InetAddress.getByName(ipToTest).isReachable(100);
+                                    if (online) {
+                                        Socket s = new Socket();
+                                        s.connect(new InetSocketAddress(ip, 15125), 100);
+                                        System.out.println("Server is listening on port " + 15125 + " of " + ip);
+                                        s.close();
+
+                                        Model.this.getIPsToScan().add(ip);
                                     }
+
+                                } catch (IOException e1) {
+                                    System.out.println(sip);
                                 }
-                            }.start();
+                            }
                         }
-                    }
+                    }.start();
                 }
             }
         }
+
+        // if (inetAddresses.hasMoreElements()) {
+        // for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+        // if ((inetAddress instanceof Inet4Address) && !inetAddress.toString()
+        // .substring(1, inetAddress.toString().lastIndexOf('.') +
+        // 1).equals("127.0.0.")) {
+        // for (int i = 1; i <= 254; i++) {
+        // String ip = inetAddress.toString().substring(1,
+        // inetAddress.toString().lastIndexOf('.') + 1)
+        // + i;
+        // new Thread() {
+        //
+        // @Override
+        // public void run() {
+        // try {
+        // if (InetAddress.getByName(ip).isReachable(100)
+        // && !ip.equalsIgnoreCase(inetAddress.toString().substring(1))) {
+        //
+        // Socket s = new Socket();
+        // s.connect(new InetSocketAddress(ip, 15125), 100);
+        // System.out.println("Server is listening on port " + 15125 + " of " + ip);
+        // s.close();
+        //
+        // Model.this.getIPsToScan().add(ip);
+        // }
+        // } catch (IOException e) {
+        // }
+        // }
+        //
+        // }.start();
+        // }
+        // }
+        // }
+        // }
     }
 
     /**
