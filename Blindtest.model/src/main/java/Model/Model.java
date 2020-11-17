@@ -6,7 +6,6 @@ package Model;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
@@ -127,40 +126,6 @@ public class Model implements IModel {
                 }
             }
         }
-
-        // if (inetAddresses.hasMoreElements()) {
-        // for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-        // if ((inetAddress instanceof Inet4Address) && !inetAddress.toString()
-        // .substring(1, inetAddress.toString().lastIndexOf('.') +
-        // 1).equals("127.0.0.")) {
-        // for (int i = 1; i <= 254; i++) {
-        // String ip = inetAddress.toString().substring(1,
-        // inetAddress.toString().lastIndexOf('.') + 1)
-        // + i;
-        // new Thread() {
-        //
-        // @Override
-        // public void run() {
-        // try {
-        // if (InetAddress.getByName(ip).isReachable(100)
-        // && !ip.equalsIgnoreCase(inetAddress.toString().substring(1))) {
-        //
-        // Socket s = new Socket();
-        // s.connect(new InetSocketAddress(ip, 15125), 100);
-        // System.out.println("Server is listening on port " + 15125 + " of " + ip);
-        // s.close();
-        //
-        // Model.this.getIPsToScan().add(ip);
-        // }
-        // } catch (IOException e) {
-        // }
-        // }
-        //
-        // }.start();
-        // }
-        // }
-        // }
-        // }
     }
 
     /**
