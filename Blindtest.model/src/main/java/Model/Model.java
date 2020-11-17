@@ -108,18 +108,18 @@ public class Model implements IModel {
                             for (int it = 1; it <= 255; it++) {
                                 try {
                                     String ipToTest = sip + it;
-                                    boolean online = InetAddress.getByName(ipToTest).isReachable(100);
+                                    boolean online = InetAddress.getByName(ipToTest).isReachable(50);
                                     if (online) {
                                         Socket s = new Socket();
-                                        s.connect(new InetSocketAddress(ip, 15125), 100);
-                                        System.out.println("Server is listening on port " + 15125 + " of " + ip);
+                                        s.connect(new InetSocketAddress(ipToTest, 15125), 50);
+                                        System.out.println("Server is listening on port " + 15125 + " of " + ipToTest);
                                         s.close();
 
-                                        Model.this.getIPsToScan().add(ip);
+                                        Model.this.getIPsToScan().add(ipToTest);
                                     }
 
                                 } catch (IOException e1) {
-                                    System.out.println(sip);
+                                    e1.printStackTrace();
                                 }
                             }
                         }
