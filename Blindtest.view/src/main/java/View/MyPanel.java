@@ -105,9 +105,6 @@ public class MyPanel extends JPanel {
     /** The view frame. */
     private ViewFrame viewFrame = null;
 
-    /** The dimensions. */
-    private Dimension dimensions = null;
-
     /** The font name. */
     private String fontName = "Helvetica";
 
@@ -119,7 +116,6 @@ public class MyPanel extends JPanel {
      */
     public MyPanel(ViewFrame viewFrame) {
         this.setViewFrame(viewFrame);
-        this.setDimensions(this.getViewFrame().getSize());
     }
 
     /**
@@ -248,14 +244,14 @@ public class MyPanel extends JPanel {
      */
     public void drawButton(Graphics2D graphics, String text, int x, int y, int width, int height) {
         Font basicFont = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
-        graphics.setColor(new Color(115, 115, 255));
+        graphics.setColor(Color.GRAY);
         graphics.fill(new RoundRectangle2D.Double(x - (this.getWidth() / 128), y - (this.getHeight() / 72),
                 width + (this.getWidth() / 64), height + (this.getHeight() / 36), 90, 90));
         Point mousePos = this.getMousePosition();
         graphics.setColor(new Color(16, 129, 255));
         if ((mousePos != null) && ((mousePos.getX() >= x) && (mousePos.getX() <= (x + width)))
                 && ((mousePos.getY() >= y) && (mousePos.getY() <= (y + height)))) {
-            graphics.setColor(Color.WHITE);
+            graphics.setColor(new Color(16, 129, 255, 150));
         }
         graphics.fill(new RoundRectangle2D.Double(x, y, width, height, 70, 70));
         graphics.setColor(Color.BLACK);
@@ -307,25 +303,6 @@ public class MyPanel extends JPanel {
      */
     public void setViewFrame(ViewFrame viewFrame) {
         this.viewFrame = viewFrame;
-    }
-
-    /**
-     * Gets the dimensions.
-     *
-     * @return the dimensions
-     */
-    public Dimension getDimensions() {
-        return this.dimensions;
-    }
-
-    /**
-     * Sets the dimensions.
-     *
-     * @param dimensions
-     *                       the new dimensions
-     */
-    public void setDimensions(Dimension dimensions) {
-        this.dimensions = dimensions;
     }
 
     /**

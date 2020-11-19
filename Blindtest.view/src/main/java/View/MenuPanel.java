@@ -63,7 +63,6 @@ public class MenuPanel extends MyPanel {
         this.setShowIndex(showIndex);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
-        this.setDimensions(this.getViewFrame().getSize());
     }
 
     /**

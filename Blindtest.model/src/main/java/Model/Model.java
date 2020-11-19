@@ -55,24 +55,21 @@ public class Model implements IModel {
             e.printStackTrace();
         }
 
-        Thread clientSearching = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        Thread.sleep(30000);
-                        Model.this.scanIPsInSubnet();
-                        for (String addr : Model.this.getIPsToScan()) {
-                            System.out.println("Trying " + addr);
-                            @SuppressWarnings("unused")
-                            FileClient client = new FileClient(Model.this, addr);
-                        }
+        Thread clientSearching = new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(30000);
+                    Model.this.scanIPsInSubnet();
+                    for (String addr : Model.this.getIPsToScan()) {
+                        System.out.println("Trying " + addr);
+                        @SuppressWarnings("unused")
+                        FileClient client = new FileClient(Model.this, addr);
                     }
-                } catch (Exception e) {
                 }
-
+            } catch (Exception ignored) {
             }
-        };
+
+        });
         clientSearching.setDaemon(true);
         clientSearching.start();
 
@@ -90,6 +87,7 @@ public class Model implements IModel {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        assert nets != null;
         for (NetworkInterface netint : Collections.list(nets)) {
             Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
 
@@ -101,28 +99,25 @@ public class Model implements IModel {
                 String sip = ip.substring(0, ip.indexOf('.', ip.indexOf('.', ip.indexOf('.') + 1) + 1) + 1);
                 if (!sip.equals("127.0.0.")) {
 
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            for (int it = 1; it <= 255; it++) {
-                                try {
-                                    String ipToTest = sip + it;
-                                    boolean online = InetAddress.getByName(ipToTest).isReachable(50);
-                                    if (online) {
-                                        Socket s = new Socket();
-                                        s.connect(new InetSocketAddress(ipToTest, 15125), 50);
-                                        System.out.println("Server is listening on port " + 15125 + " of " + ipToTest);
-                                        s.close();
+                    new Thread(() -> {
+                        for (int it = 1; it <= 255; it++) {
+                            try {
+                                String ipToTest = sip + it;
+                                boolean online = InetAddress.getByName(ipToTest).isReachable(50);
+                                if (online) {
+                                    Socket s = new Socket();
+                                    s.connect(new InetSocketAddress(ipToTest, 15125), 50);
+                                    System.out.println("Server is listening on port " + 15125 + " of " + ipToTest);
+                                    s.close();
 
-                                        Model.this.getIPsToScan().add(ipToTest);
-                                    }
-
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
+                                    Model.this.getIPsToScan().add(ipToTest);
                                 }
+
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
                             }
                         }
-                    }.start();
+                    }).start();
                 }
             }
         }
@@ -155,7 +150,7 @@ public class Model implements IModel {
         this.getThemes().clear();
         for (File theme : this.getFolders()) {
             if (theme.isDirectory()) {
-                Theme loadedTheme = new Theme(this, theme);
+                Theme loadedTheme = new Theme(theme);
                 this.getThemes().add(loadedTheme);
             }
         }

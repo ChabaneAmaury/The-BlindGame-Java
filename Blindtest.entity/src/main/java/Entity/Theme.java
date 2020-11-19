@@ -11,17 +11,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
-
 import Contract.IEntity;
-import Contract.IModel;
 
 /**
  * The Class Theme.
@@ -32,9 +28,6 @@ public class Theme extends Properties implements IEntity {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4982921459536513037L;
-
-    /** The model. */
-    private IModel model = null;
 
     /** The title. */
     private String title = "Undefined";
@@ -58,10 +51,10 @@ public class Theme extends Properties implements IEntity {
     private String infos = "";
 
     /** The file extensions. */
-    private String[] fileExtensions = new String[] { ".mp3", ".wav" };
+    private final String[] fileExtensions = new String[] { ".mp3", ".wav" };
 
     /** The cover extensions. */
-    private String[] coverExtensions = new String[] { ".png", ".jpg", ".jpeg" };
+    private final String[] coverExtensions = new String[] { ".png", ".jpg", ".jpeg" };
 
     /** The cover image. */
     private Image coverImage = null;
@@ -87,13 +80,10 @@ public class Theme extends Properties implements IEntity {
     /**
      * Instantiates a new theme.
      *
-     * @param model
-     *                   the model
      * @param folder
      *                   the folder
      */
-    public Theme(IModel model, File folder) {
-        this.setModel(model);
+    public Theme(File folder) {
         this.setFolder(folder);
         try {
             this.setCover(this.FindFileByExtension(folder, this.getCoverExtensions()));
@@ -162,10 +152,11 @@ public class Theme extends Properties implements IEntity {
             }
             try {
                 this.setTimecode(Integer.parseInt(this.getProperty("timecode")));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
         try {
+            assert inputStream != null;
             inputStream.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -239,18 +230,15 @@ public class Theme extends Properties implements IEntity {
      */
     @Override
     public String FindFileByExtension(File folder, String[] extensions) {
-        File[] files = folder.listFiles(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                for (String extension : extensions) {
-                    if (!name.toLowerCase().contains("cover_thumb") && name.toLowerCase().endsWith(extension)) {
-                        return true;
-                    }
+        File[] files = folder.listFiles((dir, name) -> {
+            for (String extension : extensions) {
+                if (!name.toLowerCase().contains("cover_thumb") && name.toLowerCase().endsWith(extension)) {
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
+        assert files != null;
         if (files.length > 0) {
             return files[new Random().nextInt(files.length)].getAbsolutePath();
         } else {
@@ -394,32 +382,12 @@ public class Theme extends Properties implements IEntity {
     }
 
     /**
-     * Sets the file extensions.
-     *
-     * @param fileExtensions
-     *                           the new file extensions
-     */
-    public void setFileExtensions(String[] fileExtensions) {
-        this.fileExtensions = fileExtensions;
-    }
-
-    /**
      * Gets the cover extensions.
      *
      * @return the cover extensions
      */
     public String[] getCoverExtensions() {
         return this.coverExtensions;
-    }
-
-    /**
-     * Sets the cover extensions.
-     *
-     * @param coverExtensions
-     *                            the new cover extensions
-     */
-    public void setCoverExtensions(String[] coverExtensions) {
-        this.coverExtensions = coverExtensions;
     }
 
     /**
@@ -528,25 +496,6 @@ public class Theme extends Properties implements IEntity {
     }
 
     /**
-     * Gets the model.
-     *
-     * @return the model
-     */
-    public IModel getModel() {
-        return this.model;
-    }
-
-    /**
-     * Sets the model.
-     *
-     * @param model
-     *                  the new model
-     */
-    public void setModel(IModel model) {
-        this.model = model;
-    }
-
-    /**
      * Gets the folder.
      *
      * @return the folder
@@ -587,7 +536,7 @@ public class Theme extends Properties implements IEntity {
     @Override
     public void setThumbnailCoverImage(int width, int height) {
 
-        File outputFile = null;
+        File outputFile;
         try {
             BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             img.createGraphics().drawImage(this.getCoverImage().getScaledInstance(width, height, Image.SCALE_SMOOTH), 0,
