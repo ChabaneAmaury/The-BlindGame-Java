@@ -13,7 +13,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -162,9 +161,6 @@ public class AddThemePanel extends MyPanel {
         int searchX = (int) (this.getWidth() / 1.74545455);
         int searchY = (int) (this.getViewFrame().getHeight() / 16.5);
         int backX = (int) (this.getWidth() - (this.getWidth() / 51.2) - (this.getWidth() / 10));
-        int nextX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 2) - (this.getWidth() / 10) - btnW)
-                + (btnW / 2);
-        int previousX = (int) (this.getWidth() - ((this.getWidth() / 51.2) * 3) - (this.getWidth() / 10) - btnW);
 
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -174,8 +170,6 @@ public class AddThemePanel extends MyPanel {
 
         this.drawButton(graphics, "Search", searchX, searchY, btnW, btnH);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
-        // this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
-        // this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
 
         if (this.getResultArr() != null) {
             for (int i = 0; i < 3; i++) {

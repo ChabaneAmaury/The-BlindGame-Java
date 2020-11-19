@@ -252,7 +252,7 @@ public class MyPanel extends JPanel {
         graphics.fill(new RoundRectangle2D.Double(x - (this.getWidth() / 128), y - (this.getHeight() / 72),
                 width + (this.getWidth() / 64), height + (this.getHeight() / 36), 90, 90));
         Point mousePos = this.getMousePosition();
-        graphics.setColor(Color.BLUE);
+        graphics.setColor(new Color(16, 129, 255));
         if ((mousePos != null) && ((mousePos.getX() >= x) && (mousePos.getX() <= (x + width)))
                 && ((mousePos.getY() >= y) && (mousePos.getY() <= (y + height)))) {
             graphics.setColor(Color.WHITE);

@@ -12,21 +12,6 @@ import java.awt.event.MouseEvent;
  */
 public class MouseInputGame extends MouseInput {
 
-    /** The menu X. */
-    private int menuX;
-    
-    /** The btn Y. */
-    private int btnY;
-    
-    /** The btn W. */
-    private int btnW;
-    
-    /** The btn H. */
-    private int btnH;
-    
-    /** The pause X. */
-    private int pauseX;
-
     /**
      * Instantiates a new mouse input game.
      *
@@ -35,12 +20,6 @@ public class MouseInputGame extends MouseInput {
     public MouseInputGame(ViewPanel viewPanel) {
         super(viewPanel);
 
-        this.menuX = (int) (this.panel.getWidth() / 51.2);
-        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
-                - (this.panel.getHeight() / 10.2857143));
-        this.btnW = this.panel.getWidth() / 12;
-        this.btnH = this.panel.getHeight() / 14;
-        this.pauseX = (int) (this.panel.getWidth() / 51.2) + this.menuX + this.btnW;
     }
 
     /**
@@ -54,15 +33,27 @@ public class MouseInputGame extends MouseInput {
         int mx = e.getX();
         int my = e.getY();
 
-        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
-            if ((mx >= this.menuX) && (mx <= (this.menuX + this.btnW))) {
+        /** The menu X. */
+        int menuX = (int) (this.panel.getWidth() / 51.2);
+        /** The btn Y. */
+        int btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        /** The btn W. */
+        int btnW = this.panel.getWidth() / 12;
+        /** The btn H. */
+        int btnH = this.panel.getHeight() / 14;
+        /** The pause X. */
+        int pauseX = (int) (this.panel.getWidth() / 51.2) + menuX + btnW;
+
+        if ((my >= btnY) && (my <= (btnY + btnH))) {
+            if ((mx >= menuX) && (mx <= (menuX + btnW))) {
                 this.viewframe.stopMusic();
                 this.viewframe.getController().getTimer().stop();
                 this.viewframe.setCurrentThemeIndex(9999);
                 this.viewframe.setContentPane(new MenuPanel(this.viewframe, 0));
                 this.viewframe.revalidate();
-            } else if ((this.viewframe.getController().getTimeLeft() < 0) && (mx >= this.pauseX)
-                    && (mx <= (this.pauseX + this.btnW))) {
+            } else if ((this.viewframe.getController().getTimeLeft() < 0) && (mx >= pauseX)
+                    && (mx <= (pauseX + btnW))) {
                 ((ViewPanel) this.panel).setPaused(!((ViewPanel) this.panel).isPaused());
             }
         }

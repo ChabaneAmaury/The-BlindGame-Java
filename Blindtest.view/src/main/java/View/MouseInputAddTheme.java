@@ -14,24 +14,6 @@ import org.json.JSONArray;
  */
 public class MouseInputAddTheme extends MouseInput {
 
-    /** The btn Y. */
-    private int btnY;
-    
-    /** The btn W. */
-    private int btnW;
-    
-    /** The btn H. */
-    private int btnH;
-    
-    /** The search X. */
-    private int searchX;
-    
-    /** The search Y. */
-    private int searchY;
-    
-    /** The back X. */
-    private int backX;
-
     /**
      * Instantiates a new mouse input add theme.
      *
@@ -39,13 +21,7 @@ public class MouseInputAddTheme extends MouseInput {
      */
     public MouseInputAddTheme(AddThemePanel addThemePanel) {
         super(addThemePanel);
-        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
-                - (this.panel.getHeight() / 10.2857143));
-        this.btnW = this.panel.getWidth() / 12;
-        this.btnH = this.panel.getHeight() / 14;
-        this.searchX = (int) (this.panel.getWidth() / 1.74545455);
-        this.searchY = (int) (this.panel.getHeight() / 16.5);
-        this.backX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
+
     }
 
     /**
@@ -58,8 +34,22 @@ public class MouseInputAddTheme extends MouseInput {
         int mx = e.getX();
         int my = e.getY();
 
-        if ((my >= this.searchY) && (my <= (this.searchY + this.btnH))) {
-            if ((mx >= this.searchX) && (mx <= (this.searchX + this.btnW))) {
+        /** The btn Y. */
+        int btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        /** The btn W. */
+        int btnW = this.panel.getWidth() / 12;
+        /** The btn H. */
+        int btnH = this.panel.getHeight() / 14;
+        /** The search X. */
+        int searchX = (int) (this.panel.getWidth() / 1.74545455);
+        /** The search Y. */
+        int searchY = (int) (this.panel.getHeight() / 16.5);
+        /** The back X. */
+        int backX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
+
+        if ((my >= searchY) && (my <= (searchY + btnH))) {
+            if ((mx >= searchX) && (mx <= (searchX + btnW))) {
                 JSONArray result = null;
                 if (((AddThemePanel) this.panel).getAddList().getSelectedItem() == "Movie") {
                     result = this.viewframe.getController().requestTMDbMovie("movie",
@@ -72,8 +62,8 @@ public class MouseInputAddTheme extends MouseInput {
                 ((AddThemePanel) this.panel)
                         .setType((String) ((AddThemePanel) this.panel).getAddList().getSelectedItem());
             }
-        } else if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
-            if ((mx >= this.backX) && (mx <= (this.backX + this.btnW))) {
+        } else if ((my >= btnY) && (my <= (btnY + btnH))) {
+            if ((mx >= backX) && (mx <= (backX + btnW))) {
                 this.viewframe.setContentPane(new OptionsPanel(this.viewframe));
                 this.viewframe.revalidate();
             }

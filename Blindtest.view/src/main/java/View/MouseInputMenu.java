@@ -12,33 +12,6 @@ import java.awt.event.MouseEvent;
  */
 public class MouseInputMenu extends MouseInput {
 
-    /** The play X. */
-    private int playX;
-    
-    /** The btn Y. */
-    private int btnY;
-    
-    /** The btn W. */
-    private int btnW;
-    
-    /** The btn H. */
-    private int btnH;
-    
-    /** The options X. */
-    private int optionsX;
-    
-    /** The next X. */
-    private int nextX;
-    
-    /** The previous X. */
-    private int previousX;
-    
-    /** The refresh X. */
-    private int refreshX;
-    
-    /** The quit X. */
-    private int quitX;
-
     /**
      * Instantiates a new mouse input menu.
      *
@@ -47,20 +20,6 @@ public class MouseInputMenu extends MouseInput {
     public MouseInputMenu(MenuPanel menuPanel) {
         super(menuPanel);
 
-        this.playX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
-        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
-                - (this.panel.getHeight() / 10.2857143));
-        this.btnW = this.panel.getWidth() / 12;
-        this.btnH = this.panel.getHeight() / 14;
-        this.optionsX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
-                - (this.panel.getWidth() / 51.2) - this.btnW);
-        this.nextX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
-                - ((this.panel.getWidth() / 51.2) * 2) - (this.btnW * 2)) + (this.btnW / 2);
-        this.previousX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
-                - ((this.panel.getWidth() / 51.2) * 3) - (this.btnW * 2));
-        this.refreshX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
-                - ((this.panel.getWidth() / 51.2) * 4) - (this.btnW * 3));
-        this.quitX = (int) (this.panel.getWidth() / 51.2);
     }
 
     /**
@@ -73,29 +32,53 @@ public class MouseInputMenu extends MouseInput {
         int mx = e.getX();
         int my = e.getY();
 
-        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
-            if ((mx >= this.previousX) && (mx <= (this.previousX + (this.btnW / 2)))) {
+        /** The play X. */
+        int playX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
+        /** The btn Y. */
+        int btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        /** The btn W. */
+        int btnW = this.panel.getWidth() / 12;
+        /** The btn H. */
+        int btnH = this.panel.getHeight() / 14;
+        /** The options X. */
+        int optionsX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - (this.panel.getWidth() / 51.2) - btnW);
+        /** The next X. */
+        int nextX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - ((this.panel.getWidth() / 51.2) * 2) - (btnW * 2)) + (btnW / 2);
+        /** The previous X. */
+        int previousX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - ((this.panel.getWidth() / 51.2) * 3) - (btnW * 2));
+        /** The refresh X. */
+        int refreshX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - ((this.panel.getWidth() / 51.2) * 4) - (btnW * 3));
+        /** The quit X. */
+        int quitX = (int) (this.panel.getWidth() / 51.2);
+
+        if ((my >= btnY) && (my <= (btnY + btnH))) {
+            if ((mx >= previousX) && (mx <= (previousX + (btnW / 2)))) {
                 if (((MenuPanel) this.panel).getShowIndex() > 0) {
                     ((MenuPanel) this.panel).setShowIndex(((MenuPanel) this.panel).getShowIndex() - 6);
                     this.panel.repaint();
                 }
-            } else if ((mx >= this.nextX) && (mx <= (this.nextX + (this.btnW / 2)))) {
+            } else if ((mx >= nextX) && (mx <= (nextX + (btnW / 2)))) {
                 if (this.viewframe.getController().getModel().getThemes()
                         .size() > ((((MenuPanel) this.panel).getShowIndex() + 6))) {
                     ((MenuPanel) this.panel).setShowIndex(((MenuPanel) this.panel).getShowIndex() + 6);
                     this.panel.repaint();
                 }
-            } else if ((mx >= this.optionsX) && (mx <= (this.optionsX + this.btnW))) {
+            } else if ((mx >= optionsX) && (mx <= (optionsX + btnW))) {
                 this.viewframe.setContentPane(new OptionsPanel(this.viewframe));
                 this.viewframe.revalidate();
-            } else if ((mx >= this.playX) && (mx <= (this.playX + this.btnW))) {
+            } else if ((mx >= playX) && (mx <= (playX + btnW))) {
                 this.viewframe.getController().startGame();
-            } else if ((mx >= this.refreshX) && (mx <= (this.refreshX + this.btnW))) {
+            } else if ((mx >= refreshX) && (mx <= (refreshX + btnW))) {
                 this.viewframe.getModel().loadFolders();
                 this.viewframe.getModel().fillThemesList();
                 this.viewframe.getModel().loadTypes();
                 this.panel.repaint();
-            } else if ((mx >= this.quitX) && (mx <= (this.quitX + this.btnW))) {
+            } else if ((mx >= quitX) && (mx <= (quitX + btnW))) {
                 System.exit(0);
 
             }

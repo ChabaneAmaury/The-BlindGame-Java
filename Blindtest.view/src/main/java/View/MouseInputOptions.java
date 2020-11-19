@@ -13,27 +13,6 @@ import javax.swing.JCheckBox;
  */
 public class MouseInputOptions extends MouseInput {
 
-    /** The back X. */
-    private int backX;
-    
-    /** The btn Y. */
-    private int btnY;
-    
-    /** The btn W. */
-    private int btnW;
-    
-    /** The btn H. */
-    private int btnH;
-    
-    /** The next X. */
-    private int nextX;
-    
-    /** The previous X. */
-    private int previousX;
-    
-    /** The add X. */
-    private int addX;
-
     /**
      * Instantiates a new mouse input options.
      *
@@ -41,19 +20,6 @@ public class MouseInputOptions extends MouseInput {
      */
     public MouseInputOptions(OptionsPanel optionsPanel) {
         super(optionsPanel);
-
-        this.backX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
-        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
-                - (this.panel.getHeight() / 10.2857143));
-        this.btnW = this.panel.getWidth() / 12;
-        this.btnH = this.panel.getHeight() / 14;
-        this.nextX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 2) - (this.panel.getWidth() / 10)
-                - this.btnW) + (this.btnW / 2);
-        this.previousX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 3)
-                - (this.panel.getWidth() / 10) - this.btnW);
-
-        this.addX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 4) - (this.panel.getWidth() / 10)
-                - (this.btnW * 2));
     }
 
     /**
@@ -66,8 +32,28 @@ public class MouseInputOptions extends MouseInput {
         int mx = e.getX();
         int my = e.getY();
 
-        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
-            if ((mx >= this.nextX) && (mx <= (this.nextX + this.btnW))) {
+        /** The back X. */
+        int backX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
+        /** The btn Y. */
+        int btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        /** The btn W. */
+        int btnW = this.panel.getWidth() / 12;
+        /** The btn H. */
+        int btnH = this.panel.getHeight() / 14;
+        /** The next X. */
+        int nextX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 2) - (this.panel.getWidth() / 10)
+                - btnW) + (btnW / 2);
+        /** The previous X. */
+        int previousX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 3)
+                - (this.panel.getWidth() / 10) - btnW);
+
+        /** The add X. */
+        int addX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 4) - (this.panel.getWidth() / 10)
+                - (btnW * 2));
+
+        if ((my >= btnY) && (my <= (btnY + btnH))) {
+            if ((mx >= nextX) && (mx <= (nextX + btnW))) {
                 if (this.viewframe.getController().getModel().getTypes()
                         .size() > ((((OptionsPanel) this.panel).getShowIndex() + 16))) {
                     for (JCheckBox checkboxe : ((OptionsPanel) this.panel).getCheckboxes()) {
@@ -92,7 +78,7 @@ public class MouseInputOptions extends MouseInput {
                     ((OptionsPanel) this.panel).createCheckboxes();
                     this.panel.repaint();
                 }
-            } else if ((mx >= this.previousX) && (mx <= (this.previousX + this.btnW))) {
+            } else if ((mx >= previousX) && (mx <= (previousX + btnW))) {
                 if (((OptionsPanel) this.panel).getShowIndex() > 0) {
                     for (JCheckBox checkboxe : ((OptionsPanel) this.panel).getCheckboxes()) {
                         if (checkboxe.isSelected()) {
@@ -115,7 +101,7 @@ public class MouseInputOptions extends MouseInput {
                     ((OptionsPanel) this.panel).createCheckboxes();
                     this.panel.repaint();
                 }
-            } else if ((mx >= this.backX) && (mx <= (this.backX + this.btnW))) {
+            } else if ((mx >= backX) && (mx <= (backX + btnW))) {
                 try {
                     this.viewframe.getController()
                             .setAllowedTime(Integer.parseInt(((OptionsPanel) this.panel).getTimeField().getText()));
@@ -142,7 +128,7 @@ public class MouseInputOptions extends MouseInput {
                 }
                 this.viewframe.setContentPane(new MenuPanel(this.viewframe, 0));
                 this.viewframe.revalidate();
-            } else if ((mx >= this.addX) && (mx <= (this.addX + this.addX))) {
+            } else if ((mx >= addX) && (mx <= (addX + addX))) {
                 this.viewframe.setContentPane(new AddThemePanel(this.viewframe));
                 this.viewframe.revalidate();
             }

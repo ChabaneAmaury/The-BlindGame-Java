@@ -13,21 +13,6 @@ import Contract.IEntity;
  */
 public class MouseInputThemeProp extends MouseInput {
 
-    /** The menu X. */
-    private int menuX;
-    
-    /** The btn Y. */
-    private int btnY;
-    
-    /** The btn W. */
-    private int btnW;
-    
-    /** The btn H. */
-    private int btnH;
-    
-    /** The play X. */
-    private int playX;
-
     /**
      * Instantiates a new mouse input theme prop.
      *
@@ -35,13 +20,6 @@ public class MouseInputThemeProp extends MouseInput {
      */
     public MouseInputThemeProp(ThemePropPanel themePropPanel) {
         super(themePropPanel);
-
-        this.menuX = (int) (this.panel.getWidth() / 51.2);
-        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
-                - (this.panel.getHeight() / 10.2857143));
-        this.btnW = this.panel.getWidth() / 12;
-        this.btnH = this.panel.getHeight() / 14;
-        this.playX = (int) (this.panel.getWidth() / 51.2) + this.menuX + this.btnW;
     }
 
     /**
@@ -56,10 +34,22 @@ public class MouseInputThemeProp extends MouseInput {
         int mx = e.getX();
         int my = e.getY();
 
-        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
-            if ((mx >= this.playX)
-                    && (mx <= ((theme.isHasError()) ? this.playX + this.btnW + (this.panel.getWidth() / 50)
-                            : this.playX + this.btnW))) {
+        /** The menu X. */
+        int menuX = (int) (this.panel.getWidth() / 51.2);
+        /** The btn Y. */
+        int btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        /** The btn W. */
+        int btnW = this.panel.getWidth() / 12;
+        /** The btn H. */
+        int btnH = this.panel.getHeight() / 14;
+        /** The play X. */
+        int playX = (int) (this.panel.getWidth() / 51.2) + menuX + btnW;
+
+        if ((my >= btnY) && (my <= (btnY + btnH))) {
+            if ((mx >= playX)
+                    && (mx <= ((theme.isHasError()) ? playX + btnW + (this.panel.getWidth() / 50)
+                            : playX + btnW))) {
                 if (theme.isHasError()) {
                     String youtubeUrl = ((ThemePropPanel) this.panel).getYtUrlField().getText();
                     String filepath = theme.getFolder().getAbsolutePath();
@@ -78,7 +68,7 @@ public class MouseInputThemeProp extends MouseInput {
                     }
                 }
 
-            } else if ((mx >= this.menuX) && (mx <= (this.menuX + this.btnW))) {
+            } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
                 theme.setPropertyValue("title", ((ThemePropPanel) this.panel).getTitleField().getText());
                 theme.setTitle(((ThemePropPanel) this.panel).getTitleField().getText());
 

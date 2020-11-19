@@ -178,7 +178,7 @@ public class Model implements IModel {
             e.printStackTrace();
         }
         try {
-            this.setFolders(new File("files\\").listFiles());
+            this.setFolders(new File("files/").listFiles());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
