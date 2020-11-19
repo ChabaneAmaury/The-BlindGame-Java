@@ -4,9 +4,6 @@
 package View;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.JCheckBox;
 
 /**
@@ -14,213 +11,156 @@ import javax.swing.JCheckBox;
  *
  * @author Amaury Chabane
  */
-public class MouseInputOptions implements MouseListener, MouseMotionListener {
+public class MouseInputOptions extends MouseInput {
 
-    /** The options panel. */
-    private OptionsPanel optionsPanel = null;
+    /** The back X. */
+    private int backX;
+    
+    /** The btn Y. */
+    private int btnY;
+    
+    /** The btn W. */
+    private int btnW;
+    
+    /** The btn H. */
+    private int btnH;
+    
+    /** The next X. */
+    private int nextX;
+    
+    /** The previous X. */
+    private int previousX;
+    
+    /** The add X. */
+    private int addX;
 
     /**
      * Instantiates a new mouse input options.
      *
-     * @param optionsPanel
-     *                         the options panel
+     * @param optionsPanel the options panel
      */
     public MouseInputOptions(OptionsPanel optionsPanel) {
-        this.optionsPanel = optionsPanel;
-    }
+        super(optionsPanel);
 
-    /**
-     * Mouse clicked.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
+        this.backX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
+        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        this.btnW = this.panel.getWidth() / 12;
+        this.btnH = this.panel.getHeight() / 14;
+        this.nextX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 2) - (this.panel.getWidth() / 10)
+                - this.btnW) + (this.btnW / 2);
+        this.previousX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 3)
+                - (this.panel.getWidth() / 10) - this.btnW);
 
+        this.addX = (int) (this.panel.getWidth() - ((this.panel.getWidth() / 51.2) * 4) - (this.panel.getWidth() / 10)
+                - (this.btnW * 2));
     }
 
     /**
      * Mouse pressed.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        ViewFrame viewframe = this.getOptionsPanel().getViewFrame();
-
         int mx = e.getX();
         int my = e.getY();
 
-        int backX = (int) (this.getOptionsPanel().getWidth() - (this.getOptionsPanel().getWidth() / 51.2)
-                - (this.getOptionsPanel().getWidth() / 10));
-        int btnY = (int) (this.getOptionsPanel().getHeight() - (this.getOptionsPanel().getWidth() / 51.2)
-                - (this.getOptionsPanel().getHeight() / 10.2857143));
-        int btnW = this.getOptionsPanel().getWidth() / 12;
-        int btnH = this.getOptionsPanel().getHeight() / 14;
-        int nextX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 2)
-                - (this.getOptionsPanel().getWidth() / 10) - btnW) + (btnW / 2);
-        int previousX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 3)
-                - (this.getOptionsPanel().getWidth() / 10) - btnW);
-
-        int addX = (int) (this.getOptionsPanel().getWidth() - ((this.getOptionsPanel().getWidth() / 51.2) * 4)
-                - (this.getOptionsPanel().getWidth() / 10) - (btnW * 2));
-
-        if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= nextX) && (mx <= (nextX + btnW))) {
-                if (viewframe.getController().getModel().getTypes()
-                        .size() > ((this.getOptionsPanel().getShowIndex() + 16))) {
-                    for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
+        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
+            if ((mx >= this.nextX) && (mx <= (this.nextX + this.btnW))) {
+                if (this.viewframe.getController().getModel().getTypes()
+                        .size() > ((((OptionsPanel) this.panel).getShowIndex() + 16))) {
+                    for (JCheckBox checkboxe : ((OptionsPanel) this.panel).getCheckboxes()) {
                         if (checkboxe.isSelected()) {
-                            viewframe.getController().removeType(checkboxe.getText());
+                            this.viewframe.getController().removeType(checkboxe.getText());
                         } else {
                             boolean checked = false;
-                            System.out.println(viewframe.getController().getNotChoosenTypes());
-                            for (String type : viewframe.getController().getNotChoosenTypes()) {
+                            System.out.println(this.viewframe.getController().getNotChoosenTypes());
+                            for (String type : this.viewframe.getController().getNotChoosenTypes()) {
                                 if (type.equalsIgnoreCase(checkboxe.getText())) {
                                     checked = true;
                                     break;
                                 }
                             }
                             if (!checked) {
-                                viewframe.getController().addType(checkboxe.getText());
+                                this.viewframe.getController().addType(checkboxe.getText());
                             }
                         }
                     }
-                    this.getOptionsPanel().removeCheckboxes();
-                    this.getOptionsPanel().setShowIndex(this.getOptionsPanel().getShowIndex() + 16);
-                    this.getOptionsPanel().createCheckboxes();
-                    this.getOptionsPanel().repaint();
+                    ((OptionsPanel) this.panel).removeCheckboxes();
+                    ((OptionsPanel) this.panel).setShowIndex(((OptionsPanel) this.panel).getShowIndex() + 16);
+                    ((OptionsPanel) this.panel).createCheckboxes();
+                    this.panel.repaint();
                 }
-            } else if ((mx >= previousX) && (mx <= (previousX + btnW))) {
-                if (this.getOptionsPanel().getShowIndex() > 0) {
-                    for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
+            } else if ((mx >= this.previousX) && (mx <= (this.previousX + this.btnW))) {
+                if (((OptionsPanel) this.panel).getShowIndex() > 0) {
+                    for (JCheckBox checkboxe : ((OptionsPanel) this.panel).getCheckboxes()) {
                         if (checkboxe.isSelected()) {
-                            viewframe.getController().removeType(checkboxe.getText());
+                            this.viewframe.getController().removeType(checkboxe.getText());
                         } else {
                             boolean checked = false;
-                            for (String type : viewframe.getController().getNotChoosenTypes()) {
+                            for (String type : this.viewframe.getController().getNotChoosenTypes()) {
                                 if (type.equalsIgnoreCase(checkboxe.getText())) {
                                     checked = true;
                                     break;
                                 }
                             }
                             if (!checked) {
-                                viewframe.getController().addType(checkboxe.getText());
+                                this.viewframe.getController().addType(checkboxe.getText());
                             }
                         }
                     }
-                    this.getOptionsPanel().removeCheckboxes();
-                    this.getOptionsPanel().setShowIndex(this.getOptionsPanel().getShowIndex() - 16);
-                    this.getOptionsPanel().createCheckboxes();
-                    this.getOptionsPanel().repaint();
+                    ((OptionsPanel) this.panel).removeCheckboxes();
+                    ((OptionsPanel) this.panel).setShowIndex(((OptionsPanel) this.panel).getShowIndex() - 16);
+                    ((OptionsPanel) this.panel).createCheckboxes();
+                    this.panel.repaint();
                 }
-            } else if ((mx >= backX) && (mx <= (backX + btnW))) {
+            } else if ((mx >= this.backX) && (mx <= (this.backX + this.btnW))) {
                 try {
-                    viewframe.getController()
-                            .setAllowedTime(Integer.parseInt(this.getOptionsPanel().getTimeField().getText()));
+                    this.viewframe.getController()
+                            .setAllowedTime(Integer.parseInt(((OptionsPanel) this.panel).getTimeField().getText()));
                 } catch (NumberFormatException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
 
-                for (JCheckBox checkboxe : this.getOptionsPanel().getCheckboxes()) {
+                for (JCheckBox checkboxe : ((OptionsPanel) this.panel).getCheckboxes()) {
                     if (checkboxe.isSelected()) {
-                        viewframe.getController().removeType(checkboxe.getText());
+                        this.viewframe.getController().removeType(checkboxe.getText());
                     } else {
                         boolean checked = false;
-                        for (String type : viewframe.getController().getNotChoosenTypes()) {
+                        for (String type : this.viewframe.getController().getNotChoosenTypes()) {
                             if (type.equalsIgnoreCase(checkboxe.getText())) {
                                 checked = true;
                                 break;
                             }
                         }
                         if (!checked) {
-                            viewframe.getController().addType(checkboxe.getText());
+                            this.viewframe.getController().addType(checkboxe.getText());
                         }
                     }
                 }
-                viewframe.setContentPane(new MenuPanel(viewframe, 0));
-                viewframe.revalidate();
-            } else if ((mx >= addX) && (mx <= (addX + addX))) {
-                viewframe.setContentPane(new AddThemePanel(viewframe));
-                viewframe.revalidate();
+                this.viewframe.setContentPane(new MenuPanel(this.viewframe, 0));
+                this.viewframe.revalidate();
+            } else if ((mx >= this.addX) && (mx <= (this.addX + this.addX))) {
+                this.viewframe.setContentPane(new AddThemePanel(this.viewframe));
+                this.viewframe.revalidate();
             }
         }
 
     }
 
     /**
-     * Gets the options panel.
-     *
-     * @return the options panel
-     */
-    private OptionsPanel getOptionsPanel() {
-        return this.optionsPanel;
-    }
-
-    /**
-     * Mouse released.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse entered.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse exited.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * Mouse dragged.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
      * Mouse moved.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        int btnY = (int) ((this.getOptionsPanel().getHeight() - (this.getOptionsPanel().getWidth() / 51.2)
-                - (this.getOptionsPanel().getHeight() / 10.2857143)) - 200);
+        int btnY = (int) ((this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143)) - 200);
         if (e.getY() >= btnY) {
-            this.getOptionsPanel().repaint(0, btnY, this.getOptionsPanel().getWidth(),
-                    this.getOptionsPanel().getHeight());
+            this.panel.repaint(0, btnY, this.panel.getWidth(), this.panel.getHeight());
         }
     }
 }

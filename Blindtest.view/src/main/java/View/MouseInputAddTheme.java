@@ -4,211 +4,135 @@
 package View;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-import javax.swing.JCheckBox;
 
 import org.json.JSONArray;
 
 /**
- * The Class MouseInputThemeProp.
+ * The Class MouseInputAddTheme.
  *
  * @author Amaury Chabane
  */
-public class MouseInputAddTheme implements MouseListener, MouseMotionListener {
+public class MouseInputAddTheme extends MouseInput {
 
-    /** The theme prop panel. */
-    private AddThemePanel addThemePanel = null;
+    /** The btn Y. */
+    private int btnY;
+    
+    /** The btn W. */
+    private int btnW;
+    
+    /** The btn H. */
+    private int btnH;
+    
+    /** The search X. */
+    private int searchX;
+    
+    /** The search Y. */
+    private int searchY;
+    
+    /** The back X. */
+    private int backX;
 
     /**
-     * Instantiates a new mouse input theme prop.
+     * Instantiates a new mouse input add theme.
      *
-     * @param themePropPanel
-     *                           the theme prop panel
+     * @param addThemePanel the add theme panel
      */
     public MouseInputAddTheme(AddThemePanel addThemePanel) {
-        this.addThemePanel = addThemePanel;
-    }
-
-    /**
-     * Mouse clicked.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        super(addThemePanel);
+        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        this.btnW = this.panel.getWidth() / 12;
+        this.btnH = this.panel.getHeight() / 14;
+        this.searchX = (int) (this.panel.getWidth() / 1.74545455);
+        this.searchY = (int) (this.panel.getHeight() / 16.5);
+        this.backX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
     }
 
     /**
      * Mouse pressed.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        ViewFrame viewframe = this.getAddThemePanel().getViewFrame();
-
         int mx = e.getX();
         int my = e.getY();
 
-        int btnY = (int) (this.getAddThemePanel().getHeight() - (this.getAddThemePanel().getWidth() / 51.2)
-                - (this.getAddThemePanel().getHeight() / 10.2857143));
-        int btnW = this.getAddThemePanel().getWidth() / 12;
-        int btnH = this.getAddThemePanel().getHeight() / 14;
-        int searchX = (int) (this.getAddThemePanel().getWidth() / 1.74545455);
-        int searchY = (int) (this.getAddThemePanel().getHeight() / 16.5);
-        int nextX = (int) (this.getAddThemePanel().getWidth() - ((this.getAddThemePanel().getWidth() / 51.2) * 2)
-                - (this.getAddThemePanel().getWidth() / 10) - btnW) + (btnW / 2);
-        int previousX = (int) (this.getAddThemePanel().getWidth() - ((this.getAddThemePanel().getWidth() / 51.2) * 3)
-                - (this.getAddThemePanel().getWidth() / 10) - btnW);
-        int backX = (int) (this.getAddThemePanel().getWidth() - (this.getAddThemePanel().getWidth() / 51.2)
-                - (this.getAddThemePanel().getWidth() / 10));
-
-        if ((my >= searchY) && (my <= (searchY + btnH))) {
-            if ((mx >= searchX) && (mx <= (searchX + btnW))) {
+        if ((my >= this.searchY) && (my <= (this.searchY + this.btnH))) {
+            if ((mx >= this.searchX) && (mx <= (this.searchX + this.btnW))) {
                 JSONArray result = null;
-                if (this.getAddThemePanel().getAddList().getSelectedItem() == "Movie") {
-                    result = viewframe.getController().requestTMDbMovie("movie",
-                            this.getAddThemePanel().getSearchField().getText());
-                } else if (this.getAddThemePanel().getAddList().getSelectedItem() == "TV Show") {
-                    result = viewframe.getController().requestTMDbMovie("tv",
-                            this.getAddThemePanel().getSearchField().getText());
+                if (((AddThemePanel) this.panel).getAddList().getSelectedItem() == "Movie") {
+                    result = this.viewframe.getController().requestTMDbMovie("movie",
+                            ((AddThemePanel) this.panel).getSearchField().getText());
+                } else if (((AddThemePanel) this.panel).getAddList().getSelectedItem() == "TV Show") {
+                    result = this.viewframe.getController().requestTMDbMovie("tv",
+                            ((AddThemePanel) this.panel).getSearchField().getText());
                 }
-                this.getAddThemePanel().setResultArr(result);
-                this.getAddThemePanel().setType((String) this.getAddThemePanel().getAddList().getSelectedItem());
+                ((AddThemePanel) this.panel).setResultArr(result);
+                ((AddThemePanel) this.panel)
+                        .setType((String) ((AddThemePanel) this.panel).getAddList().getSelectedItem());
             }
-        } else if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= backX) && (mx <= (backX + btnW))) {
-                viewframe.setContentPane(new OptionsPanel(viewframe));
-                viewframe.revalidate();
+        } else if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
+            if ((mx >= this.backX) && (mx <= (this.backX + this.btnW))) {
+                this.viewframe.setContentPane(new OptionsPanel(this.viewframe));
+                this.viewframe.revalidate();
             }
         }
 
         else {
-            if (this.getAddThemePanel().getResultArr() != null) {
+            if (((AddThemePanel) this.panel).getResultArr() != null) {
                 for (int i = 0; i < 3; i++) {
-                    if (i < this.getAddThemePanel().getResultArr().length()) {
+                    if (i < ((AddThemePanel) this.panel).getResultArr().length()) {
 
-                        int tY = (int) (this.getAddThemePanel().getSearchField().getY()
-                                + this.getAddThemePanel().getSearchField().getHeight()
-                                + (((((i + 1) * this.getAddThemePanel().getWidth()) / 51.2)
-                                        + ((((this.getAddThemePanel().getWidth() / 11) * 160) / 120) * i))));
-                        int tX = (int) (this.getAddThemePanel().getWidth() / 51.2);
-                        int tW = this.getAddThemePanel().getWidth() / 11;
+                        int tY = (int) (((AddThemePanel) this.panel).getSearchField().getY()
+                                + ((AddThemePanel) this.panel).getSearchField().getHeight()
+                                + (((((i + 1) * this.panel.getWidth()) / 51.2)
+                                        + ((((this.panel.getWidth() / 11) * 160) / 120) * i))));
+                        int tX = (int) (this.panel.getWidth() / 51.2);
+                        int tW = this.panel.getWidth() / 11;
                         int tH = (tW * 160) / 120;
 
                         if ((my >= tY) && (my <= (tY + tH))) {
                             if ((mx >= tX) && (mx <= (tX + tW))) {
-                                viewframe.getController().createThemeFromSearch(
-                                        this.getAddThemePanel().getResultArr().getJSONObject(i),
-                                        this.getAddThemePanel().getType(), this.getAddThemePanel().getTitlesMap());
-                                viewframe.getModel().fillThemesList();
-                                viewframe.getModel().loadTypes();
-                                viewframe.setContentPane(new MenuPanel(viewframe, 0));
-                                viewframe.revalidate();
+                                this.viewframe.getController().createThemeFromSearch(
+                                        ((AddThemePanel) this.panel).getResultArr().getJSONObject(i),
+                                        ((AddThemePanel) this.panel).getType(),
+                                        ((AddThemePanel) this.panel).getTitlesMap());
+                                this.viewframe.getModel().fillThemesList();
+                                this.viewframe.getModel().loadTypes();
+                                this.viewframe.setContentPane(new MenuPanel(this.viewframe, 0));
+                                this.viewframe.revalidate();
                             }
                         }
 
                     }
                 }
                 for (int i = 3; i < 6; i++) {
-                    if (i < this.getAddThemePanel().getResultArr().length()) {
+                    if (i < ((AddThemePanel) this.panel).getResultArr().length()) {
 
-                        int tY = (int) (this.getAddThemePanel().getSearchField().getY()
-                                + this.getAddThemePanel().getSearchField().getHeight()
-                                + ((((i - 3) + 1) * this.getAddThemePanel().getWidth()) / 51.2)
-                                + ((((this.getAddThemePanel().getWidth() / 11) * 160) / 120) * (i - 3)));
-                        int tX = (int) (this.getAddThemePanel().getWidth() / 51.2)
-                                + (this.getAddThemePanel().getWidth() / 2);
-                        int tW = this.getAddThemePanel().getWidth() / 11;
+                        int tY = (int) (((AddThemePanel) this.panel).getSearchField().getY()
+                                + ((AddThemePanel) this.panel).getSearchField().getHeight()
+                                + ((((i - 3) + 1) * this.panel.getWidth()) / 51.2)
+                                + ((((this.panel.getWidth() / 11) * 160) / 120) * (i - 3)));
+                        int tX = (int) (this.panel.getWidth() / 51.2) + (this.panel.getWidth() / 2);
+                        int tW = this.panel.getWidth() / 11;
                         int tH = (tW * 160) / 120;
 
                         if ((my >= tY) && (my <= (tY + tH))) {
                             if ((mx >= tX) && (mx <= (tX + tW))) {
-                                viewframe.getController().createThemeFromSearch(
-                                        this.getAddThemePanel().getResultArr().getJSONObject(i),
-                                        this.getAddThemePanel().getType(), this.getAddThemePanel().getTitlesMap());
-                                viewframe.getModel().fillThemesList();
-                                viewframe.getModel().loadTypes();
-                                viewframe.setContentPane(new MenuPanel(viewframe, 0));
-                                viewframe.revalidate();
+                                this.viewframe.getController().createThemeFromSearch(
+                                        ((AddThemePanel) this.panel).getResultArr().getJSONObject(i),
+                                        ((AddThemePanel) this.panel).getType(),
+                                        ((AddThemePanel) this.panel).getTitlesMap());
+                                this.viewframe.getModel().fillThemesList();
+                                this.viewframe.getModel().loadTypes();
+                                this.viewframe.setContentPane(new MenuPanel(this.viewframe, 0));
+                                this.viewframe.revalidate();
                             }
                         }
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Gets the theme prop panel.
-     *
-     * @return the theme prop panel
-     */
-    private AddThemePanel getAddThemePanel() {
-        return this.addThemePanel;
-    }
-
-    /**
-     * Mouse released.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse entered.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse exited.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * Mouse dragged.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse moved.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
     }
 }

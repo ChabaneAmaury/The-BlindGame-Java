@@ -4,143 +4,81 @@
 package View;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 /**
  * The Class MouseInputGame.
  *
  * @author Amaury Chabane
  */
-public class MouseInputGame implements MouseListener, MouseMotionListener {
+public class MouseInputGame extends MouseInput {
 
-    /** The view panel. */
-    private ViewPanel viewPanel = null;
+    /** The menu X. */
+    private int menuX;
+    
+    /** The btn Y. */
+    private int btnY;
+    
+    /** The btn W. */
+    private int btnW;
+    
+    /** The btn H. */
+    private int btnH;
+    
+    /** The pause X. */
+    private int pauseX;
 
     /**
      * Instantiates a new mouse input game.
      *
-     * @param viewPanel
-     *                      the view panel
+     * @param viewPanel the view panel
      */
     public MouseInputGame(ViewPanel viewPanel) {
-        this.viewPanel = viewPanel;
-    }
+        super(viewPanel);
 
-    /**
-     * Mouse clicked.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        this.menuX = (int) (this.panel.getWidth() / 51.2);
+        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        this.btnW = this.panel.getWidth() / 12;
+        this.btnH = this.panel.getHeight() / 14;
+        this.pauseX = (int) (this.panel.getWidth() / 51.2) + this.menuX + this.btnW;
     }
 
     /**
      * Mouse pressed.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @SuppressWarnings("deprecation")
     @Override
     public void mousePressed(MouseEvent e) {
-
-        ViewFrame viewframe = this.getViewPanel().getViewFrame();
-
         int mx = e.getX();
         int my = e.getY();
 
-        int menuX = (int) (this.getViewPanel().getWidth() / 51.2);
-        int btnY = (int) (this.getViewPanel().getHeight() - (this.getViewPanel().getWidth() / 51.2)
-                - (this.getViewPanel().getHeight() / 10.2857143));
-        int btnW = this.getViewPanel().getWidth() / 12;
-        int btnH = this.getViewPanel().getHeight() / 14;
-        int pauseX = (int) (this.getViewPanel().getWidth() / 51.2) + menuX + btnW;
-        if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= menuX) && (mx <= (menuX + btnW))) {
-                viewframe.stopMusic();
-                viewframe.getController().getTimer().stop();
-                viewframe.setCurrentThemeIndex(9999);
-                viewframe.setContentPane(new MenuPanel(viewframe, 0));
-                viewframe.revalidate();
-            } else if ((viewframe.getController().getTimeLeft() < 0) && (mx >= pauseX) && (mx <= (pauseX + btnW))) {
-                this.getViewPanel().setPaused(!this.getViewPanel().isPaused());
+        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
+            if ((mx >= this.menuX) && (mx <= (this.menuX + this.btnW))) {
+                this.viewframe.stopMusic();
+                this.viewframe.getController().getTimer().stop();
+                this.viewframe.setCurrentThemeIndex(9999);
+                this.viewframe.setContentPane(new MenuPanel(this.viewframe, 0));
+                this.viewframe.revalidate();
+            } else if ((this.viewframe.getController().getTimeLeft() < 0) && (mx >= this.pauseX)
+                    && (mx <= (this.pauseX + this.btnW))) {
+                ((ViewPanel) this.panel).setPaused(!((ViewPanel) this.panel).isPaused());
             }
         }
     }
 
     /**
-     * Gets the view panel.
-     *
-     * @return the view panel
-     */
-    private ViewPanel getViewPanel() {
-        return this.viewPanel;
-    }
-
-    /**
-     * Mouse released.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse entered.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse exited.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * Mouse dragged.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
      * Mouse moved.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        int btnY = (int) ((this.getViewPanel().getHeight() - (this.getViewPanel().getWidth() / 51.2)
-                - (this.getViewPanel().getHeight() / 10.2857143)) - 200);
+        int btnY = (int) ((this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143)) - 200);
         if (e.getY() >= btnY) {
-            this.getViewPanel().repaint(0, btnY, this.getViewPanel().getWidth(), this.getViewPanel().getHeight());
+            this.panel.repaint(0, btnY, this.panel.getWidth(), this.panel.getHeight());
         }
     }
 }

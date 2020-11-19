@@ -4,135 +4,142 @@
 package View;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 /**
  * The Class MouseInputMenu.
  *
  * @author Amaury Chabane
  */
-public class MouseInputMenu implements MouseListener, MouseMotionListener {
+public class MouseInputMenu extends MouseInput {
 
-    /** The menu panel. */
-    private MenuPanel menuPanel = null;
+    /** The play X. */
+    private int playX;
+    
+    /** The btn Y. */
+    private int btnY;
+    
+    /** The btn W. */
+    private int btnW;
+    
+    /** The btn H. */
+    private int btnH;
+    
+    /** The options X. */
+    private int optionsX;
+    
+    /** The next X. */
+    private int nextX;
+    
+    /** The previous X. */
+    private int previousX;
+    
+    /** The refresh X. */
+    private int refreshX;
+    
+    /** The quit X. */
+    private int quitX;
 
     /**
      * Instantiates a new mouse input menu.
      *
-     * @param menuPanel2
-     *                       the menu panel 2
+     * @param menuPanel the menu panel
      */
-    public MouseInputMenu(MenuPanel menuPanel2) {
-        this.menuPanel = menuPanel2;
-    }
+    public MouseInputMenu(MenuPanel menuPanel) {
+        super(menuPanel);
 
-    /**
-     * Mouse clicked.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        this.playX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10));
+        this.btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
+                - (this.panel.getHeight() / 10.2857143));
+        this.btnW = this.panel.getWidth() / 12;
+        this.btnH = this.panel.getHeight() / 14;
+        this.optionsX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - (this.panel.getWidth() / 51.2) - this.btnW);
+        this.nextX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - ((this.panel.getWidth() / 51.2) * 2) - (this.btnW * 2)) + (this.btnW / 2);
+        this.previousX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - ((this.panel.getWidth() / 51.2) * 3) - (this.btnW * 2));
+        this.refreshX = (int) (this.panel.getWidth() - (this.panel.getWidth() / 51.2) - (this.panel.getWidth() / 10)
+                - ((this.panel.getWidth() / 51.2) * 4) - (this.btnW * 3));
+        this.quitX = (int) (this.panel.getWidth() / 51.2);
     }
 
     /**
      * Mouse pressed.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
-        ViewFrame viewframe = this.getMenuPanel().getViewFrame();
-
         int mx = e.getX();
         int my = e.getY();
-        int playX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10));
-        int btnY = (int) (this.getMenuPanel().getHeight() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getHeight() / 10.2857143));
-        int btnW = this.getMenuPanel().getWidth() / 12;
-        int btnH = this.getMenuPanel().getHeight() / 14;
-        int optionsX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - (this.getMenuPanel().getWidth() / 51.2) - btnW);
-        int nextX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 2) - (btnW * 2))
-                + (btnW / 2);
-        int previousX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 3) - (btnW * 2));
-        int refreshX = (int) (this.getMenuPanel().getWidth() - (this.getMenuPanel().getWidth() / 51.2)
-                - (this.getMenuPanel().getWidth() / 10) - ((this.getMenuPanel().getWidth() / 51.2) * 4) - (btnW * 3));
-        int quitX = (int) (this.getMenuPanel().getWidth() / 51.2);
-        if ((my >= btnY) && (my <= (btnY + btnH))) {
-            if ((mx >= previousX) && (mx <= (previousX + (btnW / 2)))) {
-                if (this.getMenuPanel().getShowIndex() > 0) {
-                    this.getMenuPanel().setShowIndex(this.getMenuPanel().getShowIndex() - 6);
-                    this.getMenuPanel().repaint();
+
+        if ((my >= this.btnY) && (my <= (this.btnY + this.btnH))) {
+            if ((mx >= this.previousX) && (mx <= (this.previousX + (this.btnW / 2)))) {
+                if (((MenuPanel) this.panel).getShowIndex() > 0) {
+                    ((MenuPanel) this.panel).setShowIndex(((MenuPanel) this.panel).getShowIndex() - 6);
+                    this.panel.repaint();
                 }
-            } else if ((mx >= nextX) && (mx <= (nextX + (btnW / 2)))) {
-                if (viewframe.getController().getModel().getThemes()
-                        .size() > ((this.getMenuPanel().getShowIndex() + 6))) {
-                    this.getMenuPanel().setShowIndex(this.getMenuPanel().getShowIndex() + 6);
-                    this.getMenuPanel().repaint();
+            } else if ((mx >= this.nextX) && (mx <= (this.nextX + (this.btnW / 2)))) {
+                if (this.viewframe.getController().getModel().getThemes()
+                        .size() > ((((MenuPanel) this.panel).getShowIndex() + 6))) {
+                    ((MenuPanel) this.panel).setShowIndex(((MenuPanel) this.panel).getShowIndex() + 6);
+                    this.panel.repaint();
                 }
-            } else if ((mx >= optionsX) && (mx <= (optionsX + btnW))) {
-                viewframe.setContentPane(new OptionsPanel(viewframe));
-                viewframe.revalidate();
-            } else if ((mx >= playX) && (mx <= (playX + btnW))) {
-                viewframe.getController().startGame();
-            } else if ((mx >= refreshX) && (mx <= (refreshX + btnW))) {
-                viewframe.getModel().loadFolders();
-                viewframe.getModel().fillThemesList();
-                viewframe.getModel().loadTypes();
-                this.getMenuPanel().repaint();
-            } else if ((mx >= quitX) && (mx <= (quitX + btnW))) {
+            } else if ((mx >= this.optionsX) && (mx <= (this.optionsX + this.btnW))) {
+                this.viewframe.setContentPane(new OptionsPanel(this.viewframe));
+                this.viewframe.revalidate();
+            } else if ((mx >= this.playX) && (mx <= (this.playX + this.btnW))) {
+                this.viewframe.getController().startGame();
+            } else if ((mx >= this.refreshX) && (mx <= (this.refreshX + this.btnW))) {
+                this.viewframe.getModel().loadFolders();
+                this.viewframe.getModel().fillThemesList();
+                this.viewframe.getModel().loadTypes();
+                this.panel.repaint();
+            } else if ((mx >= this.quitX) && (mx <= (this.quitX + this.btnW))) {
                 System.exit(0);
 
             }
         } else {
-            for (int i = this.getMenuPanel().getShowIndex(); i < (this.getMenuPanel().getShowIndex() + 3); i++) {
-                if (i < viewframe.getModel().getThemes().size()) {
-                    int tY = (int) ((((((i - this.getMenuPanel().getShowIndex()) + 1)
-                            * (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null))) / 51.2)
-                            + (((((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11) * 160) / 120)
-                                    * (i - this.getMenuPanel().getShowIndex()))))
+            for (int i = ((MenuPanel) this.panel).getShowIndex(); i < (((MenuPanel) this.panel).getShowIndex()
+                    + 3); i++) {
+                if (i < this.viewframe.getModel().getThemes().size()) {
+                    int tY = (int) ((((((i - ((MenuPanel) this.panel).getShowIndex()) + 1)
+                            * (this.panel.getWidth() - MenuPanel.LOGO.getWidth(null))) / 51.2)
+                            + (((((this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 11) * 160) / 120)
+                                    * (i - ((MenuPanel) this.panel).getShowIndex()))))
                             + MenuPanel.LOGO.getHeight(null);
-                    int tX = (int) ((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 51.2)
+                    int tX = (int) ((this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 51.2)
                             + MenuPanel.LOGO.getWidth(null);
-                    int tW = (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11;
+                    int tW = (this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 11;
                     int tH = (tW * 160) / 120;
                     if ((my >= tY) && (my <= (tY + tH))) {
                         if ((mx >= tX) && (mx <= (tX + tW))) {
-                            viewframe.setContentPane(
-                                    new ThemePropPanel(viewframe, i, this.getMenuPanel().getShowIndex()));
-                            viewframe.revalidate();
+                            this.viewframe.setContentPane(
+                                    new ThemePropPanel(this.viewframe, i, ((MenuPanel) this.panel).getShowIndex()));
+                            this.viewframe.revalidate();
                             break;
                         }
                     }
                 }
             }
-            for (int i = this.getMenuPanel().getShowIndex() + 3; i < (this.getMenuPanel().getShowIndex() + 6); i++) {
-                if (i < viewframe.getModel().getThemes().size()) {
-                    int tY = ((int) (((((i - 3 - this.getMenuPanel().getShowIndex()) + 1)
-                            * (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null))) / 51.2))
-                            + (((((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11) * 160) / 120)
-                                    * (i - 3 - this.getMenuPanel().getShowIndex())))
+            for (int i = ((MenuPanel) this.panel).getShowIndex() + 3; i < (((MenuPanel) this.panel).getShowIndex()
+                    + 6); i++) {
+                if (i < this.viewframe.getModel().getThemes().size()) {
+                    int tY = ((int) (((((i - 3 - ((MenuPanel) this.panel).getShowIndex()) + 1)
+                            * (this.panel.getWidth() - MenuPanel.LOGO.getWidth(null))) / 51.2))
+                            + (((((this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 11) * 160) / 120)
+                                    * (i - 3 - ((MenuPanel) this.panel).getShowIndex())))
                             + MenuPanel.LOGO.getHeight(null);
-                    int tX = (int) ((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 51.2)
-                            + ((this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 2)
+                    int tX = (int) ((this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 51.2)
+                            + ((this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 2)
                             + MenuPanel.LOGO.getWidth(null);
-                    int tW = (this.getMenuPanel().getWidth() - MenuPanel.LOGO.getWidth(null)) / 11;
+                    int tW = (this.panel.getWidth() - MenuPanel.LOGO.getWidth(null)) / 11;
                     int tH = (tW * 160) / 120;
                     if ((my >= tY) && (my <= (tY + tH))) {
                         if ((mx >= tX) && (mx <= (tX + tW))) {
-                            viewframe.setContentPane(
-                                    new ThemePropPanel(viewframe, i, this.getMenuPanel().getShowIndex()));
-                            viewframe.revalidate();
+                            this.viewframe.setContentPane(
+                                    new ThemePropPanel(this.viewframe, i, ((MenuPanel) this.panel).getShowIndex()));
+                            this.viewframe.revalidate();
                             break;
                         }
                     }
@@ -143,68 +150,12 @@ public class MouseInputMenu implements MouseListener, MouseMotionListener {
     }
 
     /**
-     * Gets the menu panel.
-     *
-     * @return the menu panel
-     */
-    private MenuPanel getMenuPanel() {
-        return this.menuPanel;
-    }
-
-    /**
-     * Mouse released.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse entered.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * Mouse exited.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-    }
-
-    /**
-     * Mouse dragged.
-     *
-     * @param e
-     *              the e
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    /**
      * Mouse moved.
      *
-     * @param e
-     *              the e
+     * @param e the e
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        this.getMenuPanel().repaint();
+        this.panel.repaint();
     }
 }
