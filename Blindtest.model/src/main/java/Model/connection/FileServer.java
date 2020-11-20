@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import Model.Model;
+import Contract.IModel;
 
 /**
  * The Class FileServer.
@@ -29,7 +29,7 @@ import Model.Model;
 public class FileServer implements Runnable {
 
     /** The model. */
-    private Model model = null;
+    private IModel IModel = null;
 
     /** The server socket. */
     private ServerSocket serverSocket = null;
@@ -41,7 +41,7 @@ public class FileServer implements Runnable {
     private ArrayList<File> clientsThemes = new ArrayList<>();
 
     /** The folders to send. */
-    private ArrayList<File> foldersToSend = new ArrayList<>();
+    private final ArrayList<File> foldersToSend = new ArrayList<>();
 
     /**
      * Zip file.
@@ -62,12 +62,12 @@ public class FileServer implements Runnable {
         if (fileToZip.isDirectory()) {
             if (fileName.endsWith("/")) {
                 zipOut.putNextEntry(new ZipEntry(fileName));
-                zipOut.closeEntry();
             } else {
                 zipOut.putNextEntry(new ZipEntry(fileName + "/"));
-                zipOut.closeEntry();
             }
+            zipOut.closeEntry();
             File[] children = fileToZip.listFiles();
+            assert children != null;
             for (File childFile : children) {
                 zipFile(childFile, fileName + "/" + childFile.getName(), zipOut);
             }
@@ -87,13 +87,11 @@ public class FileServer implements Runnable {
     /**
      * Instantiates a new file server.
      *
-     * @param model
+     * @param IModel
      *                  the model
-     * @throws Exception
-     *                       the exception
      */
-    public FileServer(Model model) throws Exception {
-        this.setModel(model);
+    public FileServer(IModel IModel) {
+        this.setModel(IModel);
     }
 
     /**
@@ -119,14 +117,13 @@ public class FileServer implements Runnable {
                     System.out.println("[Server] Done!");
                 }
             }
-        } catch (NullPointerException e1) {
+        } catch (NullPointerException ignored) {
         }
 
         try {
             this.socket.close();
             this.serverSocket.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         System.out.println("[Server] Server stopped !");
@@ -143,7 +140,7 @@ public class FileServer implements Runnable {
         try {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
             os.writeObject(arrayList);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -175,7 +172,6 @@ public class FileServer implements Runnable {
             this.socket = this.serverSocket.accept();
             this.socket.setSoTimeout(100);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -191,14 +187,14 @@ public class FileServer implements Runnable {
         ObjectInputStream is = null;
         try {
             is = new ObjectInputStream(this.socket.getInputStream());
-        } catch (IOException e2) {
+        } catch (IOException ignored) {
         }
         try {
+            assert is != null;
             clientsThemes = new ArrayList<>(Arrays.asList((File[]) is.readObject()));
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         return clientsThemes;
@@ -213,9 +209,8 @@ public class FileServer implements Runnable {
     public void sendTheme(String themeFolder) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            String sourceFile = themeFolder;
             ZipOutputStream zipOut = new ZipOutputStream(baos);
-            File fileToZip = new File(sourceFile);
+            File fileToZip = new File(themeFolder);
             zipFile(fileToZip, fileToZip.getName(), zipOut);
             zipOut.close();
 
@@ -226,7 +221,6 @@ public class FileServer implements Runnable {
             baos.close();
             System.out.println("File transfer complete");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -237,18 +231,18 @@ public class FileServer implements Runnable {
      *
      * @return the model
      */
-    public Model getModel() {
-        return this.model;
+    public IModel getModel() {
+        return this.IModel;
     }
 
     /**
      * Sets the model.
      *
-     * @param model
+     * @param IModel
      *                  the new model
      */
-    public void setModel(Model model) {
-        this.model = model;
+    public void setModel(IModel IModel) {
+        this.IModel = IModel;
     }
 
     /**
@@ -277,16 +271,6 @@ public class FileServer implements Runnable {
      */
     public ArrayList<File> getFoldersToSend() {
         return this.foldersToSend;
-    }
-
-    /**
-     * Sets the folders to send.
-     *
-     * @param foldersToSend
-     *                          the new folders to send
-     */
-    public void setFoldersToSend(ArrayList<File> foldersToSend) {
-        this.foldersToSend = foldersToSend;
     }
 
     /**

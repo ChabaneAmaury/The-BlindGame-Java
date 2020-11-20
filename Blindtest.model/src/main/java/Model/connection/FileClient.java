@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import Model.Model;
+import Contract.IModel;
 
 /**
  * The Class FileClient.
@@ -28,7 +28,7 @@ import Model.Model;
 public class FileClient {
 
     /** The model. */
-    private Model model = null;
+    private IModel IModel = null;
 
     /** The socket. */
     private Socket socket = null;
@@ -52,7 +52,9 @@ public class FileClient {
     private void unzip(String zipFilePath, String destDirectory) throws IOException {
         File destDir = new File(destDirectory);
         if (!destDir.exists()) {
-            destDir.mkdir();
+            if (!destDir.mkdir()){
+                throw new IllegalArgumentException("Cannot create directory: " + destDirectory);
+            }
         }
         ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath));
         ZipEntry entry = zipIn.getNextEntry();
@@ -65,7 +67,9 @@ public class FileClient {
             } else {
                 // if the entry is a directory, make the directory
                 File dir = new File(filePath);
-                dir.mkdir();
+                if (!dir.mkdir()){
+                    throw new IllegalArgumentException("Cannot create directory: " + filePath);
+                }
             }
             zipIn.closeEntry();
             entry = zipIn.getNextEntry();
@@ -83,11 +87,14 @@ public class FileClient {
     private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         File yourFile = new File(filePath);
         if (!yourFile.exists()) {
-            yourFile.createNewFile();
+            if (!yourFile.createNewFile()){
+                throw new IllegalArgumentException("Cannot create file: " + filePath);
+            }
+
         }
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath, false));
         byte[] bytesIn = new byte[BUFFER_SIZE];
-        int read = 0;
+        int read;
         while ((read = zipIn.read(bytesIn)) != -1) {
             bos.write(bytesIn, 0, read);
         }
@@ -97,15 +104,15 @@ public class FileClient {
     /**
      * Instantiates a new file client.
      *
-     * @param model the model
+     * @param IModel the model
      * @param ip the ip
      */
-    public FileClient(Model model, String ip) {
+    public FileClient(IModel IModel, String ip) {
         this.setIp(ip);
-        this.setModel(model);
+        this.setModel(IModel);
         try {
             this.startClient();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -129,12 +136,12 @@ public class FileClient {
                 }
 
             }
-        } catch (Exception e1) {
+        } catch (Exception ignored) {
         }
 
         try {
             this.socket.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         System.out.println("[Client] Client stopped!");
     }
@@ -147,7 +154,6 @@ public class FileClient {
             ObjectOutputStream os = new ObjectOutputStream(this.socket.getOutputStream());
             os.writeObject(this.getModel().getFolders());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -160,7 +166,7 @@ public class FileClient {
     private void connectToServer(String ip) {
         try {
             this.socket = new Socket(ip, 15125, null, 15120);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -176,7 +182,6 @@ public class FileClient {
             ObjectInputStream is = new ObjectInputStream(this.socket.getInputStream());
             folders = (ArrayList<File>) is.readObject();
         } catch (ClassNotFoundException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return folders;
@@ -200,7 +205,6 @@ public class FileClient {
             this.unzip(zipName, destDir);
 
         } catch (IOException | ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -212,7 +216,6 @@ public class FileClient {
                 System.out.println("Failed to delete the file");
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -241,17 +244,17 @@ public class FileClient {
      *
      * @return the model
      */
-    public Model getModel() {
-        return this.model;
+    public IModel getModel() {
+        return this.IModel;
     }
 
     /**
      * Sets the model.
      *
-     * @param model the new model
+     * @param IModel the new model
      */
-    public void setModel(Model model) {
-        this.model = model;
+    public void setModel(IModel IModel) {
+        this.IModel = IModel;
     }
 
     /**

@@ -108,7 +108,9 @@ public class Theme extends Properties implements IEntity {
             inputStream = new FileInputStream(properties);
         } catch (FileNotFoundException e1) {
             try {
-                properties.createNewFile();
+                if (!properties.createNewFile()){
+                    throw new IllegalArgumentException("Cannot create file: " + folder.getAbsolutePath() + "\\" + Theme.PROPERTIES_FILE_NAME);
+                }
 
                 try (FileWriter fw = new FileWriter(properties);
                         BufferedWriter bw = new BufferedWriter(fw);
@@ -123,7 +125,6 @@ public class Theme extends Properties implements IEntity {
 
                 inputStream = new FileInputStream(properties);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -159,7 +160,6 @@ public class Theme extends Properties implements IEntity {
             assert inputStream != null;
             inputStream.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -176,7 +176,6 @@ public class Theme extends Properties implements IEntity {
         try {
             img = ImageIO.read(new File(path));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return img;
@@ -198,7 +197,6 @@ public class Theme extends Properties implements IEntity {
         try {
             inputStream = new FileInputStream(properties);
         } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         if (inputStream != null) {
@@ -213,7 +211,6 @@ public class Theme extends Properties implements IEntity {
                 fos = new FileOutputStream(this.getFolder().getAbsolutePath() + "\\" + Theme.PROPERTIES_FILE_NAME);
                 this.store(fos, "");
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

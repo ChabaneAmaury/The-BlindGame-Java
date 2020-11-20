@@ -3,6 +3,7 @@
  */
 package Main;
 
+import Contract.IModel;
 import Controller.ControllerMain;
 import Model.Model;
 import View.View;
@@ -22,9 +23,9 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        Model model = new Model();
-        View view = new View(model);
-        ControllerMain controller = new ControllerMain(view, model);
+        IModel IModel = new Model();
+        View view = new View(IModel);
+        ControllerMain controller = new ControllerMain(view, IModel);
         view.setController(controller);
     }
 

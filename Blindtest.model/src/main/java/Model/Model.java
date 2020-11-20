@@ -32,13 +32,13 @@ public class Model implements IModel {
     private File[] folders = null;
 
     /** The types. */
-    private ArrayList<String> types = new ArrayList<>();
+    private final ArrayList<String> types = new ArrayList<>();
 
     /** The themes. */
-    private ArrayList<IEntity> themes = new ArrayList<>();
+    private final ArrayList<IEntity> themes = new ArrayList<>();
 
     /** The I ps to scan. */
-    private ArrayList<String> IPsToScan = new ArrayList<>();
+    private final ArrayList<String> IPsToScan = new ArrayList<>();
 
     /**
      * Instantiates a new model.
@@ -84,7 +84,6 @@ public class Model implements IModel {
         try {
             nets = NetworkInterface.getNetworkInterfaces();
         } catch (SocketException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         assert nets != null;
@@ -169,13 +168,11 @@ public class Model implements IModel {
                 System.out.println("Failed to delete the file");
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         try {
             this.setFolders(new File("files/").listFiles());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -222,16 +219,6 @@ public class Model implements IModel {
     }
 
     /**
-     * Sets the types.
-     *
-     * @param types
-     *                  the new types
-     */
-    public void setTypes(ArrayList<String> types) {
-        this.types = types;
-    }
-
-    /**
      * Gets the i ps to scan.
      *
      * @return the i ps to scan
@@ -240,13 +227,4 @@ public class Model implements IModel {
         return this.IPsToScan;
     }
 
-    /**
-     * Sets the i ps to scan.
-     *
-     * @param iPsToScan
-     *                      the new i ps to scan
-     */
-    public void setIPsToScan(ArrayList<String> iPsToScan) {
-        this.IPsToScan = iPsToScan;
-    }
 }
