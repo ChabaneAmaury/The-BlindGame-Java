@@ -34,16 +34,11 @@ public class MouseInputThemeProp extends MouseInput {
         int mx = e.getX();
         int my = e.getY();
 
-        /** The menu X. */
         int menuX = (int) (this.panel.getWidth() / 51.2);
-        /** The btn Y. */
         int btnY = (int) (this.panel.getHeight() - (this.panel.getWidth() / 51.2)
                 - (this.panel.getHeight() / 10.2857143));
-        /** The btn W. */
         int btnW = this.panel.getWidth() / 12;
-        /** The btn H. */
         int btnH = this.panel.getHeight() / 14;
-        /** The play X. */
         int playX = (int) (this.panel.getWidth() / 51.2) + menuX + btnW;
 
         if ((my >= btnY) && (my <= (btnY + btnH))) {
@@ -64,7 +59,7 @@ public class MouseInputThemeProp extends MouseInput {
                         this.viewframe.playMusic(theme.getFile(),
                                 Integer.parseInt(((ThemePropPanel) this.panel).getTimeCodeField().getText()),
                                 this.panel);
-                    } catch (Exception e1) {
+                    } catch (Exception ignored) {
                     }
                 }
 
