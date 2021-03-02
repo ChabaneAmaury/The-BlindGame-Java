@@ -24,14 +24,10 @@ import java.util.Observable;
 
 import javax.imageio.ImageIO;
 
+import Contract.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import Contract.IControllerMain;
-import Contract.IEntity;
-import Contract.IModel;
-import Contract.IView;
 
 /**
  * The Class ControllerMain.
@@ -412,12 +408,12 @@ public class ControllerMain extends Observable implements IControllerMain {
     @Override
     public void createThemeFromSearch(JSONObject theme, String type, Map<String, String> titlesMap) {
         String title = theme.getString(titlesMap.get(type));
-        System.out.println(title);
-        System.out.println(type);
+        System.out.println(TimeFormatter.getTimestamp() + title);
+        System.out.println(TimeFormatter.getTimestamp() + type);
         try {
             Files.createDirectories(Paths.get("files/" + title));
         } catch (IOException e) {
-            System.err.println("Failed to create directory!" + e.getMessage());
+            System.err.println(TimeFormatter.getTimestamp() + "Failed to create directory!" + e.getMessage());
         }
 
         try {

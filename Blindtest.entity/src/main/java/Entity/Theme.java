@@ -18,6 +18,7 @@ import java.util.Properties;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import Contract.IEntity;
+import Contract.TimeFormatter;
 
 /**
  * The Class Theme.
@@ -541,7 +542,7 @@ public class Theme extends Properties implements IEntity {
             outputFile = new File(this.getFolder().getAbsolutePath() + "\\cover_thumb.jpg");
             ImageIO.write(img, "jpg", outputFile);
         } catch (IOException e) {
-            System.out.println("Exception while generating thumbnail " + e.getMessage());
+            System.out.println(TimeFormatter.getTimestamp() + "Exception while generating thumbnail " + e.getMessage());
         }
 
         this.setThumbnailCoverImage(this.loadImage(this.getFolder().getAbsolutePath() + "\\cover_thumb.jpg"));

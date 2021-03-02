@@ -19,6 +19,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import Contract.IModel;
+import Contract.TimeFormatter;
 
 /**
  * The Class FileClient.
@@ -122,17 +123,17 @@ public class FileClient {
     public void startClient() {
         try {
             this.connectToServer(this.getIp());
-            System.out.println("[Client] Connected to : " + this.socket);
+            System.out.println(TimeFormatter.getTimestamp() + "[Client] Connected to : " + this.socket);
 
             this.sendFolders();
             this.setFoldersToReceive(this.getStreamedFoldersToReceive());
 
             if (this.getFoldersToReceive().size() > 0) {
                 for (File folderToReceive : this.getFoldersToReceive()) {
-                    System.out.println("[Client] Receiving " + folderToReceive + "...");
+                    System.out.println(TimeFormatter.getTimestamp() + "[Client] Receiving " + folderToReceive + "...");
                     this.receiveTheme();
                     this.getModel().fillThemesList();
-                    System.out.println("[Client] Done!");
+                    System.out.println(TimeFormatter.getTimestamp() + "[Client] Done!");
                 }
 
             }
@@ -143,7 +144,7 @@ public class FileClient {
             this.socket.close();
         } catch (IOException ignored) {
         }
-        System.out.println("[Client] Client stopped!");
+        System.out.println(TimeFormatter.getTimestamp() + "[Client] Client stopped!");
     }
 
     /**
@@ -201,7 +202,7 @@ public class FileClient {
             bos.flush();
             bos.close();
             String destDir = new File(zipName).getAbsolutePath().replace(zipName, "files");
-            System.out.println(destDir);
+            System.out.println(TimeFormatter.getTimestamp() + destDir);
             this.unzip(zipName, destDir);
 
         } catch (IOException | ClassNotFoundException e) {
@@ -211,9 +212,9 @@ public class FileClient {
         try {
             File file = new File(zipName);
             if (file.delete()) {
-                System.out.println("File deleted successfully");
+                System.out.println(TimeFormatter.getTimestamp() + "File deleted successfully");
             } else {
-                System.out.println("Failed to delete the file");
+                System.out.println(TimeFormatter.getTimestamp() + "Failed to delete the file");
             }
         } catch (Exception e) {
             e.printStackTrace();

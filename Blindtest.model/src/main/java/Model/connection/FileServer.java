@@ -20,6 +20,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import Contract.IModel;
+import Contract.TimeFormatter;
 
 /**
  * The Class FileServer.
@@ -98,23 +99,23 @@ public class FileServer implements Runnable {
      * Start server.
      */
     public void startServer() {
-        System.out.println("[Server] Server is running on port 15125...");
+        System.out.println(TimeFormatter.getTimestamp() + "[Server] Server is running on port 15125...");
         this.waitForClient();
 
         try {
             this.sendArrayList(this.getModel().getTypes());
-            System.out.println("[Server] Accepted connection : " + this.socket);
+            System.out.println(TimeFormatter.getTimestamp() + "[Server] Accepted connection : " + this.socket);
             this.setClientsThemes(this.getStreamedClientsThemes());
             this.findFoldersToSend();
-            System.out.println(this.getFoldersToSend());
+            System.out.println(TimeFormatter.getTimestamp() + this.getFoldersToSend());
 
             this.sendArrayList(this.getFoldersToSend());
 
             if (this.getFoldersToSend().size() > 0) {
                 for (File folder : this.getFoldersToSend()) {
-                    System.out.println("[Server] Sending " + folder + "...");
+                    System.out.println(TimeFormatter.getTimestamp() + "[Server] Sending " + folder + "...");
                     this.sendTheme(folder.getAbsolutePath());
-                    System.out.println("[Server] Done!");
+                    System.out.println(TimeFormatter.getTimestamp() + "[Server] Done!");
                 }
             }
         } catch (NullPointerException ignored) {
@@ -126,7 +127,7 @@ public class FileServer implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("[Server] Server stopped !");
+        System.out.println(TimeFormatter.getTimestamp() + "[Server] Server stopped !");
         this.startServer();
     }
 
@@ -219,7 +220,7 @@ public class FileServer implements Runnable {
             ous.flush();
             zipOut.close();
             baos.close();
-            System.out.println("File transfer complete");
+            System.out.println(TimeFormatter.getTimestamp() + "File transfer complete");
         } catch (IOException e) {
             e.printStackTrace();
         }

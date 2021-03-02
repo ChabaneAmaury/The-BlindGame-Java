@@ -6,6 +6,8 @@ package Controller;
 /*
  * @author Amaury Chabane
  */
+import Contract.TimeFormatter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,7 +69,7 @@ public class YoutubeToMP3 {
     private static String getMP3Title(String html) {
         Matcher m = MP3_TITLE_PATTERN.matcher(html);
         if (!m.find()) {
-            System.out.println(html);
+            System.out.println(TimeFormatter.getTimestamp() + html);
             throw new IllegalArgumentException("Invalid Title.");
         }
         return m.group();
@@ -110,7 +112,7 @@ public class YoutubeToMP3 {
     private static String getMP3URL(String html) {
         Matcher m = MP3_URL_PATTERN.matcher(html);
         if (!m.find()) {
-            System.out.println(html);
+            System.out.println(TimeFormatter.getTimestamp() + html);
             throw new IllegalArgumentException("Invalid MP3 URL.");
         }
         return m.group();

@@ -3,6 +3,8 @@
  */
 package View;
 
+import Contract.TimeFormatter;
+
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 
@@ -61,7 +63,7 @@ public class MouseInputOptions extends MouseInput {
                             this.viewframe.getController().removeType(checkboxe.getText());
                         } else {
                             boolean checked = false;
-                            System.out.println(this.viewframe.getController().getNotChoosenTypes());
+                            System.out.println(TimeFormatter.getTimestamp() + this.viewframe.getController().getNotChoosenTypes());
                             for (String type : this.viewframe.getController().getNotChoosenTypes()) {
                                 if (type.equalsIgnoreCase(checkboxe.getText())) {
                                     checked = true;

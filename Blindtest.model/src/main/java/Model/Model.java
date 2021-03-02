@@ -17,6 +17,7 @@ import java.util.Enumeration;
 
 import Contract.IEntity;
 import Contract.IModel;
+import Contract.TimeFormatter;
 import Entity.Theme;
 import Model.connection.FileClient;
 import Model.connection.FileServer;
@@ -61,7 +62,7 @@ public class Model implements IModel {
                     Thread.sleep(30000);
                     Model.this.scanIPsInSubnet();
                     for (String addr : Model.this.getIPsToScan()) {
-                        System.out.println("Trying " + addr);
+                        System.out.println(TimeFormatter.getTimestamp() + "Trying " + addr);
                         @SuppressWarnings("unused")
                         FileClient client = new FileClient(Model.this, addr);
                     }
@@ -106,7 +107,7 @@ public class Model implements IModel {
                                 if (online) {
                                     Socket s = new Socket();
                                     s.connect(new InetSocketAddress(ipToTest, 15125), 50);
-                                    System.out.println("Server is listening on port " + 15125 + " of " + ipToTest);
+                                    System.out.println(TimeFormatter.getTimestamp() + "Server is listening on port " + 15125 + " of " + ipToTest);
                                     s.close();
 
                                     Model.this.getIPsToScan().add(ipToTest);
@@ -163,9 +164,9 @@ public class Model implements IModel {
         try {
             File file = new File("files\\theme.zip");
             if (file.delete()) {
-                System.out.println("File deleted successfully");
+                System.out.println(TimeFormatter.getTimestamp() + "File deleted successfully");
             } else {
-                System.out.println("Failed to delete the file");
+                System.out.println(TimeFormatter.getTimestamp() + "Failed to delete the file");
             }
         } catch (Exception e) {
             e.printStackTrace();
