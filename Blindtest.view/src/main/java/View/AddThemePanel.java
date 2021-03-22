@@ -98,7 +98,7 @@ public class AddThemePanel extends MyPanel {
         String poster_url = null;
         try {
             poster_url = theme.getString("poster_path");
-        } catch (JSONException e) {
+        } catch (JSONException ignored) {
         }
         Image poster = null;
 
@@ -166,7 +166,7 @@ public class AddThemePanel extends MyPanel {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        this.drawGradientPaint(graphics);
+        this.drawBackground(graphics);
 
         this.drawButton(graphics, "Search", searchX, searchY, btnW, btnH);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);

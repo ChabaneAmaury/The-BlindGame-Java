@@ -34,21 +34,7 @@ public class LoadPanel extends MyPanel {
      */
     public LoadPanel(ViewFrame viewFrame) {
         super(viewFrame);
-        this.setRotate(new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    LoadPanel.this.setRotateFactor(LoadPanel.this.getRotateFactor() + 0.1);
-                    LoadPanel.this.repaint();
-                    try {
-                        Thread.sleep(15);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        this.setRotate(new Thread(this::run));
         int imgW = (int) (this.getViewFrame().getHeight() / 2.4);
         this.setImage(this.loadImage("bin\\vinyl_icon.png").getScaledInstance(imgW, imgW, Image.SCALE_SMOOTH));
         this.getRotate().start();
@@ -69,7 +55,7 @@ public class LoadPanel extends MyPanel {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        this.drawGradientPaint(graphics);
+        this.drawBackground(graphics);
         graphics.rotate(this.getRotateFactor(), this.getWidth() / 2, this.getHeight() / 2);
         graphics.drawImage(this.getImage(), imgX, imgY, imgW, imgW, null);
     }
@@ -128,4 +114,15 @@ public class LoadPanel extends MyPanel {
         this.image = image;
     }
 
+    private void run() {
+        while (true) {
+            LoadPanel.this.setRotateFactor(LoadPanel.this.getRotateFactor() + 0.1);
+            LoadPanel.this.repaint();
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

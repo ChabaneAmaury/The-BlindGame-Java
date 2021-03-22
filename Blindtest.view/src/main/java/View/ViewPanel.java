@@ -149,7 +149,7 @@ class ViewPanel extends MyPanel {
 
         IEntity theme = this.getViewFrame().getController().getTheme();
         Graphics2D graphics = (Graphics2D) g;
-        this.drawGradientPaint(graphics);
+        this.drawBackground(graphics);
         if (this.getViewFrame().getController().getTimeLeft() < 0) {
             this.drawTheme(graphics, theme);
             if (!this.isPaused()) {

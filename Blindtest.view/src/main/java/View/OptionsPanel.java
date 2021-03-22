@@ -142,7 +142,7 @@ public class OptionsPanel extends MyPanel implements ActionListener {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        this.drawGradientPaint(graphics);
+        this.drawBackground(graphics);
         this.drawButton(graphics, "Back", backX, btnY, btnW, btnH);
         this.drawButton(graphics, ">", nextX, btnY, btnW / 2, btnH);
         this.drawButton(graphics, "<", previousX, btnY, btnW / 2, btnH);
