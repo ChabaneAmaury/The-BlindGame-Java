@@ -103,7 +103,7 @@ public class Model implements IModel {
                         for (int it = 1; it <= 255; it++) {
                             try {
                                 String ipToTest = sip + it;
-                                boolean online = InetAddress.getByName(ipToTest).isReachable(50);
+                                boolean online = !ip.equals(ipToTest) && InetAddress.getByName(ipToTest).isReachable(50);
                                 if (online) {
                                     Socket s = new Socket();
                                     s.connect(new InetSocketAddress(ipToTest, 15125), 50);
