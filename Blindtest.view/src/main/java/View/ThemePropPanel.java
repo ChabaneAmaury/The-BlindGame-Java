@@ -81,34 +81,33 @@ public class ThemePropPanel extends MyPanel {
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
 
-        this.setLayout(null);
-        int fieldHeightFactor = ((this.getViewFrame().getHeight() / 16) * 2);
-        this.setTitleField(this.createTextField(this.getTheme().getTitle(),
-                (int) (this.getViewFrame().getWidth() / 51.2), (int) (this.getViewFrame().getHeight() / 14.4),
-                (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
-        this.setComposerField(this.createTextField(this.getTheme().getComposer(),
-                (int) (this.getViewFrame().getWidth() / 51.2), this.getTitleField().getBounds().y + fieldHeightFactor,
-                (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
-        this.setTypeField(this.createTextField(this.getTheme().getType(), (int) (this.getViewFrame().getWidth() / 51.2),
-                this.getComposerField().getBounds().y + fieldHeightFactor, (int) (this.getViewFrame().getWidth() / 1.8),
-                this.getViewFrame().getHeight() / 18));
-        this.setTimeCodeField(this.createTextField(Integer.toString(this.getTheme().getTimecode()),
-                (int) (this.getViewFrame().getWidth() / 51.2), this.getTypeField().getBounds().y + fieldHeightFactor,
-                (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
-        this.setReleaseField(
-                this.createTextField(this.getTheme().getReleaseDate(), (int) (this.getViewFrame().getWidth() / 51.2),
-                        this.getTimeCodeField().getBounds().y + fieldHeightFactor,
-                        (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
-        this.setInfosField(this.createTextField(this.getTheme().getInfos(),
-                (int) (this.getViewFrame().getWidth() / 51.2), this.getReleaseField().getBounds().y + fieldHeightFactor,
-                (int) (this.getViewFrame().getWidth() / 1.8), this.getViewFrame().getHeight() / 18));
+        int fieldX = (int) (this.getViewFrame().getWidth() / 51.2);
+        int fieldHeight = this.getViewFrame().getHeight() / 26;
+        int fieldWidth = (int) (this.getViewFrame().getWidth() / 1.8);
 
-        if (this.getTheme().isHasError()) {
-            this.setYtUrlField(this.createTextField("",
-                    (int) ((this.getViewFrame().getWidth() / 51.2) + (this.getViewFrame().getWidth() / 7.2)),
-                    this.getInfosField().getBounds().y + (fieldHeightFactor / 2),
-                    (int) ((this.getViewFrame().getWidth() / 2.4)), this.getViewFrame().getHeight() / 18));
-        }
+        this.setLayout(null);
+        int fieldHeightFactor = ((this.getViewFrame().getHeight() / 18) * 2);
+        this.setTitleField(this.createTextField(this.getTheme().getTitle(), fieldX, (int) (this.getViewFrame().getHeight() / 14.4),
+                fieldWidth, fieldHeight));
+        this.setComposerField(this.createTextField(this.getTheme().getComposer(),
+                fieldX, this.getTitleField().getBounds().y + fieldHeightFactor,
+                fieldWidth, fieldHeight));
+        this.setTypeField(this.createTextField(this.getTheme().getType(), fieldX,
+                this.getComposerField().getBounds().y + fieldHeightFactor, fieldWidth, fieldHeight));
+        this.setTimeCodeField(this.createTextField(Integer.toString(this.getTheme().getTimecode()),
+                fieldX, this.getTypeField().getBounds().y + fieldHeightFactor,
+                fieldWidth, fieldHeight));
+        this.setReleaseField(
+                this.createTextField(this.getTheme().getReleaseDate(), fieldX, this.getTimeCodeField().getBounds().y + fieldHeightFactor,
+                        fieldWidth, fieldHeight));
+        this.setInfosField(this.createTextField(this.getTheme().getInfos(),
+                fieldX, this.getReleaseField().getBounds().y + fieldHeightFactor,
+                fieldWidth, fieldHeight));
+
+        this.setYtUrlField(this.createTextField("",
+                fieldX,
+                this.getInfosField().getBounds().y + fieldHeightFactor,
+                fieldWidth, fieldHeight));
     }
 
     /**
@@ -127,7 +126,8 @@ public class ThemePropPanel extends MyPanel {
         int timecodeHeight = this.getTimeCodeField().getBounds().y - graphics.getFont().getSize();
         int dateHeight = this.getReleaseField().getBounds().y - graphics.getFont().getSize();
         int infosHeight = this.getInfosField().getBounds().y - graphics.getFont().getSize();
-        Font font = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
+        int ytUrlHeight = this.getYtUrlField().getBounds().y - graphics.getFont().getSize();
+        Font font = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 30));
         graphics.setFont(font);
         graphics.setColor(Color.BLACK);
 
@@ -167,11 +167,7 @@ public class ThemePropPanel extends MyPanel {
         graphics.drawString("Timecode :", metaXStart, timecodeHeight);
         graphics.drawString("Release Date :", metaXStart, dateHeight);
         graphics.drawString("Infos :", metaXStart, infosHeight);
-
-        if (this.getTheme().isHasError()) {
-            int ytUrlHeight = this.getYtUrlField().getBounds().y + graphics.getFont().getSize();
-            graphics.drawString("Yt Video Url :", metaXStart, ytUrlHeight);
-        }
+        graphics.drawString("Yt Video Url :", metaXStart, ytUrlHeight);
     }
 
     /**
@@ -187,7 +183,9 @@ public class ThemePropPanel extends MyPanel {
         int btnY = (int) (this.getHeight() - (this.getWidth() / 51.2) - (this.getHeight() / 10.2857143));
         int btnW = this.getWidth() / 12;
         int btnH = this.getHeight() / 14;
-        int playX = (int) (this.getWidth() / 51.2) + menuX + btnW;
+        int openX = (int) (this.getWidth() / 51.2) + menuX + btnW;
+        int playX = (int) (this.getWidth() / 51.2) + openX + btnW;
+        int downloadX = (int) (this.getWidth() / 51.2) + playX + btnW;
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -196,16 +194,14 @@ public class ThemePropPanel extends MyPanel {
         this.drawTheme(graphics, this.getTheme());
 
         this.drawButton(graphics, "Menu", menuX, btnY, btnW, btnH);
+        this.drawButton(graphics, "Open", openX, btnY, btnW, btnH);
+        this.drawButton(graphics, " Download ", downloadX, btnY, btnW + (this.getWidth() / 50), btnH);
 
-        if (this.getTheme().isHasError()) {
-            this.drawButton(graphics, " Download ", playX, btnY, btnW + (this.getWidth() / 50), btnH);
+        if ((this.getViewFrame().getClip() == null) || !this.getViewFrame().getClip().isActive()) {
+            this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
         } else {
-            if ((this.getViewFrame().getClip() == null) || !this.getViewFrame().getClip().isActive()) {
-                this.drawButton(graphics, "Play", playX, btnY, btnW, btnH);
-            } else {
-                this.drawButton(graphics, "" + (this.getViewFrame().getClip().getMicrosecondPosition() / 1000000),
-                        playX, btnY, btnW, btnH);
-            }
+            this.drawButton(graphics, "" + (this.getViewFrame().getClip().getMicrosecondPosition() / 1000000),
+                    playX, btnY, btnW, btnH);
         }
 
         try {

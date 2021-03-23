@@ -70,6 +70,8 @@ public class AddThemePanel extends MyPanel {
         this.addList.setBounds(new Rectangle(
                 ((int) (this.getViewFrame().getWidth() / 51.2) + (int) (this.getViewFrame().getWidth() / 1.92)) - 100,
                 (int) (this.getViewFrame().getHeight() / 14.4), 100, this.getViewFrame().getHeight() / 18));
+
+        this.addList.setFont(new Font(this.getFontName(), Font.BOLD, (int) (this.getViewFrame().getHeight() / 40)));
         this.add(this.addList);
     }
 

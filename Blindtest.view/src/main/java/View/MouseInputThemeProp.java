@@ -3,7 +3,11 @@
  */
 package View;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+
 import Contract.IEntity;
 
 /**
@@ -39,31 +43,39 @@ public class MouseInputThemeProp extends MouseInput {
                 - (this.panel.getHeight() / 10.2857143));
         int btnW = this.panel.getWidth() / 12;
         int btnH = this.panel.getHeight() / 14;
-        int playX = (int) (this.panel.getWidth() / 51.2) + menuX + btnW;
+        int openX = (int) (this.panel.getWidth() / 51.2) + menuX + btnW;
+        int playX = (int) (this.panel.getWidth() / 51.2) + openX + btnW;
+        int downloadX = (int) (this.panel.getWidth() / 51.2) + playX + btnW;
 
         if ((my >= btnY) && (my <= (btnY + btnH))) {
             if ((mx >= playX)
                     && (mx <= ((theme.isHasError()) ? playX + btnW + (this.panel.getWidth() / 50)
                             : playX + btnW))) {
-                if (theme.isHasError()) {
-                    String youtubeUrl = ((ThemePropPanel) this.panel).getYtUrlField().getText();
-                    String filepath = theme.getFolder().getAbsolutePath();
-                    this.viewframe.getController().downloadYtVideoToMP3(filepath, youtubeUrl);
 
-                    theme.setFile(theme.FindFileByExtension(theme.getFolder(), theme.getFileExtensions()));
-                    theme.setHasError(false);
-                    this.panel.remove(((ThemePropPanel) this.panel).getYtUrlField());
-                } else {
-                    try {
-                        this.viewframe.stopMusic();
-                        this.viewframe.playMusic(theme.getFile(),
-                                Integer.parseInt(((ThemePropPanel) this.panel).getTimeCodeField().getText()),
-                                this.panel);
-                    } catch (Exception ignored) {
-                    }
+                try {
+                    this.viewframe.stopMusic();
+                    this.viewframe.playMusic(theme.getFile(),
+                            Integer.parseInt(((ThemePropPanel) this.panel).getTimeCodeField().getText()),
+                            this.panel);
+                } catch (Exception ignored) {
                 }
 
-            } else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
+            }else if ((mx >= downloadX) && (mx <= (downloadX + btnW))) {
+                String youtubeUrl = ((ThemePropPanel) this.panel).getYtUrlField().getText();
+                String filepath = theme.getFolder().getAbsolutePath();
+                this.viewframe.getController().downloadYtVideoToMP3(filepath, youtubeUrl);
+
+                theme.setFile(theme.FindFileByExtension(theme.getFolder(), theme.getFileExtensions()));
+                theme.setHasError(false);
+                this.panel.remove(((ThemePropPanel) this.panel).getYtUrlField());
+            }else if ((mx >= openX) && (mx <= (openX + btnW))) {
+                try {
+                    Desktop.getDesktop().open(((ThemePropPanel) this.panel).getTheme().getFolder());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+            else if ((mx >= menuX) && (mx <= (menuX + btnW))) {
                 theme.setPropertyValue("title", ((ThemePropPanel) this.panel).getTitleField().getText());
                 theme.setTitle(((ThemePropPanel) this.panel).getTitleField().getText());
 
