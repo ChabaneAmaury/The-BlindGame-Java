@@ -24,8 +24,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  * The Class MyPanel.
@@ -255,6 +254,11 @@ public class MyPanel extends JPanel {
      *                     the height
      */
     public void drawButton(Graphics2D graphics, String text, int x, int y, int width, int height) {
+//        JButton button = new JButton(text);
+//        button.setLocation(x, y);
+//        button.setSize(width, height);
+//        button.setFont(new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 40)));
+//        this.add(button);
         Font basicFont = new Font(this.getFontName(), Font.BOLD, (int) (this.getHeight() / 28.8));
         //border
         graphics.setColor(new Color(255, 255, 255));

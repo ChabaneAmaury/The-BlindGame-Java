@@ -52,7 +52,6 @@ public class AddThemePanel extends MyPanel {
         this.getTitlesMap().put("Movie", "original_title");
         this.getTitlesMap().put("TV Show", "original_name");
 
-        // TODO Auto-generated constructor stub
         MouseInputAddTheme mouseInput = new MouseInputAddTheme(this);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.addMouseListener(mouseInput);
