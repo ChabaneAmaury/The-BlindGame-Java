@@ -47,7 +47,7 @@ public class YoutubeToMP3 {
      * @throws IOException
      *                         Signals that an I/O exception has occurred.
      */
-    public static ArrayList<Object> youtubeToMP3(String youtubeUrl) throws IOException {
+    public static ArrayList<Object> youtubeToMP3(String youtubeUrl) throws IOException, IllegalArgumentException {
         String id = getID(youtubeUrl);
         String converter = loadConverter(id);
         String mp3url = getMP3URL(converter);
@@ -109,7 +109,7 @@ public class YoutubeToMP3 {
      *                 the html
      * @return the mp3url
      */
-    private static String getMP3URL(String html) {
+    private static String getMP3URL(String html) throws IllegalArgumentException {
         Matcher m = MP3_URL_PATTERN.matcher(html);
         if (!m.find()) {
             System.out.println(TimeFormatter.getTimestamp() + html);

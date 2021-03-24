@@ -64,10 +64,8 @@ public class MouseInputThemeProp extends MouseInput {
                 String youtubeUrl = ((ThemePropPanel) this.panel).getYtUrlField().getText();
                 String filepath = theme.getFolder().getAbsolutePath();
                 this.viewframe.getController().downloadYtVideoToMP3(filepath, youtubeUrl);
-
                 theme.setFile(theme.FindFileByExtension(theme.getFolder(), theme.getFileExtensions()));
                 theme.setHasError(false);
-                this.panel.remove(((ThemePropPanel) this.panel).getYtUrlField());
             }else if ((mx >= openX) && (mx <= (openX + btnW))) {
                 try {
                     Desktop.getDesktop().open(((ThemePropPanel) this.panel).getTheme().getFolder());

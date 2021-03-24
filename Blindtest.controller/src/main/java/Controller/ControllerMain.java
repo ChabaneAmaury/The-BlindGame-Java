@@ -87,8 +87,7 @@ public class ControllerMain extends Observable implements IControllerMain {
         try {
             ArrayList<Object> mp3_raw = YoutubeToMP3.youtubeToMP3(youtubeUrl);
             YoutubeToMP3.saveFile(filepath + "\\" + (String) mp3_raw.get(0) + ".mp3", (byte[]) mp3_raw.get(1));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

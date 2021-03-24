@@ -82,7 +82,7 @@ public class ThemePropPanel extends MyPanel {
         this.addMouseMotionListener(mouseInput);
 
         int fieldX = (int) (this.getViewFrame().getWidth() / 51.2);
-        int fieldHeight = this.getViewFrame().getHeight() / 26;
+        int fieldHeight = this.getViewFrame().getHeight() / 22;
         int fieldWidth = (int) (this.getViewFrame().getWidth() / 1.8);
 
         this.setLayout(null);
